@@ -1,5 +1,6 @@
 package cc.mrbird.febs.server.test.configure;
 
+import cc.mrbird.febs.common.entity.constant.EndpointConstant;
 import cc.mrbird.febs.common.handler.FebsAccessDeniedHandler;
 import cc.mrbird.febs.common.handler.FebsAuthExceptionEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,11 @@ public class FebsServerTestResourceServerConfigure extends ResourceServerConfigu
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .requestMatchers().antMatchers("/**")
+                .requestMatchers().antMatchers(EndpointConstant.ALL)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/actuator/**").permitAll()
-                .antMatchers("/**").authenticated()
+                .antMatchers(EndpointConstant.ALL).authenticated()
                 .and()
                 .httpBasic();
     }

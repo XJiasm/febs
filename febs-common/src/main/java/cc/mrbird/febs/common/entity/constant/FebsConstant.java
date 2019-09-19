@@ -1,6 +1,8 @@
-package cc.mrbird.febs.common.entity;
+package cc.mrbird.febs.common.entity.constant;
 
 /**
+ * FEBS系统常量类
+ *
  * @author MrBird
  */
 public class FebsConstant {
@@ -29,15 +31,6 @@ public class FebsConstant {
     public static final String[] VALID_FILE_TYPE = {"xlsx", "zip"};
 
     /**
-     * gif类型
-     */
-    public static final String GIF = "gif";
-    /**
-     * png类型
-     */
-    public static final String PNG = "png";
-
-    /**
      * 验证码 key前缀
      */
     public static final String CODE_PREFIX = "febs.captcha.";
@@ -46,5 +39,18 @@ public class FebsConstant {
      * 异步线程池名称
      */
     public static final String ASYNC_POOL = "febsAsyncThreadPool";
+
+    /**
+     * OAUTH2 令牌类型 https://oauth.net/2/bearer-tokens/
+     */
+    public static final String OAUTH2_TOKEN_TYPE = "bearer";
+    /**
+     * Java默认临时目录
+     */
+    public static final String JAVA_TEMP_DIR = "java.io.tmpdir";
+    /**
+     * utf-8
+     */
+    public static final String UTF8 = "utf-8";
 
 }

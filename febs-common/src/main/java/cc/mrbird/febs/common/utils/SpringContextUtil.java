@@ -3,7 +3,6 @@ package cc.mrbird.febs.common.utils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
 /**
  * 用于从 IOC容器中获取 Bean
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
  * @author MrBird
  *
  */
-@Component
 public class SpringContextUtil implements ApplicationContextAware {
 	private static ApplicationContext applicationContext;
 

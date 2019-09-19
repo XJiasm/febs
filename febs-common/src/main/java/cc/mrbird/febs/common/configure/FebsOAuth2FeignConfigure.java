@@ -1,6 +1,6 @@
 package cc.mrbird.febs.common.configure;
 
-import cc.mrbird.febs.common.entity.FebsConstant;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import com.google.common.net.HttpHeaders;
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,7 @@ public class FebsOAuth2FeignConfigure {
             Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
             if (details instanceof OAuth2AuthenticationDetails) {
                 String authorizationToken = ((OAuth2AuthenticationDetails) details).getTokenValue();
-                requestTemplate.header(HttpHeaders.AUTHORIZATION, "bearer " + authorizationToken);
+                requestTemplate.header(HttpHeaders.AUTHORIZATION, FebsConstant.OAUTH2_TOKEN_TYPE + authorizationToken);
             }
         };
     }

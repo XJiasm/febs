@@ -2,7 +2,8 @@ package cc.mrbird.febs.auth.service;
 
 import cc.mrbird.febs.auth.properties.FebsAuthProperties;
 import cc.mrbird.febs.auth.properties.FebsValidateCodeProperties;
-import cc.mrbird.febs.common.entity.FebsConstant;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.entity.constant.ImageTypeConstant;
 import cc.mrbird.febs.common.exception.ValidateCodeException;
 import cc.mrbird.febs.common.service.RedisService;
 import com.wf.captcha.GifCaptcha;
@@ -71,7 +72,7 @@ public class ValidateCodeService {
 
     private Captcha createCaptcha(FebsValidateCodeProperties code) {
         Captcha captcha = null;
-        if (StringUtils.equalsIgnoreCase(code.getType(), FebsConstant.GIF)) {
+        if (StringUtils.equalsIgnoreCase(code.getType(), ImageTypeConstant.GIF)) {
             captcha = new GifCaptcha(code.getWidth(), code.getHeight(), code.getLength());
         } else {
             captcha = new SpecCaptcha(code.getWidth(), code.getHeight(), code.getLength());
@@ -81,7 +82,7 @@ public class ValidateCodeService {
     }
 
     private void setHeader(HttpServletResponse response, String type) {
-        if (StringUtils.equalsIgnoreCase(type, FebsConstant.GIF)) {
+        if (StringUtils.equalsIgnoreCase(type, ImageTypeConstant.GIF)) {
             response.setContentType(MediaType.IMAGE_GIF_VALUE);
         } else {
             response.setContentType(MediaType.IMAGE_PNG_VALUE);

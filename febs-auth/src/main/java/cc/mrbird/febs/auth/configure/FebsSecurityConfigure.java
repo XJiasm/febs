@@ -2,6 +2,7 @@ package cc.mrbird.febs.auth.configure;
 
 import cc.mrbird.febs.auth.filter.ValidateCodeFilter;
 import cc.mrbird.febs.auth.service.FebsUserDetailService;
+import cc.mrbird.febs.common.entity.constant.EndpointConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
@@ -38,10 +39,10 @@ public class FebsSecurityConfigure extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .requestMatchers()
-                .antMatchers("/oauth/**")
+                .antMatchers(EndpointConstant.OAUTH_ALL)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/oauth/**").authenticated()
+                .antMatchers(EndpointConstant.OAUTH_ALL).authenticated()
                 .and()
                 .csrf().disable();
     }

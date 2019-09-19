@@ -91,7 +91,7 @@ public class FebsAuthorizationServerConfigurer extends AuthorizationServerConfig
         DefaultUserAuthenticationConverter userAuthenticationConverter = new DefaultUserAuthenticationConverter();
         userAuthenticationConverter.setUserDetailsService(userDetailService);
         defaultAccessTokenConverter.setUserTokenConverter(userAuthenticationConverter);
-        accessTokenConverter.setSigningKey("febs");
+        accessTokenConverter.setSigningKey(properties.getJwtAccessKey());
         return accessTokenConverter;
     }
 

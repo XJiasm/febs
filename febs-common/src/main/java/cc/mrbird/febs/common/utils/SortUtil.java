@@ -1,6 +1,6 @@
 package cc.mrbird.febs.common.utils;
 
-import cc.mrbird.febs.common.entity.FebsConstant;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;

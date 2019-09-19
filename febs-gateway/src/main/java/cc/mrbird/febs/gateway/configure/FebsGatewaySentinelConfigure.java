@@ -56,6 +56,9 @@ public class FebsGatewaySentinelConfigure {
         initGatewayRules();
     }
 
+    /**
+     * 验证码限流
+     */
     private void initGatewayRules() {
         Set<ApiDefinition> definitions = new HashSet<>();
         Set<ApiPredicateItem> predicateItems = new HashSet<>();

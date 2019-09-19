@@ -1,6 +1,6 @@
 package cc.mrbird.febs.common.utils;
 
-import cc.mrbird.febs.common.entity.FebsConstant;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import com.google.common.base.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
@@ -64,9 +64,9 @@ public class FileUtil {
         if (!fileTypeIsValid(fileType)) {
             throw new Exception("暂不支持该类型文件下载");
         }
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName=" + java.net.URLEncoder.encode(fileName, "utf-8"));
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName=" + java.net.URLEncoder.encode(fileName, FebsConstant.UTF8));
         response.setContentType(MediaType.MULTIPART_FORM_DATA_VALUE);
-        response.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding(FebsConstant.UTF8);
         try (InputStream inputStream = new FileInputStream(file); OutputStream os = response.getOutputStream()) {
             byte[] b = new byte[2048];
             int length;

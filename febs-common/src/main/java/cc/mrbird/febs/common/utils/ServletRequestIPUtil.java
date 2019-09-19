@@ -1,13 +1,11 @@
 package cc.mrbird.febs.common.utils;
 
-import org.springframework.http.HttpHeaders;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author MrBird
  */
-public class IPUtil {
+public class ServletRequestIPUtil {
 
 	private static final String UNKNOWN = "unknown";
 

@@ -1,7 +1,7 @@
 package cc.mrbird.febs.gateway.filter;
 
-import cc.mrbird.febs.common.entity.FebsConstant;
 import cc.mrbird.febs.common.entity.FebsResponse;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.gateway.properties.FebsGatewayProperties;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +55,8 @@ public class FebsGatewayRequestFilter implements GlobalFilter {
         printLog(exchange);
 
         byte[] token = Base64Utils.encode((FebsConstant.GATEWAY_TOKEN_VALUE).getBytes());
-        ServerHttpRequest build = request.mutate().header(FebsConstant.GATEWAY_TOKEN_HEADER, new String(token)).build();
+        String[] headerValues = {new String(token)};
+        ServerHttpRequest build = request.mutate().header(FebsConstant.GATEWAY_TOKEN_HEADER, headerValues).build();
         ServerWebExchange newExchange = exchange.mutate().request(build).build();
         return chain.filter(newExchange);
     }

@@ -1,7 +1,7 @@
 package cc.mrbird.febs.server.system.service;
 
 
-import cc.mrbird.febs.common.entity.FebsConstant;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.system.Log;
 import com.baomidou.mybatisplus.core.metadata.IPage;

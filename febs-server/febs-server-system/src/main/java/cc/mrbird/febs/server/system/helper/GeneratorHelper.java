@@ -1,6 +1,7 @@
 package cc.mrbird.febs.server.system.helper;
 
 import cc.mrbird.febs.common.annotation.Helper;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.Column;
 import cc.mrbird.febs.common.entity.system.GeneratorConfig;
 import cc.mrbird.febs.common.entity.system.GeneratorConstant;
@@ -93,7 +94,7 @@ public class GeneratorHelper {
         generateFileByTemplate(templateName, mapperXmlFile, data);
     }
 
-    @SuppressWarnings("UnstableApiUsage")
+    @SuppressWarnings("all")
     private void generateFileByTemplate(String templateName, File file, Object data) throws Exception {
         Template template = getTemplate(templateName);
         Files.createParentDirs(file);
@@ -130,12 +131,12 @@ public class GeneratorHelper {
         String templatePath = GeneratorHelper.class.getResource("/generator/templates/").getPath();
         File file = new File(templatePath);
         if (!file.exists()) {
-            templatePath = System.getProperties().getProperty("java.io.tmpdir");
-            file = new File(templatePath + "/" + templateName);
+            templatePath = System.getProperties().getProperty(FebsConstant.JAVA_TEMP_DIR);
+            file = new File(templatePath + File.separator + templateName);
             FileUtils.copyInputStreamToFile(Objects.requireNonNull(AddressUtil.class.getClassLoader().getResourceAsStream("classpath:generator/templates/" + templateName)), file);
         }
         configuration.setDirectoryForTemplateLoading(new File(templatePath));
-        configuration.setDefaultEncoding("UTF-8");
+        configuration.setDefaultEncoding(FebsConstant.UTF8);
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.IGNORE_HANDLER);
         return configuration.getTemplate(templateName);
 

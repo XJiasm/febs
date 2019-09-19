@@ -1,6 +1,6 @@
 package cc.mrbird.febs.common.interceptor;
 
-import cc.mrbird.febs.common.entity.FebsConstant;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import org.apache.commons.lang3.StringUtils;

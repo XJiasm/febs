@@ -18,11 +18,11 @@ public class FebsClientsProperties {
     /**
      * 认证类型
      */
-    private String grantType = "password,authorization_code,refresh_token";
+    private String grantType;
     /**
      * 范围
      */
-    private String scope = "all";
+    private String scope;
     /**
      * 访问令牌有效时间，单位秒
      */

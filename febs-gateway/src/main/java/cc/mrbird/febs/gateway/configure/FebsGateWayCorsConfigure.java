@@ -1,5 +1,6 @@
 package cc.mrbird.febs.gateway.configure;
 
+import cc.mrbird.febs.common.entity.constant.EndpointConstant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -21,7 +22,7 @@ public class FebsGateWayCorsConfigure {
         cors.addAllowedOrigin(CorsConfiguration.ALL);
         cors.addAllowedHeader(CorsConfiguration.ALL);
         cors.addAllowedMethod(CorsConfiguration.ALL);
-        source.registerCorsConfiguration("/**", cors);
+        source.registerCorsConfiguration(EndpointConstant.ALL, cors);
         return new CorsWebFilter(source);
     }
 

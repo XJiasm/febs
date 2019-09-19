@@ -1,5 +1,6 @@
 package cc.mrbird.febs.server.system.utils;
 
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.lionsoul.ip2region.DataBlock;
@@ -29,7 +30,7 @@ public class AddressUtil {
             String dbPath = AddressUtil.class.getResource("/ip2region/ip2region.db").getPath();
             File file = new File(dbPath);
             if (!file.exists()) {
-                String tmpDir = System.getProperties().getProperty("java.io.tmpdir");
+                String tmpDir = System.getProperties().getProperty(FebsConstant.JAVA_TEMP_DIR);
                 dbPath = tmpDir + "ip.db";
                 file = new File(dbPath);
                 InputStream resourceAsStream = AddressUtil.class.getClassLoader().getResourceAsStream("classpath:ip2region/ip2region.db");

@@ -1,10 +1,10 @@
 package cc.mrbird.febs.server.system.service.impl;
 
 
-import cc.mrbird.febs.common.entity.FebsConstant;
 import cc.mrbird.febs.common.entity.QueryRequest;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.Log;
-import cc.mrbird.febs.common.utils.IPUtil;
+import cc.mrbird.febs.common.utils.ServletRequestIPUtil;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.server.system.mapper.LogMapper;
 import cc.mrbird.febs.server.system.service.ILogService;
@@ -74,7 +74,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
     public void saveLog(ProceedingJoinPoint point, Method method, HttpServletRequest request, String operation, String username, long start) {
         Log Log = new Log();
         // 设置 IP地址
-        String ip = IPUtil.getIpAddr(request);
+        String ip = ServletRequestIPUtil.getIpAddr(request);
         Log.setIp(ip);
         // 设置操作用户
         Log.setUsername(username);
