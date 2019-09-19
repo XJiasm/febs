@@ -42,4 +42,9 @@ public class FebsConstant {
      */
     public static final String CODE_PREFIX = "febs.captcha.";
 
+    /**
+     * 异步线程池名称
+     */
+    public static final String ASYNC_POOL = "febsAsyncThreadPool";
+
 }

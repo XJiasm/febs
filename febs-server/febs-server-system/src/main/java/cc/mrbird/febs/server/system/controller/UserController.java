@@ -1,6 +1,6 @@
 package cc.mrbird.febs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.Log;
+import cc.mrbird.febs.common.annotation.ControllerEndpoint;
 import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.system.LoginLog;
@@ -86,67 +86,40 @@ public class UserController {
         return this.userService.findByName(username) == null;
     }
 
-    @Log("新增用户")
     @PostMapping
     @PreAuthorize("hasAnyAuthority('user:add')")
-    public void addUser(@Valid SystemUser user) throws FebsException {
-        try {
-            this.userService.createUser(user);
-        } catch (Exception e) {
-            String message = "新增用户失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(operation = "新增用户", exceptionMessage = "新增用户失败")
+    public void addUser(@Valid SystemUser user) {
+        this.userService.createUser(user);
     }
 
-    @Log("新增用户")
     @PutMapping
     @PreAuthorize("hasAnyAuthority('user:update')")
-    public void updateUser(@Valid SystemUser user) throws FebsException {
-        try {
-            this.userService.updateUser(user);
-        } catch (Exception e) {
-            String message = "修改用户失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(operation = "修改用户", exceptionMessage = "修改用户失败")
+    public void updateUser(@Valid SystemUser user) {
+        this.userService.updateUser(user);
     }
 
     @DeleteMapping("/{userIds}")
     @PreAuthorize("hasAnyAuthority('user:delete')")
-    public void deleteUsers(@NotBlank(message = "{required}") @PathVariable String userIds) throws FebsException {
-        try {
-            String[] ids = userIds.split(StringPool.COMMA);
-            this.userService.deleteUsers(ids);
-        } catch (Exception e) {
-            String message = "删除用户失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(operation = "删除用户", exceptionMessage = "删除用户失败")
+    public void deleteUsers(@NotBlank(message = "{required}") @PathVariable String userIds) {
+        String[] ids = userIds.split(StringPool.COMMA);
+        this.userService.deleteUsers(ids);
     }
 
     @PutMapping("profile")
-    public void updateProfile(@Valid SystemUser user) throws FebsException {
-        try {
-            this.userService.updateProfile(user);
-        } catch (Exception e) {
-            String message = "修改个人信息失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(exceptionMessage = "修改个人信息失败")
+    public void updateProfile(@Valid SystemUser user) {
+        this.userService.updateProfile(user);
     }
 
     @PutMapping("avatar")
+    @ControllerEndpoint(exceptionMessage = "修改头像失败")
     public void updateAvatar(
             @NotBlank(message = "{required}") String username,
-            @NotBlank(message = "{required}") String avatar) throws FebsException {
-        try {
-            this.userService.updateAvatar(username, avatar);
-        } catch (Exception e) {
-            String message = "修改头像失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+            @NotBlank(message = "{required}") String avatar) {
+        this.userService.updateAvatar(username, avatar);
     }
 
     @GetMapping("password/check")
@@ -158,42 +131,26 @@ public class UserController {
     }
 
     @PutMapping("password")
+    @ControllerEndpoint(exceptionMessage = "修改密码失败")
     public void updatePassword(
             @NotBlank(message = "{required}") String username,
-            @NotBlank(message = "{required}") String password) throws FebsException {
-        try {
-            userService.updatePassword(username, password);
-        } catch (Exception e) {
-            String message = "修改密码失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+            @NotBlank(message = "{required}") String password) {
+        userService.updatePassword(username, password);
     }
 
     @PutMapping("password/reset")
     @PreAuthorize("hasAnyAuthority('user:reset')")
-    public void resetPassword(@NotBlank(message = "{required}") String usernames) throws FebsException {
-        try {
-            String[] usernameArr = usernames.split(StringPool.COMMA);
-            this.userService.resetPassword(usernameArr);
-        } catch (Exception e) {
-            String message = "重置用户密码失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(exceptionMessage = "重置用户密码失败")
+    public void resetPassword(@NotBlank(message = "{required}") String usernames) {
+        String[] usernameArr = usernames.split(StringPool.COMMA);
+        this.userService.resetPassword(usernameArr);
     }
 
-    @Log("导出用户数据")
     @PostMapping("excel")
     @PreAuthorize("hasAnyAuthority('user:export')")
+    @ControllerEndpoint(operation = "导出用户数据", exceptionMessage = "导出Excel失败")
     public void export(QueryRequest queryRequest, SystemUser user, HttpServletResponse response) throws FebsException {
-        try {
-            List<SystemUser> users = this.userService.findUserDetail(user, queryRequest).getRecords();
-            ExcelKit.$Export(SystemUser.class, response).downXlsx(users, false);
-        } catch (Exception e) {
-            String message = "导出Excel失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+        List<SystemUser> users = this.userService.findUserDetail(user, queryRequest).getRecords();
+        ExcelKit.$Export(SystemUser.class, response).downXlsx(users, false);
     }
 }

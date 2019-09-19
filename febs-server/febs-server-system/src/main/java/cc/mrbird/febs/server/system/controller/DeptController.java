@@ -1,10 +1,9 @@
 package cc.mrbird.febs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.Log;
+import cc.mrbird.febs.common.annotation.ControllerEndpoint;
 import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.system.Dept;
-import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.server.system.service.IDeptService;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
@@ -35,57 +34,33 @@ public class DeptController {
         return new FebsResponse().data(depts);
     }
 
-    @Log("新增部门")
     @PostMapping
     @PreAuthorize("hasAnyAuthority('dept:add')")
-    public void addDept(@Valid Dept dept) throws FebsException {
-        try {
-            this.deptService.createDept(dept);
-        } catch (Exception e) {
-            String message = "新增部门失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(operation = "新增部门", exceptionMessage = "新增部门失败")
+    public void addDept(@Valid Dept dept) {
+        this.deptService.createDept(dept);
     }
 
-    @Log("删除部门")
     @DeleteMapping("/{deptIds}")
     @PreAuthorize("hasAnyAuthority('dept:delete')")
-    public void deleteDepts(@NotBlank(message = "{required}") @PathVariable String deptIds) throws FebsException {
-        try {
-            String[] ids = deptIds.split(StringPool.COMMA);
-            this.deptService.deleteDepts(ids);
-        } catch (Exception e) {
-            String message = "删除部门失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(operation = "删除部门", exceptionMessage = "删除部门失败")
+    public void deleteDepts(@NotBlank(message = "{required}") @PathVariable String deptIds) {
+        String[] ids = deptIds.split(StringPool.COMMA);
+        this.deptService.deleteDepts(ids);
     }
 
-    @Log("修改部门")
     @PutMapping
     @PreAuthorize("hasAnyAuthority('dept:update')")
-    public void updateDept(@Valid Dept dept) throws FebsException {
-        try {
-            this.deptService.updateDept(dept);
-        } catch (Exception e) {
-            String message = "修改部门失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(operation = "修改部门", exceptionMessage = "修改部门失败")
+    public void updateDept(@Valid Dept dept) {
+        this.deptService.updateDept(dept);
     }
 
-    @Log("导出部门数据")
     @PostMapping("excel")
     @PreAuthorize("hasAnyAuthority('dept:export')")
-    public void export(Dept dept, QueryRequest request, HttpServletResponse response) throws FebsException {
-        try {
-            List<Dept> depts = this.deptService.findDepts(dept, request);
-            ExcelKit.$Export(Dept.class, response).downXlsx(depts, false);
-        } catch (Exception e) {
-            String message = "导出Excel失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(operation = "导出部门数据", exceptionMessage = "导出Excel失败")
+    public void export(Dept dept, QueryRequest request, HttpServletResponse response) {
+        List<Dept> depts = this.deptService.findDepts(dept, request);
+        ExcelKit.$Export(Dept.class, response).downXlsx(depts, false);
     }
 }

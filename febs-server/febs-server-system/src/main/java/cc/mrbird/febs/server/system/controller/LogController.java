@@ -1,5 +1,6 @@
 package cc.mrbird.febs.server.system.controller;
 
+import cc.mrbird.febs.common.annotation.ControllerEndpoint;
 import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.system.Log;
@@ -37,28 +38,18 @@ public class LogController {
 
     @DeleteMapping("{ids}")
     @PreAuthorize("hasAnyAuthority('log:delete')")
-    public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) throws FebsException {
-        try {
-            String[] logIds = ids.split(StringPool.COMMA);
-            this.logService.deleteLogs(logIds);
-        } catch (Exception e) {
-            String message = "删除日志失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(exceptionMessage = "删除日志失败")
+    public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) {
+        String[] logIds = ids.split(StringPool.COMMA);
+        this.logService.deleteLogs(logIds);
     }
 
 
     @PostMapping("excel")
     @PreAuthorize("hasAnyAuthority('log:export')")
-    public void export(QueryRequest request, Log lg, HttpServletResponse response) throws FebsException {
-        try {
-            List<Log> logs = this.logService.findLogs(lg, request).getRecords();
-            ExcelKit.$Export(Log.class, response).downXlsx(logs, false);
-        } catch (Exception e) {
-            String message = "导出Excel失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(exceptionMessage = "导出Excel失败")
+    public void export(QueryRequest request, Log lg, HttpServletResponse response) {
+        List<Log> logs = this.logService.findLogs(lg, request).getRecords();
+        ExcelKit.$Export(Log.class, response).downXlsx(logs, false);
     }
 }
