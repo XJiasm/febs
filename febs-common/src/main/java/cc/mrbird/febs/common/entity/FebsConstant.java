@@ -15,13 +15,13 @@ public class FebsConstant {
     public static final String ORDER_ASC = "ascending";
 
     /**
-     * Zuul请求头TOKEN名称（不要有空格）
+     * Gateway请求头TOKEN名称（不要有空格）
      */
-    public static final String ZUUL_TOKEN_HEADER = "ZuulToken";
+    public static final String GATEWAY_TOKEN_HEADER = "GatewayToken";
     /**
-     * Zuul请求头TOKEN值
+     * Gateway请求头TOKEN值
      */
-    public static final String ZUUL_TOKEN_VALUE = "febs:zuul:123456";
+    public static final String GATEWAY_TOKEN_VALUE = "febs:gateway:123456";
 
     /**
      * 允许下载的文件类型，根据需求自己添加（小写）
