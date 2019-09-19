@@ -20,8 +20,8 @@ public interface ILogService extends IService<Log> {
     /**
      * 查询操作日志分页
      *
-     * @param Log 日志
-     * @param request   QueryRequest
+     * @param log     日志
+     * @param request QueryRequest
      * @return IPage<SystemLog>
      */
     IPage<Log> findLogs(Log log, QueryRequest request);
@@ -40,8 +40,9 @@ public interface ILogService extends IService<Log> {
      * @param method    Method
      * @param request   HttpServletRequest
      * @param operation 操作内容
+     * @param username  操作用户
      * @param start     开始时间
      */
     @Async(FebsConstant.ASYNC_POOL)
-    void saveLog(ProceedingJoinPoint point, Method method, HttpServletRequest request, String operation, long start);
+    void saveLog(ProceedingJoinPoint point, Method method, HttpServletRequest request, String operation, String username, long start);
 }

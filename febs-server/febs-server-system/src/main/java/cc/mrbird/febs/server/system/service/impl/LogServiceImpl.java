@@ -18,8 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,14 +71,12 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
     }
 
     @Override
-    public void saveLog(ProceedingJoinPoint point, Method method, HttpServletRequest request, String operation, long start) {
+    public void saveLog(ProceedingJoinPoint point, Method method, HttpServletRequest request, String operation, String username, long start) {
         Log Log = new Log();
         // 设置 IP地址
         String ip = IPUtil.getIpAddr(request);
         Log.setIp(ip);
         // 设置操作用户
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = (String) authentication.getPrincipal();
         Log.setUsername(username);
         // 设置耗时
         Log.setTime(System.currentTimeMillis() - start);

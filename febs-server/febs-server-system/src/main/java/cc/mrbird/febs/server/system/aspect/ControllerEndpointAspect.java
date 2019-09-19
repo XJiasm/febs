@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +43,9 @@ public class ControllerEndpointAspect extends AspectSupport {
             result = point.proceed();
             if (StringUtils.isNotBlank(operation)) {
                 HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-                logService.saveLog(point, targetMethod, request, operation, start);
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                String username = (String) authentication.getPrincipal();
+                logService.saveLog(point, targetMethod, request, operation, username, start);
             }
             return result;
         } catch (Throwable throwable) {
