@@ -3,6 +3,7 @@ package cc.mrbird.febs.common.utils;
 import cc.mrbird.febs.common.entity.FebsConstant;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
 
@@ -35,15 +36,15 @@ public class SortUtil {
                 && !StringUtils.equalsIgnoreCase(request.getField(), "null")
                 && !StringUtils.equalsIgnoreCase(request.getOrder(), "null")) {
             if (StringUtils.equals(request.getOrder(), FebsConstant.ORDER_DESC))
-                page.setDesc(sortField);
+                page.addOrder(OrderItem.desc(sortField));
             else
-                page.setAsc(sortField);
+                page.addOrder(OrderItem.asc(sortField));
         } else {
             if (StringUtils.isNotBlank(defaultSort)) {
                 if (StringUtils.equals(defaultOrder, FebsConstant.ORDER_DESC))
-                    page.setDesc(defaultSort);
+                    page.addOrder(OrderItem.desc(defaultSort));
                 else
-                    page.setAsc(defaultSort);
+                    page.addOrder(OrderItem.asc(defaultSort));
             }
         }
     }
