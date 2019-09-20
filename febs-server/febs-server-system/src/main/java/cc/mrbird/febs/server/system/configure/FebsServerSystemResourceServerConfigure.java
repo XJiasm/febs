@@ -32,7 +32,8 @@ public class FebsServerSystemResourceServerConfigure extends ResourceServerConfi
     public void configure(HttpSecurity http) throws Exception {
         String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(properties.getAnonUrl(), ",");
 
-        http.csrf().disable()
+        http.headers().frameOptions().disable()
+                .and().csrf().disable()
                 .requestMatchers().antMatchers(EndpointConstant.ALL)
                 .and()
                 .authorizeRequests()

@@ -24,9 +24,10 @@ public class StartedUpRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         if (context.isActive()) {
-            log.info(" +-+-+-+-+-+-+-+-+");
-            log.info(" |c|o|m|p|l|e|t|e|");
-            log.info(" +-+-+-+-+-+-+-+-+");
+            log.info("  _   _   _   _   _   _   _   _");
+            log.info(" / \\ / \\ / \\ / \\ / \\ / \\ / \\ / \\");
+            log.info("( c | o | m | p | l | e | t | e )");
+            log.info(" \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/");
             log.info("{} 启动完毕，时间：{}", applicationName, LocalDateTime.now());
         }
     }

@@ -40,10 +40,6 @@ public class FebsAuthorizationServerConfigurer extends AuthorizationServerConfig
     @Autowired
     private FebsWebResponseExceptionTranslator exceptionTranslator;
     @Autowired
-    private TokenStore jwtTokenStore;
-    @Autowired
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
-    @Autowired
     private FebsAuthProperties properties;
 
     @Override
@@ -72,8 +68,8 @@ public class FebsAuthorizationServerConfigurer extends AuthorizationServerConfig
     @Override
     @SuppressWarnings("unchecked")
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints.tokenStore(jwtTokenStore)
-                .accessTokenConverter(jwtAccessTokenConverter)
+        endpoints.tokenStore(jwtTokenStore())
+                .accessTokenConverter(jwtAccessTokenConverter())
                 .userDetailsService(userDetailService)
                 .authenticationManager(authenticationManager)
                 .exceptionTranslator(exceptionTranslator);
@@ -91,7 +87,7 @@ public class FebsAuthorizationServerConfigurer extends AuthorizationServerConfig
         DefaultUserAuthenticationConverter userAuthenticationConverter = new DefaultUserAuthenticationConverter();
         userAuthenticationConverter.setUserDetailsService(userDetailService);
         defaultAccessTokenConverter.setUserTokenConverter(userAuthenticationConverter);
-        accessTokenConverter.setSigningKey("febs");
+        accessTokenConverter.setSigningKey(properties.getJwtAccessKey());
         return accessTokenConverter;
     }
 

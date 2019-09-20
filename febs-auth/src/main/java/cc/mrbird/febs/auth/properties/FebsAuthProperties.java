@@ -26,4 +26,8 @@ public class FebsAuthProperties {
      * 验证码配置
      */
     private FebsValidateCodeProperties code = new FebsValidateCodeProperties();
+    /**
+     * JWT加签密钥
+     */
+    private String jwtAccessKey;
 }
