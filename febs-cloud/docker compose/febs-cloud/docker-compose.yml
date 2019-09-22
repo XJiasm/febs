@@ -12,9 +12,6 @@ services:
   febs-gateway:
     image: febs-gateway:latest
     container_name: febs-gateway
-    depends_on:
-      - febs-config
-      - febs-register
     volumes:
       - "/febs/log:/log"
     command:
@@ -26,9 +23,6 @@ services:
   febs-auth:
     image: febs-auth:latest
     container_name: febs-auth
-    depends_on:
-      - febs-config
-      - febs-register
     volumes:
       - "/febs/log:/log"
     command:
@@ -41,9 +35,6 @@ services:
   febs-server-system:
     image: febs-server-system:latest
     container_name: febs-server-system
-    depends_on:
-      - febs-register
-      - febs-config
     volumes:
       - "/febs/log:/log"
     command:
@@ -57,9 +48,6 @@ services:
   febs-server-test:
     image: febs-server-test:latest
     container_name: febs-server-test
-    depends_on:
-      - febs-config
-      - febs-register
     volumes:
       - "/febs/log:/log"
     command:

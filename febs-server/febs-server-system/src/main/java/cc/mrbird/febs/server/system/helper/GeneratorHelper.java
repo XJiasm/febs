@@ -4,7 +4,7 @@ import cc.mrbird.febs.common.annotation.Helper;
 import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.Column;
 import cc.mrbird.febs.common.entity.system.GeneratorConfig;
-import cc.mrbird.febs.common.entity.system.GeneratorConstant;
+import cc.mrbird.febs.common.entity.constant.GeneratorConstant;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.server.system.utils.AddressUtil;
 import com.alibaba.fastjson.JSONObject;

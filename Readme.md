@@ -1,10 +1,11 @@
 ### FEBS Cloud 微服务权限系统
 ![https://img.shields.io/badge/license-Apache%202.0-blue.svg?longCache=true&style=flat-square](https://img.shields.io/badge/license-Apache%202.0-blue.svg?longCache=true&style=flat-square)
-![https://img.shields.io/badge/springcloud-Greenwich.SR1-yellow.svg?style=flat-square](https://img.shields.io/badge/springcloud-Greenwich.SR1-yellow.svg?style=flat-square)
-![https://img.shields.io/badge/springboot-2.1.6.RELEASE-brightgreen.svg?style=flat-square](https://img.shields.io/badge/springboot-2.1.6.RELEASE-brightgreen.svg?style=flat-square)
+![https://img.shields.io/badge/springcloud-Greenwich.SR3-yellow.svg?style=flat-square](https://img.shields.io/badge/springcloud-Greenwich.SR3-yellow.svg?style=flat-square)
+![https://img.shields.io/badge/SpringCloudAlibaba-0.9.0.RELEASE-blueviolet.svg?style=flat-square](https://img.shields.io/badge/SpringCloudAlibaba-0.9.0.RELEASE-blueviolet.svg?style=flat-square)
+![https://img.shields.io/badge/springboot-2.1.8.RELEASE-brightgreen.svg?style=flat-square](https://img.shields.io/badge/springboot-2.1.8.RELEASE-brightgreen.svg?style=flat-square)
 ![https://img.shields.io/badge/vue-2.6.10-orange.svg?style=flat-square](https://img.shields.io/badge/vue-2.6.10-orange.svg?style=flat-square)
 
-FEBS Cloud是一款使用Spring Cloud Greenwich.SR1、Spring Cloud OAuth2和Spring Cloud Security构建的权限管理系统，前端（FEBS Cloud Web）采用vue element admin构建。FEBS意指：**F**ast，**E**asy use，**B**eautiful和**S**afe。该系统具有如下特点：
+FEBS Cloud是一款使用Spring Cloud Greenwich.SR3、Spring Cloud OAuth2 & Spring Cloud Alibaba构建的低耦合权限管理系统，前端（FEBS Cloud Web）采用vue element admin构建。FEBS意指：**F**ast，**E**asy use，**B**eautiful和**S**afe。该系统具有如下特点：
 
 1. 前后端分离架构，客户端和服务端纯Token交互；
  
@@ -14,19 +15,27 @@ FEBS Cloud是一款使用Spring Cloud Greenwich.SR1、Spring Cloud OAuth2和Spri
 
 4. 集成Spring Boot Admin，多维度监控微服务；
 
-5. 集成Zipkin，方便跟踪Feign调用链；
+5. 集成Spring Cloud Alibaba Nocas服务治理和集中配置管理；
 
-6. 集成ELK，集中管理日志，便于问题分析；
+6. 网关集成Sentinel流控；
 
-7. 微服务Docker化，使用Docker Compose一键部署；
+7. 集成Zipkin，方便跟踪Feign调用链；
 
-8. 提供详细的使用文档和搭建教程；
+8. 集成ELK，集中管理日志，便于问题分析；
 
-9. 前后端请求参数校验，Excel导入导出，代码生成等。
+9. 微服务Docker化，使用Docker Compose一键部署；
+
+10. 提供详细的使用文档和搭建教程；
+
+11. 前后端请求参数校验，Excel导入导出，代码生成等。
 
 ### 文档与教程
 
-项目文档及手摸手搭建教程地址：[https://www.kancloud.cn/mrbird/spring-cloud/1263679](https://www.kancloud.cn/mrbird/spring-cloud/1263679)
+项目文档及**手摸手搭建教程**地址：[https://www.kancloud.cn/mrbird/spring-cloud/1263679](https://www.kancloud.cn/mrbird/spring-cloud/1263679)
+
+### 更新日志
+
+[https://www.kancloud.cn/mrbird/spring-cloud/1292659](https://www.kancloud.cn/mrbird/spring-cloud/1292659)
 
 ### 系统架构
 
@@ -65,19 +74,18 @@ FEBS模块：
 
 服务名称 | 端口 | 描述
 ---|---|---
-FEBS-Register| 8001 |微服务注册中心 
 FEBS-Auth| 8101| 微服务认证服务器 
 FEBS-Server-System| 8201 | 微服务子系统（资源服务器）
 FEBS-Server-Test|8202 | 微服务子系统（资源服务器）
 FEBS-Gateway|8301|微服务网关
 FEBS-Monitor-Admin|8401|微服务监控子系统
-Zipkin-Server|8402|Zipkin服务器
-FEBS-Config|8501|微服务配置子系统
 
 第三方模块：
 
 服务名称 | 端口 | 描述
 ---|---|---
+Nacos| 8001 |注册中心，配置中心 
+Zipkin-Server|8402|Zipkin服务器
 MySQL| 3306 |MySQL 数据库 
 RabbitMQ|5672|RabbitMQ 消息中间件 
 Redis| 6379 | K-V 缓存数据库 
@@ -89,17 +97,16 @@ Kibana|5601|日志展示
 ```
 ├─febs-auth                       ------ 微服务认证服务器
 ├─febs-cloud                      ------ 整个项目的父模块
+│  ├─sql                          ------ SQL脚本
 │  └─docker compose               ------ 存放docker compose文件
 │      ├─elk                      ------ ELK docker compose文件
 │      ├─febs-cloud               ------ 聚合所有微服务子项目的docker compose文件
 │      └─third-part               ------ 第三方服务（MySQL，Redis等）docker compose文件
 ├─febs-common                     ------ 通用模块
-├─febs-config                     ------ 微服务配置中心
 ├─febs-gateway                    ------ 微服务网关
 ├─febs-monitor                    ------ 微服务监控父模块
 │  ├─febs-monitor-admin           ------ 微服务监控中心
 │  └─zipkin-server                ------ zipkin 服务
-├─febs-register                   ------ 微服务注册中心
 └─febs-server                     ------ 资源服务器
    ├─febs-server-system           ------- 资源服务器系统模块
    └─febs-server-test             ------ 资源服务器demo，演示如何整合自己的微服务系统
@@ -120,12 +127,11 @@ Kibana|5601|日志展示
 
 ![7](images/7.png)
 
-![8](images/8.png)
-
 ### 参与贡献
 
 欢迎提交PR一起完善项目，以下为提PR并合并的小伙伴（排名不分先后）：
-
+<a href="https://github.com/yuuki80code">
+    <img src="https://avatars1.githubusercontent.com/u/17798853?s=400&v=4" width="45px"></a>
 <a href="https://github.com/sonake">
     <img src="https://avatars3.githubusercontent.com/u/46209482?s=400&v=4" width="45px"></a>
 <a href="https://github.com/mgzu">

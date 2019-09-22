@@ -1,4 +1,4 @@
-package cc.mrbird.febs.common.entity.system;
+package cc.mrbird.febs.common.entity.constant;
 
 /**
  * 代码生成常量
