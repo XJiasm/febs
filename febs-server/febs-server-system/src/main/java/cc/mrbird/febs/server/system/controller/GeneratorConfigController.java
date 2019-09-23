@@ -1,6 +1,6 @@
 package cc.mrbird.febs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.Log;
+import cc.mrbird.febs.common.annotation.ControllerEndpoint;
 import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.entity.system.GeneratorConfig;
 import cc.mrbird.febs.common.exception.FebsException;
@@ -33,18 +33,12 @@ public class GeneratorConfigController {
         return new FebsResponse().data(generatorConfigService.findGeneratorConfig());
     }
 
-    @Log("修改生成代码配置")
     @PostMapping
     @PreAuthorize("hasAnyAuthority('gen:config:update')")
+    @ControllerEndpoint(operation = "修改生成代码配置", exceptionMessage = "修改GeneratorConfig失败")
     public void updateGeneratorConfig(@Valid GeneratorConfig generatorConfig) throws FebsException {
-        try {
-            if (StringUtils.isBlank(generatorConfig.getId()))
-                throw new FebsException("配置id不能为空");
-            this.generatorConfigService.updateGeneratorConfig(generatorConfig);
-        } catch (Exception e) {
-            String message = "修改GeneratorConfig失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+        if (StringUtils.isBlank(generatorConfig.getId()))
+            throw new FebsException("配置id不能为空");
+        this.generatorConfigService.updateGeneratorConfig(generatorConfig);
     }
 }

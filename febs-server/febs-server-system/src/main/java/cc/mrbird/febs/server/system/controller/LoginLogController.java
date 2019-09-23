@@ -1,10 +1,9 @@
 package cc.mrbird.febs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.Log;
+import cc.mrbird.febs.common.annotation.ControllerEndpoint;
 import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.system.LoginLog;
-import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.server.system.service.ILoginLogService;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -42,31 +41,19 @@ public class LoginLogController {
         return new FebsResponse().data(userLastSevenLoginLogs);
     }
 
-    @Log("删除登录日志")
     @DeleteMapping("{ids}")
     @PreAuthorize("hasAnyAuthority('loginlog:delete')")
-    public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) throws FebsException {
-        try {
-            String[] loginLogIds = ids.split(StringPool.COMMA);
-            this.loginLogService.deleteLoginLogs(loginLogIds);
-        } catch (Exception e) {
-            String message = "删除登录日志失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(operation = "删除登录日志", exceptionMessage = "删除登录日志失败")
+    public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) {
+        String[] loginLogIds = ids.split(StringPool.COMMA);
+        this.loginLogService.deleteLoginLogs(loginLogIds);
     }
 
-    @Log("导出登录日志数据")
     @PostMapping("excel")
     @PreAuthorize("hasAnyAuthority('loginlog:export')")
-    public void export(QueryRequest request, LoginLog loginLog, HttpServletResponse response) throws FebsException {
-        try {
-            List<LoginLog> loginLogs = this.loginLogService.findLoginLogs(loginLog, request).getRecords();
-            ExcelKit.$Export(LoginLog.class, response).downXlsx(loginLogs, false);
-        } catch (Exception e) {
-            String message = "导出Excel失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(operation = "导出登录日志数据", exceptionMessage = "导出Excel失败")
+    public void export(QueryRequest request, LoginLog loginLog, HttpServletResponse response) {
+        List<LoginLog> loginLogs = this.loginLogService.findLoginLogs(loginLog, request).getRecords();
+        ExcelKit.$Export(LoginLog.class, response).downXlsx(loginLogs, false);
     }
 }

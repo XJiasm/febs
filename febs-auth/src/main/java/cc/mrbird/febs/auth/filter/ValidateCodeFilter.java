@@ -2,6 +2,9 @@ package cc.mrbird.febs.auth.filter;
 
 import cc.mrbird.febs.auth.service.ValidateCodeService;
 import cc.mrbird.febs.common.entity.FebsResponse;
+import cc.mrbird.febs.common.entity.constant.EndpointConstant;
+import cc.mrbird.febs.common.entity.constant.GrantTypeConstant;
+import cc.mrbird.febs.common.entity.constant.ParamsConstant;
 import cc.mrbird.febs.common.exception.ValidateCodeException;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -41,9 +44,9 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         String header = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
         String clientId = getClientId(header, httpServletRequest);
 
-        RequestMatcher matcher = new AntPathRequestMatcher("/oauth/token", HttpMethod.POST.toString());
+        RequestMatcher matcher = new AntPathRequestMatcher(EndpointConstant.OAUTH_TOKEN, HttpMethod.POST.toString());
         if (matcher.matches(httpServletRequest)
-                && StringUtils.equalsIgnoreCase(httpServletRequest.getParameter("grant_type"), "password")
+                && StringUtils.equalsIgnoreCase(httpServletRequest.getParameter(ParamsConstant.GRANT_TYPE), GrantTypeConstant.PASSWORD)
                 && !StringUtils.equalsAnyIgnoreCase(clientId, "swagger")) {
             try {
                 validateCode(httpServletRequest);
@@ -60,8 +63,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     }
 
     private void validateCode(HttpServletRequest httpServletRequest) throws ValidateCodeException {
-        String code = httpServletRequest.getParameter("code");
-        String key = httpServletRequest.getParameter("key");
+        String code = httpServletRequest.getParameter(ParamsConstant.VALIDATE_CODE_CODE);
+        String key = httpServletRequest.getParameter(ParamsConstant.VALIDATE_CODE_KEY);
         validateCodeService.check(key, code);
     }
 
@@ -71,7 +74,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
             byte[] base64Token = header.substring(6).getBytes(StandardCharsets.UTF_8);
             byte[] decoded;
             decoded = Base64.getDecoder().decode(base64Token);
-
             String token = new String(decoded, StandardCharsets.UTF_8);
             int delim = token.indexOf(":");
             if (delim != -1) {

@@ -19,7 +19,7 @@ public interface IRoleService extends IService<Role> {
 
     void createRole(Role role);
 
-    void deleteRoles(String[] roleIds) throws Exception;
+    void deleteRoles(String[] roleIds);
 
-    void updateRole(Role role) throws Exception;
+    void updateRole(Role role);
 }

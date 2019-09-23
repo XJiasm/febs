@@ -1,5 +1,6 @@
 package cc.mrbird.febs.server.system.configure;
 
+import cc.mrbird.febs.common.entity.constant.EndpointConstant;
 import cc.mrbird.febs.common.handler.FebsAccessDeniedHandler;
 import cc.mrbird.febs.common.handler.FebsAuthExceptionEntryPoint;
 import cc.mrbird.febs.server.system.properties.FebsServerSystemProperties;
@@ -31,12 +32,13 @@ public class FebsServerSystemResourceServerConfigure extends ResourceServerConfi
     public void configure(HttpSecurity http) throws Exception {
         String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(properties.getAnonUrl(), ",");
 
-        http.csrf().disable()
-                .requestMatchers().antMatchers("/**")
+        http.headers().frameOptions().disable()
+                .and().csrf().disable()
+                .requestMatchers().antMatchers(EndpointConstant.ALL)
                 .and()
                 .authorizeRequests()
                 .antMatchers(anonUrls).permitAll()
-                .antMatchers("/**").authenticated()
+                .antMatchers(EndpointConstant.ALL).authenticated()
                 .and().httpBasic();
     }
 

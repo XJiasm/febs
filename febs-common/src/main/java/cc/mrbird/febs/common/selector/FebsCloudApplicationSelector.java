@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 public class FebsCloudApplicationSelector implements ImportSelector {
 
     @Override
+    @SuppressWarnings("all")
     public String[] selectImports(@Nonnull AnnotationMetadata annotationMetadata) {
         return new String[]{
                 FebsAuthExceptionConfigure.class.getName(),

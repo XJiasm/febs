@@ -1,11 +1,11 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.FebsConstant;
 import cc.mrbird.febs.common.entity.QueryRequest;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.LoginLog;
 import cc.mrbird.febs.common.entity.system.SystemUser;
 import cc.mrbird.febs.common.utils.HttpContextUtil;
-import cc.mrbird.febs.common.utils.IPUtil;
+import cc.mrbird.febs.common.utils.ServletRequestIPUtil;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.server.system.mapper.LoginLogMapper;
 import cc.mrbird.febs.server.system.service.ILoginLogService;
@@ -56,7 +56,7 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
     public void saveLoginLog(LoginLog loginLog) {
         loginLog.setLoginTime(new Date());
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        String ip = IPUtil.getIpAddr(request);
+        String ip = ServletRequestIPUtil.getIpAddr(request);
         loginLog.setIp(ip);
         loginLog.setLocation(AddressUtil.getCityInfo(ip));
         this.save(loginLog);

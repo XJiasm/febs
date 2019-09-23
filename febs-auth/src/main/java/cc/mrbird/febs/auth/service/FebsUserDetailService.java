@@ -35,7 +35,7 @@ public class FebsUserDetailService implements UserDetailsService {
             FebsAuthUser authUser = new FebsAuthUser(systemUser.getUsername(), systemUser.getPassword(), true, true, true, notLocked,
                     AuthorityUtils.commaSeparatedStringToAuthorityList(permissions));
 
-            BeanUtils.copyProperties(systemUser,authUser);
+            BeanUtils.copyProperties(systemUser, authUser);
             return authUser;
         } else {
             throw new UsernameNotFoundException("");
