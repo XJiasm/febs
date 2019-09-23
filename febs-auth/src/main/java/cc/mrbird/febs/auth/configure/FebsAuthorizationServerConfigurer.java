@@ -3,12 +3,16 @@ package cc.mrbird.febs.auth.configure;
 import cc.mrbird.febs.auth.properties.FebsAuthProperties;
 import cc.mrbird.febs.auth.properties.FebsClientsProperties;
 import cc.mrbird.febs.auth.service.FebsUserDetailService;
+import cc.mrbird.febs.auth.service.RedisClientDetailsService;
 import cc.mrbird.febs.auth.translator.FebsWebResponseExceptionTranslator;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
@@ -17,10 +21,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+
+import java.util.UUID;
 
 /**
  * 认证服务器配置
@@ -41,43 +49,60 @@ public class FebsAuthorizationServerConfigurer extends AuthorizationServerConfig
     private FebsWebResponseExceptionTranslator exceptionTranslator;
     @Autowired
     private FebsAuthProperties properties;
+    @Autowired
+    private RedisClientDetailsService redisClientDetailsService;
+    @Autowired
+    private RedisConnectionFactory redisConnectionFactory;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        FebsClientsProperties[] clientsArray = properties.getClients();
-        InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
-        if (ArrayUtils.isNotEmpty(clientsArray)) {
-            for (FebsClientsProperties client : clientsArray) {
-                if (StringUtils.isBlank(client.getClient())) {
-                    throw new Exception("client不能为空");
-                }
-                if (StringUtils.isBlank(client.getSecret())) {
-                    throw new Exception("secret不能为空");
-                }
-                String[] grantTypes = StringUtils.splitByWholeSeparatorPreserveAllTokens(client.getGrantType(), ",");
-                builder.withClient(client.getClient())
-                        .secret(passwordEncoder.encode(client.getSecret()))
-                        .authorizedGrantTypes(grantTypes)
-                        .accessTokenValiditySeconds(client.getAccessTokenValiditySeconds())
-                        .refreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds())
-                        .scopes(client.getScope());
-            }
-        }
+//        FebsClientsProperties[] clientsArray = properties.getClients();
+//        InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
+//        if (ArrayUtils.isNotEmpty(clientsArray)) {
+//            for (FebsClientsProperties client : clientsArray) {
+//                if (StringUtils.isBlank(client.getClient())) {
+//                    throw new Exception("client不能为空");
+//                }
+//                if (StringUtils.isBlank(client.getSecret())) {
+//                    throw new Exception("secret不能为空");
+//                }
+//                String[] grantTypes = StringUtils.splitByWholeSeparatorPreserveAllTokens(client.getGrantType(), ",");
+//                builder.withClient(client.getClient())
+//                        .secret(passwordEncoder.encode(client.getSecret()))
+//                        .authorizedGrantTypes(grantTypes)
+//                        .accessTokenValiditySeconds(client.getAccessTokenValiditySeconds())
+//                        .refreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds())
+//                        .scopes(client.getScope());
+//            }
+//        }
+        clients.withClientDetails(redisClientDetailsService);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints.tokenStore(jwtTokenStore())
+        endpoints.tokenStore(tokenStore())
                 .accessTokenConverter(jwtAccessTokenConverter())
                 .userDetailsService(userDetailService)
                 .authenticationManager(authenticationManager)
                 .exceptionTranslator(exceptionTranslator);
+        if(properties.getEnableJwt()){
+            endpoints.accessTokenConverter(jwtAccessTokenConverter());
+        }else {
+            endpoints.tokenServices(defaultTokenServices());
+        }
     }
 
     @Bean
-    public TokenStore jwtTokenStore() {
-        return new JwtTokenStore(jwtAccessTokenConverter());
+    public TokenStore tokenStore() {
+        if(properties.getEnableJwt()){
+            return new JwtTokenStore(jwtAccessTokenConverter());
+        }else {
+            RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
+            // 解决每次生成的的token都一样的问题
+            redisTokenStore.setAuthenticationKeyGenerator(oAuth2Authentication -> UUID.randomUUID().toString());
+            return redisTokenStore;
+        }
     }
 
     @Bean
@@ -91,4 +116,14 @@ public class FebsAuthorizationServerConfigurer extends AuthorizationServerConfig
         return accessTokenConverter;
     }
 
+    @Primary
+    @Bean
+    public DefaultTokenServices defaultTokenServices() {
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+
+        tokenServices.setTokenStore(tokenStore());
+        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setClientDetailsService(redisClientDetailsService);
+        return tokenServices;
+    }
 }
