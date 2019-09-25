@@ -1,26 +1,15 @@
-server:
-  port: 8202
-
 spring:
   application:
     name: FEBS-Server-Test
   cloud:
-    config:
-      fail-fast: true
-      name: ${spring.application.name}
-      profile: ${spring.profiles.active}
+    nacos:
+      config:
+        server-addr: ${nacos.url}:8001
+        group: DEFAULT_GROUP
+        prefix: febs-server-test
+        file-extension: yaml
       discovery:
-        enabled: true
-        service-id: FEBS-Config
-  profiles:
-    active: dev
-
-eureka:
-  instance:
-    lease-renewal-interval-in-seconds: 20
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    instance-info-replication-interval-seconds: 30
-    serviceUrl:
-      defaultZone: http://febs:123456@${febs-register}:8001/register/eureka/
+        server-addr: ${nacos.url}:8001
+logging:
+  level:
+    com.alibaba.nacos.client: error

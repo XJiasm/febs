@@ -1,7 +1,7 @@
 package cc.mrbird.febs.server.system.service.impl;
 
 import cc.mrbird.febs.common.entity.DeptTree;
-import cc.mrbird.febs.common.entity.FebsConstant;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.Tree;
 import cc.mrbird.febs.common.entity.system.Dept;

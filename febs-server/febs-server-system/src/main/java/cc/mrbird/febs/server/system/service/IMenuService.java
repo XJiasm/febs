@@ -21,13 +21,13 @@ public interface IMenuService extends IService<Menu> {
 
     void createMenu(Menu menu);
 
-    void updateMenu(Menu menu) throws Exception;
+    void updateMenu(Menu menu);
 
     /**
      * 递归删除菜单/按钮
      *
      * @param menuIds menuIds
      */
-    void deleteMeuns(String[] menuIds) throws Exception;
+    void deleteMeuns(String[] menuIds);
 
 }
