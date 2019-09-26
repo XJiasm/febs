@@ -15,10 +15,6 @@ import org.springframework.context.annotation.PropertySource;
 public class FebsAuthProperties {
 
     /**
-     * client配置
-     */
-    private FebsClientsProperties[] clients = {};
-    /**
      * 免认证访问路径
      */
     private String anonUrl;
