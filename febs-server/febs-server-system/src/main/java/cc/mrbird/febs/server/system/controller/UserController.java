@@ -5,7 +5,6 @@ import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.system.LoginLog;
 import cc.mrbird.febs.common.entity.system.SystemUser;
-import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.server.system.service.ILoginLogService;
 import cc.mrbird.febs.server.system.service.IUserService;
@@ -149,7 +148,7 @@ public class UserController {
     @PostMapping("excel")
     @PreAuthorize("hasAnyAuthority('user:export')")
     @ControllerEndpoint(operation = "导出用户数据", exceptionMessage = "导出Excel失败")
-    public void export(QueryRequest queryRequest, SystemUser user, HttpServletResponse response) throws FebsException {
+    public void export(QueryRequest queryRequest, SystemUser user, HttpServletResponse response) {
         List<SystemUser> users = this.userService.findUserDetail(user, queryRequest).getRecords();
         ExcelKit.$Export(SystemUser.class, response).downXlsx(users, false);
     }
