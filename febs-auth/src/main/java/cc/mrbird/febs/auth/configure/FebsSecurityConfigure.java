@@ -1,7 +1,7 @@
 package cc.mrbird.febs.auth.configure;
 
 import cc.mrbird.febs.auth.filter.ValidateCodeFilter;
-import cc.mrbird.febs.auth.service.FebsUserDetailService;
+import cc.mrbird.febs.auth.service.impl.FebsUserDetailService;
 import cc.mrbird.febs.common.entity.constant.EndpointConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

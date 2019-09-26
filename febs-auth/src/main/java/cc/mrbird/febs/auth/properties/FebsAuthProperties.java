@@ -31,7 +31,7 @@ public class FebsAuthProperties {
      */
     private String jwtAccessKey;
     /**
-     * 是否启用jwt
+     * 是否使用 JWT令牌
      */
     private Boolean enableJwt;
 }

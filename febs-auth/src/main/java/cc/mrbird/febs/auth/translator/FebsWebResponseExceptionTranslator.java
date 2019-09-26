@@ -6,6 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
+import org.springframework.security.oauth2.common.exceptions.InvalidScopeException;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTypeException;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.stereotype.Component;
@@ -27,6 +29,15 @@ public class FebsWebResponseExceptionTranslator implements WebResponseExceptionT
         log.error(message, e);
         if (e instanceof UnsupportedGrantTypeException) {
             message = "不支持该认证类型";
+            return status.body(response.message(message));
+        }
+        if (e instanceof InvalidTokenException
+                && StringUtils.containsIgnoreCase(e.getMessage(), "Invalid refresh token (expired)")) {
+            message = "刷新令牌已过期，请重新登录";
+            return status.body(response.message(message));
+        }
+        if (e instanceof InvalidScopeException) {
+            message = "不是有效的scope值";
             return status.body(response.message(message));
         }
         if (e instanceof InvalidGrantException) {

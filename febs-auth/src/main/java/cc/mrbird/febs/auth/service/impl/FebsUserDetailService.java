@@ -1,4 +1,4 @@
-package cc.mrbird.febs.auth.service;
+package cc.mrbird.febs.auth.service.impl;
 
 import cc.mrbird.febs.auth.manager.UserManager;
 import cc.mrbird.febs.common.entity.FebsAuthUser;

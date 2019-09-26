@@ -1,9 +1,10 @@
-package cc.mrbird.febs.auth.service;
+package cc.mrbird.febs.auth.service.impl;
 
 import cc.mrbird.febs.common.service.RedisService;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.Strings;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -15,13 +16,15 @@ import javax.sql.DataSource;
 import java.util.List;
 
 /**
- * 自定义oauth客户端适配
  * @author Yuuki
- * @date 2019年9月23日17:23:04
  */
-@Service
 @Slf4j
+@Service
 public class RedisClientDetailsService extends JdbcClientDetailsService {
+    /**
+     * 缓存 client的 redis key，这里是 hash结构存储
+     */
+    private static final String CACHE_CLIENT_KEY = "client_details";
 
     @Autowired
     RedisService redisService;
@@ -30,19 +33,11 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
         super(dataSource);
     }
 
-
-    /**
-     * 缓存client的redis key，这里是hash结构存储
-     */
-    private static final String CACHE_CLIENT_KEY = "client_details";
-
     @Override
     public ClientDetails loadClientByClientId(String clientId) throws InvalidClientException {
         ClientDetails clientDetails = null;
-
-        // 先从redis获取
-        String value = (String) redisService.hget(CACHE_CLIENT_KEY,clientId);
-        if (Strings.isBlank(value)) {
+        String value = (String) redisService.hget(CACHE_CLIENT_KEY, clientId);
+        if (StringUtils.isBlank(value)) {
             clientDetails = cacheAndGetClient(clientId);
         } else {
             clientDetails = JSONObject.parseObject(value, BaseClientDetails.class);
@@ -52,32 +47,30 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
     }
 
     /**
-     * 缓存client并返回client
+     * 缓存 client并返回 client
      *
-     * @param clientId
+     * @param clientId clientId
      */
     public ClientDetails cacheAndGetClient(String clientId) {
-        // 从数据库读取
-        ClientDetails clientDetails = super.loadClientByClientId(clientId);
-        if (clientDetails != null) {// 写入redis缓存
-            redisService.hset(CACHE_CLIENT_KEY,clientId,JSONObject.toJSONString(clientDetails));
-            log.info("缓存clientId:{},{}", clientId, clientDetails);
+        ClientDetails clientDetails = null;
+        clientDetails = super.loadClientByClientId(clientId);
+        if (clientDetails != null) {
+            redisService.hset(CACHE_CLIENT_KEY, clientId, JSONObject.toJSONString(clientDetails));
         }
-
         return clientDetails;
     }
 
     /**
-     * 删除redis缓存
+     * 删除 redis缓存
      *
-     * @param clientId
+     * @param clientId clientId
      */
     public void removeRedisCache(String clientId) {
-        redisService.hdel(CACHE_CLIENT_KEY,clientId);
+        redisService.hdel(CACHE_CLIENT_KEY, clientId);
     }
 
     /**
-     * 将oauth_client_details全表刷入redis
+     * 将 oauth_client_details全表刷入 redis
      */
     public void loadAllClientToCache() {
         if (redisService.hasKey(CACHE_CLIENT_KEY)) {
@@ -86,14 +79,10 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
         log.info("将oauth_client_details全表刷入redis");
 
         List<ClientDetails> list = super.listClientDetails();
-        if (list.isEmpty()) {
+        if (CollectionUtils.isEmpty(list)) {
             log.error("oauth_client_details表数据为空，请检查");
             return;
         }
-
-        list.forEach(client -> {
-            redisService.hset(CACHE_CLIENT_KEY,client.getClientId(),JSONObject.toJSONString(client));
-        });
+        list.forEach(client -> redisService.hset(CACHE_CLIENT_KEY, client.getClientId(), JSONObject.toJSONString(client)));
     }
-
 }
