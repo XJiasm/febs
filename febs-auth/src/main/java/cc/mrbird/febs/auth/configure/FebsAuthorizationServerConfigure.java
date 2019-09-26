@@ -32,7 +32,7 @@ import java.util.UUID;
  */
 @Configuration
 @EnableAuthorizationServer
-public class FebsAuthorizationServerConfigurer extends AuthorizationServerConfigurerAdapter {
+public class FebsAuthorizationServerConfigure extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private AuthenticationManager authenticationManager;

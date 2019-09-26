@@ -19,7 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  */
 @Configuration
 @EnableResourceServer
-public class FebsResourceServerConfigurer extends ResourceServerConfigurerAdapter {
+public class FebsResourceServerConfigure extends ResourceServerConfigurerAdapter {
 
     @Autowired
     private FebsAccessDeniedHandler accessDeniedHandler;
