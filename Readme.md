@@ -52,7 +52,7 @@ Gitee  | [https://gitee.com/mrbirdd/FEBS-Cloud](https://gitee.com/mrbirdd/FEBS-C
 
 ### 演示地址
 
-演示地址（服务器资源有限，没有搭建ELK）：[http://49.234.20.223:9527](http://49.234.20.223:9527)
+演示地址（服务器资源有限，没有搭建ELK）：[https://cloud.mrbird.cn](https://cloud.mrbird.cn)
 
 演示环境账号密码：
 
