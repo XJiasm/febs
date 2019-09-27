@@ -54,7 +54,7 @@ public class Menu implements Serializable {
      * 菜单URL
      */
     @TableField("PATH")
-    @Size(max = 50, message = "{noMoreThan}")
+    @Size(max = 100, message = "{noMoreThan}")
     @ExcelField(value = "URL")
     private String path;
 

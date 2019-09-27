@@ -70,7 +70,7 @@ public class FebsAuthorizationServerConfigure extends AuthorizationServerConfigu
             return new JwtTokenStore(jwtAccessTokenConverter());
         } else {
             RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
-            // 解决每次生成的的 token都一样的问题
+            // 解决每次生成的 token都一样的问题
             redisTokenStore.setAuthenticationKeyGenerator(oAuth2Authentication -> UUID.randomUUID().toString());
             return redisTokenStore;
         }

@@ -6,6 +6,8 @@ services:
     container_name: febs-monitor-admin
     volumes:
       - "/febs/log:/log"
+    command:
+      - "--nacos.url=127.0.0.1"
     ports:
       - 8401:8401
     restart: on-failure
