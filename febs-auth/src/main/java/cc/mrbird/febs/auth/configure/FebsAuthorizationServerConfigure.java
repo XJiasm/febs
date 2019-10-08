@@ -15,6 +15,9 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
+import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
@@ -96,6 +99,20 @@ public class FebsAuthorizationServerConfigure extends AuthorizationServerConfigu
         defaultAccessTokenConverter.setUserTokenConverter(userAuthenticationConverter);
         accessTokenConverter.setSigningKey(properties.getJwtAccessKey());
         return accessTokenConverter;
+    }
+
+    @Bean
+    public ResourceOwnerPasswordTokenGranter resourceOwnerPasswordTokenGranter(AuthenticationManager authenticationManager, OAuth2RequestFactory oAuth2RequestFactory) {
+        DefaultTokenServices defaultTokenServices = defaultTokenServices();
+        if (properties.getEnableJwt()) {
+            defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
+        }
+        return new ResourceOwnerPasswordTokenGranter(authenticationManager, defaultTokenServices, redisClientDetailsService, oAuth2RequestFactory);
+    }
+
+    @Bean
+    public DefaultOAuth2RequestFactory oAuth2RequestFactory() {
+        return new DefaultOAuth2RequestFactory(redisClientDetailsService);
     }
 
 }

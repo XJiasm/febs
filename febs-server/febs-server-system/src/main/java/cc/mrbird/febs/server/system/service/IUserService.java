@@ -87,14 +87,6 @@ public interface IUserService extends IService<SystemUser> {
     void updatePassword(String username, String password);
 
     /**
-     * 注册用户
-     *
-     * @param username 用户名
-     * @param password 密码
-     */
-    void regist(String username, String password);
-
-    /**
      * 重置密码
      *
      * @param usernames 用户集合

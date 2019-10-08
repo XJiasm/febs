@@ -30,4 +30,9 @@ public class FebsAuthProperties {
      * 是否使用 JWT令牌
      */
     private Boolean enableJwt;
+
+    /**
+     * 社交登录所使用的 Client
+     */
+    private String socialLoginClientId;
 }

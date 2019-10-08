@@ -19,5 +19,9 @@ public class ParamsConstant {
      * 认证类型参数 key
      */
     public static final String GRANT_TYPE = "grant_type";
+    /**
+     * 登录类型
+     */
+    public static final String LOGIN_TYPE = "login_type";
 
 }

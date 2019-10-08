@@ -52,5 +52,9 @@ public class FebsConstant {
      * utf-8
      */
     public static final String UTF8 = "utf-8";
+    /**
+     * 注册用户角色ID
+     */
+    public static final Long REGISTER_ROLE_ID = 2L;
 
 }

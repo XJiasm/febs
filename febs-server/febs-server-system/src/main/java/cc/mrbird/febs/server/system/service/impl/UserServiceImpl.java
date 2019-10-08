@@ -131,26 +131,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
 
     @Override
     @Transactional
-    public void regist(String username, String password) {
-        SystemUser user = new SystemUser();
-        user.setPassword(passwordEncoder.encode(password));
-        user.setUsername(username);
-        user.setCreateTime(new Date());
-        user.setStatus(SystemUser.STATUS_VALID);
-        user.setSex(SystemUser.SEX_UNKNOW);
-        user.setAvatar(SystemUser.DEFAULT_AVATAR);
-        user.setDescription("注册用户");
-        this.save(user);
-
-        UserRole ur = new UserRole();
-        ur.setUserId(user.getUserId());
-        ur.setRoleId(2L); // 注册用户角色 ID
-        this.userRoleService.save(ur);
-
-    }
-
-    @Override
-    @Transactional
     public void resetPassword(String[] usernames) {
         for (String username : usernames) {
             SystemUser user = new SystemUser();

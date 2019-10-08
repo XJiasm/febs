@@ -2,11 +2,17 @@ package cc.mrbird.febs.auth.manager;
 
 import cc.mrbird.febs.auth.mapper.MenuMapper;
 import cc.mrbird.febs.auth.mapper.UserMapper;
+import cc.mrbird.febs.auth.mapper.UserRoleMapper;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.Menu;
 import cc.mrbird.febs.common.entity.system.SystemUser;
+import cc.mrbird.febs.common.entity.system.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,12 +22,15 @@ import java.util.stream.Collectors;
  * @author MrBird
  */
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserManager {
 
     @Autowired
     private UserMapper userMapper;
     @Autowired
     private MenuMapper menuMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     /**
      * 通过用户名查询用户信息
@@ -42,5 +51,31 @@ public class UserManager {
     public String findUserPermissions(String username) {
         List<Menu> userPermissions = menuMapper.findUserPermissions(username);
         return userPermissions.stream().map(Menu::getPerms).collect(Collectors.joining(","));
+    }
+
+    /**
+     * 注册用户
+     *
+     * @param username username
+     * @param password password
+     * @return SystemUser SystemUser
+     */
+    @Transactional
+    public SystemUser registUser(String username,String password) {
+        SystemUser systemUser = new SystemUser();
+        systemUser.setUsername(username);
+        systemUser.setPassword(password);
+        systemUser.setCreateTime(new Date());
+        systemUser.setStatus(SystemUser.STATUS_VALID);
+        systemUser.setSex(SystemUser.SEX_UNKNOW);
+        systemUser.setAvatar(SystemUser.DEFAULT_AVATAR);
+        systemUser.setDescription("注册用户");
+        this.userMapper.insert(systemUser);
+
+        UserRole userRole = new UserRole();
+        userRole.setUserId(systemUser.getUserId());
+        userRole.setRoleId(FebsConstant.REGISTER_ROLE_ID); // 注册用户角色 ID
+        this.userRoleMapper.insert(userRole);
+        return systemUser;
     }
 }

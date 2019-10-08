@@ -59,6 +59,7 @@ public class OAuthClientDetailsServiceImpl extends ServiceImpl<OAuthClientDetail
     }
 
     @Override
+    @Transactional
     public void createOAuthClientDetails(OAuthClientDetails oauthClientDetails) throws FebsException {
         OAuthClientDetails byId = this.findById(oauthClientDetails.getClientId());
         if (byId != null) {
@@ -74,6 +75,7 @@ public class OAuthClientDetailsServiceImpl extends ServiceImpl<OAuthClientDetail
     }
 
     @Override
+    @Transactional
     public void updateOAuthClientDetails(OAuthClientDetails oauthClientDetails) {
         String clientId = oauthClientDetails.getClientId();
 
@@ -91,6 +93,7 @@ public class OAuthClientDetailsServiceImpl extends ServiceImpl<OAuthClientDetail
     }
 
     @Override
+    @Transactional
     public void deleteOAuthClientDetails(String clientIds) {
         Object[] clientIdArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(clientIds, ",");
         LambdaQueryWrapper<OAuthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
