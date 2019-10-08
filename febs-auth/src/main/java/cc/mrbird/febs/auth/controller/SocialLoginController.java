@@ -2,7 +2,7 @@ package cc.mrbird.febs.auth.controller;
 
 import cc.mrbird.febs.auth.entity.BindUser;
 import cc.mrbird.febs.auth.entity.UserConnection;
-import cc.mrbird.febs.auth.service.impl.SocialLoginService;
+import cc.mrbird.febs.auth.service.SocialLoginService;
 import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.FebsUtil;

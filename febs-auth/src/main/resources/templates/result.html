@@ -12,7 +12,6 @@
 <script th:inline="javascript">
     var response = [[${response}]];
     var frontUrl = [[${frontUrl}]];
-    console.log(frontUrl);
     window.onload = function () {
         window.opener.postMessage(response, frontUrl);
         window.close();

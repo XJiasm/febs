@@ -4,6 +4,7 @@ import cc.mrbird.febs.auth.entity.BindUser;
 import cc.mrbird.febs.auth.entity.UserConnection;
 import cc.mrbird.febs.auth.manager.UserManager;
 import cc.mrbird.febs.auth.properties.FebsAuthProperties;
+import cc.mrbird.febs.auth.service.SocialLoginService;
 import cc.mrbird.febs.auth.service.UserConnectionService;
 import cc.mrbird.febs.common.entity.FebsAuthUser;
 import cc.mrbird.febs.common.entity.FebsResponse;
@@ -40,7 +41,7 @@ import java.util.Map;
  * @author MrBird
  */
 @Service
-public class SocialLoginService {
+public class SocialLoginServiceImpl implements SocialLoginService {
 
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
@@ -63,10 +64,12 @@ public class SocialLoginService {
     @Autowired
     private RedisClientDetailsService redisClientDetailsService;
 
+    @Override
     public AuthRequest renderAuth(String oauthType) throws FebsException {
         return factory.get(getAuthSource(oauthType));
     }
 
+    @Override
     public FebsResponse resolveBind(String oauthType, AuthCallback callback) throws FebsException {
         FebsResponse febsResponse = new FebsResponse();
         AuthRequest authRequest = factory.get(getAuthSource(oauthType));
@@ -79,6 +82,7 @@ public class SocialLoginService {
         return febsResponse;
     }
 
+    @Override
     public FebsResponse resolveLogin(String oauthType, AuthCallback callback) throws FebsException {
         FebsResponse febsResponse = new FebsResponse();
         AuthRequest authRequest = factory.get(getAuthSource(oauthType));
@@ -103,6 +107,7 @@ public class SocialLoginService {
         return febsResponse;
     }
 
+    @Override
     public OAuth2AccessToken bindLogin(BindUser bindUser, AuthUser authUser) throws FebsException {
         SystemUser systemUser = userManager.findByName(bindUser.getBindUsername());
         if (systemUser == null || !passwordEncoder.matches(bindUser.getBindPassword(), systemUser.getPassword())) {
@@ -112,6 +117,7 @@ public class SocialLoginService {
         return this.getOAuth2AccessToken(systemUser);
     }
 
+    @Override
     public OAuth2AccessToken signLogin(BindUser registUser, AuthUser authUser) throws FebsException {
         SystemUser user = this.userManager.findByName(registUser.getBindUsername());
         if (user != null) {
@@ -123,6 +129,7 @@ public class SocialLoginService {
         return this.getOAuth2AccessToken(systemUser);
     }
 
+    @Override
     public void bind(BindUser bindUser, AuthUser authUser) throws FebsException {
         String username = bindUser.getBindUsername();
         if (isCurrentUser(username)) {
@@ -138,6 +145,7 @@ public class SocialLoginService {
         }
     }
 
+    @Override
     public void unbind(BindUser bindUser, String oauthType) throws FebsException {
         String username = bindUser.getBindUsername();
         if (isCurrentUser(username)) {
@@ -147,6 +155,7 @@ public class SocialLoginService {
         }
     }
 
+    @Override
     public List<UserConnection> findUserConnections(String username) {
         return this.userConnectionService.selectByCondition(username);
     }
