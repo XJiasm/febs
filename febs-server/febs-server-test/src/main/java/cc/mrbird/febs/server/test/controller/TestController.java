@@ -29,6 +29,12 @@ public class TestController {
         return userService.userList(request, user);
     }
 
+    /**
+     * 获取当前用户信息
+     *
+     * @param principal principal
+     * @return Principal
+     */
     @GetMapping("user")
     public Principal currentUser(Principal principal) {
         return principal;

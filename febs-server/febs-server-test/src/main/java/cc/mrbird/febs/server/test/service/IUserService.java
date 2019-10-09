@@ -18,5 +18,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface IUserService {
 
     @GetMapping("user")
-    FebsResponse userList(@RequestParam QueryRequest queryRequest, @RequestParam SystemUser user);
+    FebsResponse userList(@RequestParam("queryRequest") QueryRequest queryRequest, @RequestParam("user") SystemUser user);
 }
