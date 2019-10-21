@@ -5,12 +5,12 @@
     <parent>
         <groupId>cc.mrbird</groupId>
         <artifactId>febs-monitor</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>febs-monitor-admin</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.3-SNAPSHOT</version>
     <name>Febs-Monitor-Admin</name>
     <description>Febs-Monitor-Admin基于Spring Boot Admin搭建的监控程序</description>
 

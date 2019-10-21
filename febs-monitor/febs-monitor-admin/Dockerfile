@@ -1,5 +1,7 @@
 FROM openjdk:8u212-jre
 MAINTAINER MrBird 852252810@qq.com
 
-COPY ./target/febs-monitor-admin-1.1-SNAPSHOT.jar /febs/febs-monitor-admin-1.1-SNAPSHOT.jar
-ENTRYPOINT ["java", "-Xmx256m", "-jar", "/febs/febs-monitor-admin-1.1-SNAPSHOT.jar"]
+COPY ./target/febs-monitor-admin-1.3-SNAPSHOT.jar /febs/febs-monitor-admin-1.3-SNAPSHOT.jar
+ADD agent/ /agent
+
+ENTRYPOINT ["java", "-javaagent:/agent/skywalking-agent.jar", "-Dskywalking.agent.service_name=febs-monitor-admin", "-Dskywalking.collector.backend_service=X.X.X.X:11800", "-Xmx256m", "-jar", "/febs/febs-monitor-admin-1.3-SNAPSHOT.jar"]

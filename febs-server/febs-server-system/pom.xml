@@ -6,12 +6,12 @@
     <parent>
         <groupId>cc.mrbird</groupId>
         <artifactId>febs-server</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>febs-server-system</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.3-SNAPSHOT</version>
     <name>FEBS-Server-System</name>
     <description>FEBS-Server-System微服务系统模块</description>
 
