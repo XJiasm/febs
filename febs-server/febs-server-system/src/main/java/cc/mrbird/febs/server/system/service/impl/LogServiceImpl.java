@@ -72,35 +72,30 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 
     @Override
     public void saveLog(ProceedingJoinPoint point, Method method, HttpServletRequest request, String operation, String username, long start) {
-        Log Log = new Log();
-        // 设置 IP地址
+        Log log = new Log();
         String ip = ServletRequestIPUtil.getIpAddr(request);
-        Log.setIp(ip);
-        // 设置操作用户
-        Log.setUsername(username);
-        // 设置耗时
-        Log.setTime(System.currentTimeMillis() - start);
-        // 设置操作描述
-        Log.setOperation(operation);
-        // 请求的类名
+        log.setIp(ip);
+
+        log.setUsername(username);
+        log.setTime(System.currentTimeMillis() - start);
+        log.setOperation(operation);
+
         String className = point.getTarget().getClass().getName();
-        // 请求的方法名
         String methodName = method.getName();
-        Log.setMethod(className + "." + methodName + "()");
-        // 请求的方法参数值
+        log.setMethod(className + "." + methodName + "()");
+
         Object[] args = point.getArgs();
-        // 请求的方法参数名称
         LocalVariableTableParameterNameDiscoverer u = new LocalVariableTableParameterNameDiscoverer();
         String[] paramNames = u.getParameterNames(method);
         if (args != null && paramNames != null) {
             StringBuilder params = new StringBuilder();
             params = handleParams(params, args, Arrays.asList(paramNames));
-            Log.setParams(params.toString());
+            log.setParams(params.toString());
         }
-        Log.setCreateTime(new Date());
-        Log.setLocation(AddressUtil.getCityInfo(ip));
+        log.setCreateTime(new Date());
+        log.setLocation(AddressUtil.getCityInfo(ip));
         // 保存系统日志
-        save(Log);
+        save(log);
     }
 
     private StringBuilder handleParams(StringBuilder params, Object[] args, List paramNames) {
