@@ -113,19 +113,23 @@ Kibana|5601|日志展示
 ```
 ### 系统截图
 
-![1](images/1.png)
-
-![2](images/2.png)
-
-![3](images/3.png)
-
-![4](images/4.png)
-
-![5](images/5.png)
-
-![6](images/6.png)
-
-![7](images/7.png)
+<table>
+  <tr>
+     <td><img src="images/1.png"/></td>
+     <td><img src="images/2.png"/></td>
+  </tr>
+  <tr>
+     <td><img src="images/3.png"/></td>
+     <td><img src="images/4.png"/></td>
+  </tr>
+  <tr>
+     <td><img src="images/5.png"/></td>
+     <td><img src="images/6.png"/></td>
+  </tr>
+  <tr>
+     <td><img src="images/7.png"/></td>
+  </tr>
+</table>
 
 ### 参与贡献
 欢迎提交PR一起完善项目，以下为提PR并合并的小伙伴（排名不分先后）：
