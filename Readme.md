@@ -92,15 +92,20 @@ Redis| 6379 | K-V 缓存数据库
 Elasticsearch|9200 | 日志存储
 Logstash|4560|日志收集
 Kibana|5601|日志展示
+Prometheus|8403~8409|Prometheus APM
+Skywalking|11800、12800、8080|Skywalking APM
 
 ### 目录结构
 ```
 ├─febs-auth                       ------ 微服务认证服务器
 ├─febs-cloud                      ------ 整个项目的父模块
 │  ├─sql                          ------ SQL脚本
+│  ├─config                       ------ 第三方应用配置
 │  └─docker compose               ------ 存放docker compose文件
 │      ├─elk                      ------ ELK docker compose文件
 │      ├─febs-cloud               ------ 聚合所有微服务子项目的docker compose文件
+│      ├─prometheus               ------ Prometheus docker compose文件
+│      ├─skywalking               ------ Skywalking docker compose文件
 │      └─third-part               ------ 第三方服务（MySQL，Redis等）docker compose文件
 ├─febs-common                     ------ 通用模块
 ├─febs-gateway                    ------ 微服务网关
@@ -108,7 +113,7 @@ Kibana|5601|日志展示
 │  ├─febs-monitor-admin           ------ 微服务监控中心
 │  └─zipkin-server                ------ zipkin 服务
 └─febs-server                     ------ 资源服务器
-   ├─febs-server-system           ------- 资源服务器系统模块
+   ├─febs-server-system           ------ 资源服务器系统模块
    └─febs-server-test             ------ 资源服务器demo，演示如何整合自己的微服务系统
 ```
 ### 系统截图
@@ -137,22 +142,44 @@ Kibana|5601|日志展示
 
 <table>
   <tr>
-     <td width="50%" align="center"><b>JVM监控</b></td>
-     <td width="50%" align="center"><b>MySQL监控</b></td>
+     <td width="100%" align="center"><b>JVM监控</b></td>
   </tr>
   <tr>
-     <td valign="top"><img src="images/jvm_monitor.png"/></td>
-     <td valign="top"><img src="images/mysql_monitor.png"/></td>
+     <td><img src="images/jvm_monitor.png"/></td>
+  </tr>
+  <tr>
+  	<td width="100%" align="center"><b>MySQL监控</b></td>
+  </tr>
+  <tr>
+  	<td><img src="images/mysql_monitor.png"/></td>
   </tr>
    <tr>
-     <td width="50%" align="center"><b>Docker容器监控</b></td>
-     <td width="50%" align="center"><b>Redis监控</b></td>
+     <td width="100%" align="center"><b>Docker容器监控</b></td>
   </tr>
   <tr>
-     <td valign="top"><img src="images/docker_container_monitor.png"/></td>
-     <td valign="top"><img src="images/redis_monitor.png"/></td>
+     <td><img src="images/docker_container_monitor.png"/></td>
+  </tr>
+  <tr>
+  	<td width="100%" align="center"><b>Redis监控</b></td>
+  </tr>
+  <tr>
+  	<td><img src="images/redis_monitor.png"/></td>
   </tr>
 </table>
+
+### Skywalking APM
+
+<table>
+  <tr>
+     <td width="50%" align="top"><img src="images/skywalking_global.png"/></td>
+     <td width="50%" align="top"><img src="images/skywalking_service.png"/></td>
+  </tr>
+  <tr>
+     <td width="50%" align="top"><img src="images/skywalking_topology.png"/></td>
+     <td width="50%" align="top"><img src="images/skywalking_trace.png"/></td>
+  </tr>
+</table>
+
 
 ### 参与贡献
 欢迎提交PR一起完善项目，以下为提PR并合并的小伙伴（排名不分先后）：
