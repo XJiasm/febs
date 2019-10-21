@@ -13,13 +13,13 @@ FEBS Cloud是一款使用Spring Cloud Greenwich.SR3、Spring Cloud OAuth2 & Spri
 
 3. 微服务防护，客户端请求资源只能通过微服务网关获取；
 
-4. 集成Spring Boot Admin，多维度监控微服务；
+4. 集成Prometheus，SpringBootAdmin，多维度监控微服务；
 
 5. 集成Spring Cloud Alibaba Nacos服务治理和集中配置管理；
 
 6. 网关集成Sentinel流控；
 
-7. 集成Zipkin，方便跟踪Feign调用链；
+7. ~~集成Zipkin，方便跟踪Feign调用链~~，集成Skywalking APM；
 
 8. 集成ELK，集中管理日志，便于问题分析；
 
