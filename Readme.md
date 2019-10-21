@@ -39,10 +39,26 @@ FEBS Cloud是一款使用Spring Cloud Greenwich.SR3、Spring Cloud OAuth2 & Spri
 
 ### 系统架构
 
-系统架构如下图所示（右键在新标签页中打开图片）：
-
-![febs-cloud.png](images/febs-cloud.png)
-
+<table>
+  <tr>
+     <td width="100%" align="center"><b>FEBS Cloud</b></td>
+  </tr>
+  <tr>
+     <td><img src="images/febs-cloud.png"/></td>
+  </tr>
+  <tr>
+  	<td width="100%" align="center"><b>FEBS Prometheus APM</b></td>
+  </tr>
+  <tr>
+  	<td><img src="images/prometheus_apm.png"/></td>
+  </tr>
+   <tr>
+     <td width="100%" align="center"><b>FEBS Skywalking APM</b></td>
+  </tr>
+  <tr>
+     <td><img src="images/skywalking_apm.png"/></td>
+  </tr>
+</table>
 ### 项目地址
 
  平台  | FEBS Cloud（后端）|FEBS Cloud Web（前端）
