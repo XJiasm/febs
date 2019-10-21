@@ -137,16 +137,16 @@ Kibana|5601|日志展示
 
 <table>
   <tr>
-     <td width="100%" align="center"><b>JVM监控</b></td>
-     <td width="100%" align="center"><b>MySQL监控</b></td>
+     <td width="50%" align="center"><b>JVM监控</b></td>
+     <td width="50%" align="center"><b>MySQL监控</b></td>
   </tr>
   <tr>
      <td><img src="images/jvm_monitor.png"/></td>
      <td><img src="images/mysql_monitor.png"/></td>
   </tr>
    <tr>
-     <td width="100%" align="center"><b>Docker容器监控</b></td>
-     <td width="100%" align="center"><b>Redis监控</b></td>
+     <td width="50%" align="center"><b>Docker容器监控</b></td>
+     <td width="50%" align="center"><b>Redis监控</b></td>
   </tr>
   <tr>
      <td><img src="images/docker_container_monitor.png"/></td>
