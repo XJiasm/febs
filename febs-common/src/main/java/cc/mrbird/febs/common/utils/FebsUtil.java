@@ -1,5 +1,6 @@
 package cc.mrbird.febs.common.utils;
 
+import cc.mrbird.febs.common.entity.constant.PageConstant;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
@@ -107,8 +108,8 @@ public class FebsUtil {
      */
     public static Map<String, Object> getDataTable(IPage<?> pageInfo) {
         Map<String, Object> data = new HashMap<>();
-        data.put("rows", pageInfo.getRecords());
-        data.put("total", pageInfo.getTotal());
+        data.put(PageConstant.ROWS, pageInfo.getRecords());
+        data.put(PageConstant.TOTAL, pageInfo.getTotal());
         return data;
     }
 
