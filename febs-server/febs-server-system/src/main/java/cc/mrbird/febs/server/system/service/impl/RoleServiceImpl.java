@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -95,14 +96,16 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     }
 
     private void setRoleMenus(Role role, String[] menuIds) {
+        List<RoleMenu> roleMenus = new ArrayList<>();
         Arrays.stream(menuIds).forEach(menuId -> {
-            RoleMenu rm = new RoleMenu();
+            RoleMenu roleMenu = new RoleMenu();
             if (StringUtils.isNotBlank(menuId)) {
-                rm.setMenuId(Long.valueOf(menuId));
+                roleMenu.setMenuId(Long.valueOf(menuId));
             }
-            rm.setRoleId(role.getRoleId());
-            this.roleMenuService.save(rm);
+            roleMenu.setRoleId(role.getRoleId());
+            roleMenus.add(roleMenu);
         });
+        this.roleMenuService.saveBatch(roleMenus);
     }
 
 }

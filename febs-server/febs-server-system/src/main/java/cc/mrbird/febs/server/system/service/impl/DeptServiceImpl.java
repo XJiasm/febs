@@ -4,6 +4,7 @@ import cc.mrbird.febs.common.entity.DeptTree;
 import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.Tree;
+import cc.mrbird.febs.common.entity.constant.PageConstant;
 import cc.mrbird.febs.common.entity.system.Dept;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.common.utils.TreeUtil;
@@ -36,12 +37,12 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
             buildTrees(trees, depts);
             List<? extends Tree> deptTree = TreeUtil.build(trees);
 
-            result.put("rows", deptTree);
-            result.put("total", depts.size());
+            result.put(PageConstant.ROWS, deptTree);
+            result.put(PageConstant.TOTAL, depts.size());
         } catch (Exception e) {
             log.error("获取部门列表失败", e);
-            result.put("rows", null);
-            result.put("total", 0);
+            result.put(PageConstant.ROWS, null);
+            result.put(PageConstant.TOTAL, 0);
         }
         return result;
     }

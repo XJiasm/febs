@@ -96,7 +96,7 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
 
         QueryRequest request = new QueryRequest();
         request.setPageNum(1);
-        request.setPageSize(7);
+        request.setPageSize(7); // 近7日记录
 
         IPage<LoginLog> loginLogs = this.findLoginLogs(loginLog, request);
         return loginLogs.getRecords();

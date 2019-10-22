@@ -1,7 +1,7 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.QueryRequest;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.SystemUser;
 import cc.mrbird.febs.common.entity.system.UserRole;
 import cc.mrbird.febs.common.utils.SortUtil;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -132,20 +133,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     @Override
     @Transactional
     public void resetPassword(String[] usernames) {
-        for (String username : usernames) {
-            SystemUser user = new SystemUser();
-            user.setPassword(passwordEncoder.encode(SystemUser.DEFAULT_PASSWORD));
-            this.baseMapper.update(user, new LambdaQueryWrapper<SystemUser>().eq(SystemUser::getUsername, username));
-        }
+        SystemUser params = new SystemUser();
+        params.setPassword(passwordEncoder.encode(SystemUser.DEFAULT_PASSWORD));
+
+        List<String> list = Arrays.asList(usernames);
+        this.baseMapper.update(params, new LambdaQueryWrapper<SystemUser>().in(SystemUser::getUsername, list));
 
     }
 
     private void setUserRoles(SystemUser user, String[] roles) {
+        List<UserRole> userRoles = new ArrayList<>();
         Arrays.stream(roles).forEach(roleId -> {
-            UserRole ur = new UserRole();
-            ur.setUserId(user.getUserId());
-            ur.setRoleId(Long.valueOf(roleId));
-            userRoleService.save(ur);
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getUserId());
+            userRole.setRoleId(Long.valueOf(roleId));
+            userRoles.add(userRole);
         });
+        userRoleService.saveBatch(userRoles);
     }
 }

@@ -2,6 +2,7 @@ package cc.mrbird.febs.server.system.service.impl;
 
 import cc.mrbird.febs.common.entity.MenuTree;
 import cc.mrbird.febs.common.entity.Tree;
+import cc.mrbird.febs.common.entity.constant.PageConstant;
 import cc.mrbird.febs.common.entity.router.RouterMeta;
 import cc.mrbird.febs.common.entity.router.VueRouter;
 import cc.mrbird.febs.common.entity.system.Menu;
@@ -48,17 +49,17 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             buildTrees(trees, menus);
 
             if (StringUtils.equals(menu.getType(), Menu.TYPE_BUTTON)) {
-                result.put("rows", trees);
+                result.put(PageConstant.ROWS, trees);
             } else {
                 List<? extends Tree> menuTree = TreeUtil.build(trees);
-                result.put("rows", menuTree);
+                result.put(PageConstant.ROWS, menuTree);
             }
 
             result.put("total", menus.size());
         } catch (NumberFormatException e) {
             log.error("查询菜单失败", e);
-            result.put("rows", null);
-            result.put("total", 0);
+            result.put(PageConstant.ROWS, null);
+            result.put(PageConstant.TOTAL, 0);
         }
         return result;
     }
