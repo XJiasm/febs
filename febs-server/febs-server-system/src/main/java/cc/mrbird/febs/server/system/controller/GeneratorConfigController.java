@@ -28,13 +28,13 @@ public class GeneratorConfigController {
     private IGeneratorConfigService generatorConfigService;
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('gen:config')")
+    @PreAuthorize("hasAuthority('gen:config')")
     public FebsResponse getGeneratorConfig() {
         return new FebsResponse().data(generatorConfigService.findGeneratorConfig());
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('gen:config:update')")
+    @PreAuthorize("hasAuthority('gen:config:update')")
     @ControllerEndpoint(operation = "修改生成代码配置", exceptionMessage = "修改GeneratorConfig失败")
     public void updateGeneratorConfig(@Valid GeneratorConfig generatorConfig) throws FebsException {
         if (StringUtils.isBlank(generatorConfig.getId()))

@@ -59,14 +59,14 @@ public class MenuController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('menu:add')")
+    @PreAuthorize("hasAuthority('menu:add')")
     @ControllerEndpoint(operation = "新增菜单/按钮", exceptionMessage = "新增菜单/按钮失败")
     public void addMenu(@Valid Menu menu) {
         this.menuService.createMenu(menu);
     }
 
     @DeleteMapping("/{menuIds}")
-    @PreAuthorize("hasAnyAuthority('menu:delete')")
+    @PreAuthorize("hasAuthority('menu:delete')")
     @ControllerEndpoint(operation = "删除菜单/按钮", exceptionMessage = "删除菜单/按钮失败")
     public void deleteMenus(@NotBlank(message = "{required}") @PathVariable String menuIds) {
         String[] ids = menuIds.split(StringPool.COMMA);
@@ -74,14 +74,14 @@ public class MenuController {
     }
 
     @PutMapping
-    @PreAuthorize("hasAnyAuthority('menu:update')")
+    @PreAuthorize("hasAuthority('menu:update')")
     @ControllerEndpoint(operation = "修改菜单/按钮", exceptionMessage = "修改菜单/按钮失败")
     public void updateMenu(@Valid Menu menu) {
         this.menuService.updateMenu(menu);
     }
 
     @PostMapping("excel")
-    @PreAuthorize("hasAnyAuthority('menu:export')")
+    @PreAuthorize("hasAuthority('menu:export')")
     @ControllerEndpoint(operation = "导出菜单数据", exceptionMessage = "导出Excel失败")
     public void export(Menu menu, HttpServletResponse response) {
         List<Menu> menus = this.menuService.findMenuList(menu);

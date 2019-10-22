@@ -37,7 +37,7 @@ public class LogController {
     }
 
     @DeleteMapping("{ids}")
-    @PreAuthorize("hasAnyAuthority('log:delete')")
+    @PreAuthorize("hasAuthority('log:delete')")
     @ControllerEndpoint(exceptionMessage = "删除日志失败")
     public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) {
         String[] logIds = ids.split(StringPool.COMMA);
@@ -46,7 +46,7 @@ public class LogController {
 
 
     @PostMapping("excel")
-    @PreAuthorize("hasAnyAuthority('log:export')")
+    @PreAuthorize("hasAuthority('log:export')")
     @ControllerEndpoint(exceptionMessage = "导出Excel失败")
     public void export(QueryRequest request, Log lg, HttpServletResponse response) {
         List<Log> logs = this.logService.findLogs(lg, request).getRecords();

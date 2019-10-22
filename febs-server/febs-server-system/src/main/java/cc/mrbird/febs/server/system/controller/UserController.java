@@ -74,7 +74,7 @@ public class UserController {
 
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('user:view')")
+    @PreAuthorize("hasAuthority('user:view')")
     public FebsResponse userList(QueryRequest queryRequest, SystemUser user) {
         Map<String, Object> dataTable = FebsUtil.getDataTable(userService.findUserDetail(user, queryRequest));
         return new FebsResponse().data(dataTable);
@@ -86,21 +86,21 @@ public class UserController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('user:add')")
+    @PreAuthorize("hasAuthority('user:add')")
     @ControllerEndpoint(operation = "新增用户", exceptionMessage = "新增用户失败")
     public void addUser(@Valid SystemUser user) {
         this.userService.createUser(user);
     }
 
     @PutMapping
-    @PreAuthorize("hasAnyAuthority('user:update')")
+    @PreAuthorize("hasAuthority('user:update')")
     @ControllerEndpoint(operation = "修改用户", exceptionMessage = "修改用户失败")
     public void updateUser(@Valid SystemUser user) {
         this.userService.updateUser(user);
     }
 
     @DeleteMapping("/{userIds}")
-    @PreAuthorize("hasAnyAuthority('user:delete')")
+    @PreAuthorize("hasAuthority('user:delete')")
     @ControllerEndpoint(operation = "删除用户", exceptionMessage = "删除用户失败")
     public void deleteUsers(@NotBlank(message = "{required}") @PathVariable String userIds) {
         String[] ids = userIds.split(StringPool.COMMA);
@@ -138,7 +138,7 @@ public class UserController {
     }
 
     @PutMapping("password/reset")
-    @PreAuthorize("hasAnyAuthority('user:reset')")
+    @PreAuthorize("hasAuthority('user:reset')")
     @ControllerEndpoint(exceptionMessage = "重置用户密码失败")
     public void resetPassword(@NotBlank(message = "{required}") String usernames) {
         String[] usernameArr = usernames.split(StringPool.COMMA);
@@ -146,7 +146,7 @@ public class UserController {
     }
 
     @PostMapping("excel")
-    @PreAuthorize("hasAnyAuthority('user:export')")
+    @PreAuthorize("hasAuthority('user:export')")
     @ControllerEndpoint(operation = "导出用户数据", exceptionMessage = "导出Excel失败")
     public void export(QueryRequest queryRequest, SystemUser user, HttpServletResponse response) {
         List<SystemUser> users = this.userService.findUserDetail(user, queryRequest).getRecords();

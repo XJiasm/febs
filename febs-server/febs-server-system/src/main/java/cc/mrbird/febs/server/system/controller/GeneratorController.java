@@ -45,14 +45,14 @@ public class GeneratorController {
     private GeneratorHelper generatorHelper;
 
     @GetMapping("tables")
-    @PreAuthorize("hasAnyAuthority('gen:generate')")
+    @PreAuthorize("hasAuthority('gen:generate')")
     public FebsResponse tablesInfo(String tableName, QueryRequest request) {
         Map<String, Object> dataTable = FebsUtil.getDataTable(generatorService.getTables(tableName, request, GeneratorConstant.DATABASE_TYPE, GeneratorConstant.DATABASE_NAME));
         return new FebsResponse().data(dataTable);
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('gen:generate:gen')")
+    @PreAuthorize("hasAuthority('gen:generate:gen')")
     @ControllerEndpoint(operation = "生成代码", exceptionMessage = "代码生成失败")
     public void generate(@NotBlank(message = "{required}") String name, String remark, HttpServletResponse response) throws Exception {
         GeneratorConfig generatorConfig = generatorConfigService.findGeneratorConfig();

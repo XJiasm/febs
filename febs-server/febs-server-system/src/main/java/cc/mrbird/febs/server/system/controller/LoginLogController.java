@@ -42,7 +42,7 @@ public class LoginLogController {
     }
 
     @DeleteMapping("{ids}")
-    @PreAuthorize("hasAnyAuthority('loginlog:delete')")
+    @PreAuthorize("hasAuthority('loginlog:delete')")
     @ControllerEndpoint(operation = "删除登录日志", exceptionMessage = "删除登录日志失败")
     public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) {
         String[] loginLogIds = ids.split(StringPool.COMMA);
@@ -50,7 +50,7 @@ public class LoginLogController {
     }
 
     @PostMapping("excel")
-    @PreAuthorize("hasAnyAuthority('loginlog:export')")
+    @PreAuthorize("hasAuthority('loginlog:export')")
     @ControllerEndpoint(operation = "导出登录日志数据", exceptionMessage = "导出Excel失败")
     public void export(QueryRequest request, LoginLog loginLog, HttpServletResponse response) {
         List<LoginLog> loginLogs = this.loginLogService.findLoginLogs(loginLog, request).getRecords();

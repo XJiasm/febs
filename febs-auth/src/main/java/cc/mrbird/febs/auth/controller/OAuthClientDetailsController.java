@@ -36,7 +36,7 @@ public class OAuthClientDetailsController {
     }
 
     @GetMapping("secret/{clientId}")
-    @PreAuthorize("hasAnyAuthority('client:decrypt')")
+    @PreAuthorize("hasAuthority('client:decrypt')")
     public FebsResponse getOriginClientSecret(@NotBlank(message = "{required}") @PathVariable String clientId) {
         OAuthClientDetails client = this.oAuthClientDetailsService.findById(clientId);
         String origin = client != null ? client.getOriginSecret() : StringUtils.EMPTY;
@@ -44,7 +44,7 @@ public class OAuthClientDetailsController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('client:view')")
+    @PreAuthorize("hasAuthority('client:view')")
     public FebsResponse oauthCliendetailsList(QueryRequest request, OAuthClientDetails oAuthClientDetails) {
         Map<String, Object> dataTable = FebsUtil.getDataTable(this.oAuthClientDetailsService.findOAuthClientDetails(request, oAuthClientDetails));
         return new FebsResponse().data(dataTable);
@@ -52,7 +52,7 @@ public class OAuthClientDetailsController {
 
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('client:add')")
+    @PreAuthorize("hasAuthority('client:add')")
     public void addOauthCliendetails(@Valid OAuthClientDetails oAuthClientDetails) throws FebsException {
         try {
             this.oAuthClientDetailsService.createOAuthClientDetails(oAuthClientDetails);
@@ -64,7 +64,7 @@ public class OAuthClientDetailsController {
     }
 
     @DeleteMapping
-    @PreAuthorize("hasAnyAuthority('client:delete')")
+    @PreAuthorize("hasAuthority('client:delete')")
     public void deleteOauthCliendetails(@NotBlank(message = "{required}") String clientIds) throws FebsException {
         try {
             this.oAuthClientDetailsService.deleteOAuthClientDetails(clientIds);
@@ -76,7 +76,7 @@ public class OAuthClientDetailsController {
     }
 
     @PutMapping
-    @PreAuthorize("hasAnyAuthority('client:update')")
+    @PreAuthorize("hasAuthority('client:update')")
     public void updateOauthCliendetails(@Valid OAuthClientDetails oAuthClientDetails) throws FebsException {
         try {
             this.oAuthClientDetailsService.updateOAuthClientDetails(oAuthClientDetails);
