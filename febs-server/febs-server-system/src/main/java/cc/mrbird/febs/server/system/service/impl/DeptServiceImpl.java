@@ -64,8 +64,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     @Override
     @Transactional
     public void createDept(Dept dept) {
-        Long parentId = dept.getParentId();
-        if (parentId == null)
+        if (dept.getParentId() == null)
             dept.setParentId(0L);
         dept.setCreateTime(new Date());
         this.save(dept);
@@ -74,6 +73,8 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     @Override
     @Transactional
     public void updateDept(Dept dept) {
+        if (dept.getParentId() == null)
+            dept.setParentId(0L);
         dept.setModifyTime(new Date());
         this.baseMapper.updateById(dept);
     }
