@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  initContainers:
+    - name: init-html
+      image: busybox
+      command:
+        - wget
+        - "-o"
+        - "/html/index.html"
+        - http://mrbird.cc
+      volumeMounts:
+        - mountPath: /html
+          name: html-v
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: html-v
+  volumes:
+    - name: html-v
+      emptyDir: {}

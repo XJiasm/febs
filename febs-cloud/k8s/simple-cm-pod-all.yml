@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-cm-pod-all
+spec:
+  containers:
+    - name: busybox
+      image: busybox
+      command: ["sh", "-c", "env"]
+      envFrom:
+        - configMapRef:
+            name: simple-cm

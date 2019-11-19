@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-ex
+spec:
+  parallelism: 2 # 并发数2
+  completions: 6 # 总的Job数量
+  template:
+    spec:
+      containers:
+        - name: job
+          image: busybox
+          command: ["echo", "hello job"]
+      restartPolicy: Never

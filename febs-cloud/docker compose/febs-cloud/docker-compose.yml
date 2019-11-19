@@ -93,7 +93,7 @@ services:
     ports:
       - 8402:8402
     restart: on-failure
-  febs-clou-web:
+  febs-cloud-web:
     image: febs-cloud-web
     container_name: febs-cloud-web
     volumes:

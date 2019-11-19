@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-taint
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+  tolerations:
+    - key: "aa"
+      operator: "Equal"
+      value: "bb"
+      effect: "NoSchedule"
+
+# 意思是，如果该pod没有这是容忍该污点，那么就不在这个node上调度
+
+# NoSchedule和NoExecute区别
+# NoSchedule不调度，如果是在调度后设置的污点，并且Pod没有容忍该污点，也能继续执行
+# NoExecute不执行，如果是在调度后设置的污点，并且Pod没有容忍该污点，则会被驱逐
+#                 可以设置驱逐时间tolerationSeconds: 3600

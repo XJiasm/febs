@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: file-cm-pod
+spec:
+  containers:
+    - name: tomcat
+      image: tomcat
+      ports:
+        - containerPort: 8080
+      volumeMounts:
+        - mountPath: /configs # 容器挂载目录为/configs
+          name: config-vm # 引用下面定义的这个Volume
+  volumes:
+    - name: config-vm   # volume名称为config-vm
+      configMap:        # 通过ConfigMap获取
+        name: file-cm   # 引用名称为file-cm的ConfigMap
+        items:
+          - key: serverXml # ConfigMap里配置的key
+            path: server.xml # 值使用server.xml文件进行挂载
+          - key: serverProperties
+            path: server.properties
