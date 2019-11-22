@@ -77,6 +77,8 @@ Gitee  | [https://gitee.com/mrbirdd/FEBS-Cloud](https://gitee.com/mrbirdd/FEBS-C
 ---|---|---
 scott | 1234qwer | 注册账户，拥有查看权限
 
+Grafana账号密码：febs，123456
+
 本地部署账号密码：
 
 账号 | 密码| 权限

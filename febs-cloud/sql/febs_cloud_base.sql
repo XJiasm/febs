@@ -47,7 +47,7 @@ CREATE TABLE `oauth_client_details`  (
                                          `web_server_redirect_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                          `authorities` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                          `access_token_validity` int(11) NOT NULL,
-                                         `refresh_token_validity` int(11) NOT NULL,
+                                         `refresh_token_validity` int(11) NULL DEFAULT NULL,
                                          `additional_information` varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
                                          `autoapprove` tinyint(4) NULL DEFAULT NULL,
                                          `origin_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
