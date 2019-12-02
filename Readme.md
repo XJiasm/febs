@@ -1,11 +1,11 @@
 ### FEBS Cloud 微服务权限系统
 ![https://img.shields.io/badge/license-Apache%202.0-blue.svg?longCache=true&style=flat-square](https://img.shields.io/badge/license-Apache%202.0-blue.svg?longCache=true&style=flat-square)
-![https://img.shields.io/badge/springcloud-Greenwich.SR3-yellow.svg?style=flat-square](https://img.shields.io/badge/springcloud-Greenwich.SR3-yellow.svg?style=flat-square)
-![https://img.shields.io/badge/SpringCloudAlibaba-0.9.0.RELEASE-blueviolet.svg?style=flat-square](https://img.shields.io/badge/SpringCloudAlibaba-0.9.0.RELEASE-blueviolet.svg?style=flat-square)
-![https://img.shields.io/badge/springboot-2.1.8.RELEASE-brightgreen.svg?style=flat-square](https://img.shields.io/badge/springboot-2.1.8.RELEASE-brightgreen.svg?style=flat-square)
+![https://img.shields.io/badge/springcloud-Hoxton.RELEASE-yellow.svg?style=flat-square](https://img.shields.io/badge/springcloud-Hoxton.RELEASE-yellow.svg?style=flat-square)
+![https://img.shields.io/badge/SpringCloudAlibaba-2.1.1.RELEASE-blueviolet.svg?style=flat-square](https://img.shields.io/badge/SpringCloudAlibaba-2.1.1.RELEASE-blueviolet.svg?style=flat-square)
+![https://img.shields.io/badge/springboot-2.2.0.RELEASE-brightgreen.svg?style=flat-square](https://img.shields.io/badge/springboot-2.2.0.RELEASE-brightgreen.svg?style=flat-square)
 ![https://img.shields.io/badge/vue-2.6.10-orange.svg?style=flat-square](https://img.shields.io/badge/vue-2.6.10-orange.svg?style=flat-square)
 
-FEBS Cloud是一款使用Spring Cloud Greenwich.SR3、Spring Cloud OAuth2 & Spring Cloud Alibaba构建的低耦合权限管理系统，前端（FEBS Cloud Web）采用vue element admin构建。FEBS意指：**F**ast，**E**asy use，**B**eautiful和**S**afe。该系统具有如下特点：
+FEBS Cloud是一款使用Spring Cloud Hoxton.RELEASE、Spring Cloud OAuth2 & Spring Cloud Alibaba构建的低耦合权限管理系统，前端（FEBS Cloud Web）采用vue element admin构建。FEBS意指：**F**ast，**E**asy use，**B**eautiful和**S**afe。该系统具有如下特点：
 
 1. 前后端分离架构，客户端和服务端纯Token交互；
  
