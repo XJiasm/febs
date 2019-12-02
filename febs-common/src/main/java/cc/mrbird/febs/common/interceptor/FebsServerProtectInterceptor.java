@@ -27,7 +27,7 @@ public class FebsServerProtectInterceptor implements HandlerInterceptor {
             return true;
         } else {
             FebsResponse febsResponse = new FebsResponse();
-            FebsUtil.makeResponse(response,MediaType.APPLICATION_JSON_UTF8_VALUE,
+            FebsUtil.makeResponse(response,MediaType.APPLICATION_JSON_VALUE,
                     HttpServletResponse.SC_FORBIDDEN, febsResponse.message("请通过网关获取资源"));
             return false;
         }

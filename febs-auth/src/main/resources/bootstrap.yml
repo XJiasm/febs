@@ -12,3 +12,12 @@ spring:
         file-extension: yaml
       discovery:
         server-addr: ${nacos.url}:8001
+
+logging:
+  level:
+    com:
+      alibaba:
+        cloud:
+          nacos:
+            client:
+              NacosPropertySourceBuilder: error

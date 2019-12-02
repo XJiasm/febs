@@ -19,7 +19,7 @@ public class FebsAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
         FebsResponse febsResponse = new FebsResponse();
         FebsUtil.makeResponse(
-                response, MediaType.APPLICATION_JSON_UTF8_VALUE,
+                response, MediaType.APPLICATION_JSON_VALUE,
                 HttpServletResponse.SC_FORBIDDEN, febsResponse.message("没有权限访问该资源"));
     }
 }
