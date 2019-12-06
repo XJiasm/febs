@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class FebsWebResponseExceptionTranslator implements WebResponseExceptionTranslator {
 
     @Override
-    public ResponseEntity translate(Exception e) {
+    public ResponseEntity<?> translate(Exception e) {
         ResponseEntity.BodyBuilder status = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
         FebsResponse response = new FebsResponse();
         String message = "认证失败";
