@@ -61,10 +61,12 @@ public class FebsAuthorizationServerConfigure extends AuthorizationServerConfigu
     @SuppressWarnings("unchecked")
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore())
-                .accessTokenConverter(jwtAccessTokenConverter())
                 .userDetailsService(userDetailService)
                 .authenticationManager(authenticationManager)
                 .exceptionTranslator(exceptionTranslator);
+        if (properties.getEnableJwt()) {
+            endpoints.accessTokenConverter(jwtAccessTokenConverter());
+        }
     }
 
     @Bean
