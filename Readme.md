@@ -35,6 +35,8 @@ FEBS Cloud是一款使用Spring Cloud Hoxton.RELEASE、Spring Cloud OAuth2 & Spr
 
 项目从零搭建到部署教程：[https://www.kancloud.cn/mrbird/spring-cloud/1263685](https://www.kancloud.cn/mrbird/spring-cloud/1263685)。
 
+Kubernetes集群部署脚本：[https://github.com/wuyouzhuguli/FEBS-Cloud-K8S](https://github.com/wuyouzhuguli/FEBS-Cloud-K8S)
+
 ### 更新日志
 
 [https://www.kancloud.cn/mrbird/spring-cloud/1292659](https://www.kancloud.cn/mrbird/spring-cloud/1292659)
@@ -71,7 +73,7 @@ Gitee  | [https://gitee.com/mrbirdd/FEBS-Cloud](https://gitee.com/mrbirdd/FEBS-C
 
 ### 演示地址
 
-演示地址（服务器资源有限，没有搭建ELK）：[https://cloud.mrbird.cn](https://cloud.mrbird.cn)
+演示地址：[https://cloud.mrbird.cn](https://cloud.mrbird.cn)
 
 演示环境账号密码：
 
