@@ -25,9 +25,11 @@ FEBS Cloud是一款使用Spring Cloud Hoxton.RELEASE、Spring Cloud OAuth2 & Spr
 
 9. 微服务Docker化，使用Docker Compose一键部署；
 
-10. 提供详细的使用文档和搭建教程；
+10. 支持Kubernetes集群部署；
 
-11. 前后端请求参数校验，Excel导入导出，代码生成等。
+11. 提供详细的使用文档和搭建教程；
+
+12. 前后端请求参数校验，Excel导入导出，代码生成等。
 
 ### 文档与教程
 
@@ -35,7 +37,7 @@ FEBS Cloud是一款使用Spring Cloud Hoxton.RELEASE、Spring Cloud OAuth2 & Spr
 
 项目从零搭建到部署教程：[https://www.kancloud.cn/mrbird/spring-cloud/1263685](https://www.kancloud.cn/mrbird/spring-cloud/1263685)。
 
-Kubernetes集群部署脚本：[https://github.com/wuyouzhuguli/FEBS-Cloud-K8S](https://github.com/wuyouzhuguli/FEBS-Cloud-K8S)
+Kubernetes集群部署脚本：[https://github.com/wuyouzhuguli/FEBS-Cloud-K8S](https://github.com/wuyouzhuguli/FEBS-Cloud-K8S)。
 
 ### 更新日志
 
