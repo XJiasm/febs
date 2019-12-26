@@ -67,7 +67,7 @@ public class DateUtil {
     public static String formatCSTTime(String date, String format) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(CST_TIME_PATTERN, Locale.US);
         Date usDate = simpleDateFormat.parse(date);
-        return DateUtil.getDateFormat(usDate, format);
+        return getDateFormat(usDate, format);
     }
 
     /**

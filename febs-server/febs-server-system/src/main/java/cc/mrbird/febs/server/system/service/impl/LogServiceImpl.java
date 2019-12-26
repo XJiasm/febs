@@ -98,6 +98,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
         save(log);
     }
 
+    @SuppressWarnings("all")
     private StringBuilder handleParams(StringBuilder params, Object[] args, List paramNames) {
         try {
             for (int i = 0; i < args.length; i++) {

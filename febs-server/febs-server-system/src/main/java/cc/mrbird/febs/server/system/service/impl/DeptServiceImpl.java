@@ -35,7 +35,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
             List<Dept> depts = findDepts(dept, request);
             List<DeptTree> trees = new ArrayList<>();
             buildTrees(trees, depts);
-            List<? extends Tree> deptTree = TreeUtil.build(trees);
+            List<? extends Tree<?>> deptTree = TreeUtil.build(trees);
 
             result.put(PageConstant.ROWS, deptTree);
             result.put(PageConstant.TOTAL, depts.size());

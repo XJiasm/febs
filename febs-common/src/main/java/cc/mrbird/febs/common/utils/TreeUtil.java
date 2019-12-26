@@ -19,7 +19,7 @@ public class TreeUtil {
      * @param nodes nodes
      * @return <T> List<? extends Tree>
      */
-    public static <T> List<? extends Tree> build(List<? extends Tree<T>> nodes) {
+    public static <T> List<? extends Tree<?>> build(List<? extends Tree<T>> nodes) {
         if (nodes == null) {
             return null;
         }

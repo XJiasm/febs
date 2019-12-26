@@ -51,7 +51,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             if (StringUtils.equals(menu.getType(), Menu.TYPE_BUTTON)) {
                 result.put(PageConstant.ROWS, trees);
             } else {
-                List<? extends Tree> menuTree = TreeUtil.build(trees);
+                List<? extends Tree<?>> menuTree = TreeUtil.build(trees);
                 result.put(PageConstant.ROWS, menuTree);
             }
 

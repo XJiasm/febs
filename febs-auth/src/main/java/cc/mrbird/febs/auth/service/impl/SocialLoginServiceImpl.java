@@ -151,7 +151,7 @@ public class SocialLoginServiceImpl implements SocialLoginService {
         if (isCurrentUser(username)) {
             this.userConnectionService.deleteByCondition(username, oauthType);
         } else {
-            throw new FebsException("绑定失败，您无权解绑别人的账号");
+            throw new FebsException("解绑失败，您无权解绑别人的账号");
         }
     }
 
