@@ -1,9 +1,11 @@
 package cc.mrbird.febs.server.system.service.impl;
 
+import cc.mrbird.febs.common.entity.FebsAuthUser;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.SystemUser;
 import cc.mrbird.febs.common.entity.system.UserRole;
+import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.server.system.mapper.UserMapper;
 import cc.mrbird.febs.server.system.service.IUserRoleService;
@@ -15,6 +17,8 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -45,7 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
-    public IPage<SystemUser> findUserDetail(SystemUser user, QueryRequest request) {
+    public IPage<SystemUser> findUserDetailList(SystemUser user, QueryRequest request) {
         Page<SystemUser> page = new Page<>(request.getPageNum(), request.getPageSize());
         SortUtil.handlePageSort(request, page, "userId", FebsConstant.ORDER_ASC, false);
         return this.baseMapper.findUserDetailPage(page, user);
@@ -107,11 +111,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
 
     @Override
     @Transactional
-    public void updateProfile(SystemUser user) {
+    public void updateProfile(SystemUser user) throws FebsException {
         user.setPassword(null);
         user.setUsername(null);
         user.setStatus(null);
-        updateById(user);
+        if (isCurrentUser(user.getUserId())) {
+            updateById(user);
+        } else {
+            throw new FebsException("您无权修改别人的账号信息！");
+        }
     }
 
     @Override
@@ -150,5 +158,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
             userRoles.add(userRole);
         });
         userRoleService.saveBatch(userRoles);
+    }
+
+    private boolean isCurrentUser(Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        FebsAuthUser authUser = (FebsAuthUser) authentication.getPrincipal();
+        return id.equals(authUser.getUserId());
     }
 }

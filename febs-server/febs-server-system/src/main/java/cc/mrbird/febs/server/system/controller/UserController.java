@@ -5,6 +5,7 @@ import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.system.LoginLog;
 import cc.mrbird.febs.common.entity.system.SystemUser;
+import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.server.system.service.ILoginLogService;
 import cc.mrbird.febs.server.system.service.IUserService;
@@ -76,7 +77,7 @@ public class UserController {
     @GetMapping
     @PreAuthorize("hasAuthority('user:view')")
     public FebsResponse userList(QueryRequest queryRequest, SystemUser user) {
-        Map<String, Object> dataTable = FebsUtil.getDataTable(userService.findUserDetail(user, queryRequest));
+        Map<String, Object> dataTable = FebsUtil.getDataTable(userService.findUserDetailList(user, queryRequest));
         return new FebsResponse().data(dataTable);
     }
 
@@ -109,7 +110,7 @@ public class UserController {
 
     @PutMapping("profile")
     @ControllerEndpoint(exceptionMessage = "修改个人信息失败")
-    public void updateProfile(@Valid SystemUser user) {
+    public void updateProfile(@Valid SystemUser user) throws FebsException {
         this.userService.updateProfile(user);
     }
 
@@ -149,7 +150,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('user:export')")
     @ControllerEndpoint(operation = "导出用户数据", exceptionMessage = "导出Excel失败")
     public void export(QueryRequest queryRequest, SystemUser user, HttpServletResponse response) {
-        List<SystemUser> users = this.userService.findUserDetail(user, queryRequest).getRecords();
+        List<SystemUser> users = this.userService.findUserDetailList(user, queryRequest).getRecords();
         ExcelKit.$Export(SystemUser.class, response).downXlsx(users, false);
     }
 }

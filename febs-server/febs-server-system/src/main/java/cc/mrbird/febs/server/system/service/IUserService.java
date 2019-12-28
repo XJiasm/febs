@@ -2,6 +2,7 @@ package cc.mrbird.febs.server.system.service;
 
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.system.SystemUser;
+import cc.mrbird.febs.common.exception.FebsException;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -25,7 +26,7 @@ public interface IUserService extends IService<SystemUser> {
      * @param user    用户对象，用于传递查询条件
      * @return IPage
      */
-    IPage<SystemUser> findUserDetail(SystemUser user, QueryRequest request);
+    IPage<SystemUser> findUserDetailList(SystemUser user, QueryRequest request);
 
     /**
      * 通过用户名查找用户详细信息
@@ -68,7 +69,7 @@ public interface IUserService extends IService<SystemUser> {
      *
      * @param user 个人信息
      */
-    void updateProfile(SystemUser user);
+    void updateProfile(SystemUser user) throws FebsException;
 
     /**
      * 更新用户头像
