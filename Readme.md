@@ -85,8 +85,6 @@ Gitee  | [https://gitee.com/mrbirdd/FEBS-Cloud](https://gitee.com/mrbirdd/FEBS-C
 ---|---|---
 scott | 1234qwer | 注册账户，拥有查看权限
 
-Grafana账号密码：febs，123456
-
 本地部署账号密码：
 
 账号 | 密码| 权限
@@ -165,7 +163,9 @@ Skywalking|11800、12800、8080|Skywalking APM
 
 ### 服务APM
 
-#### Prometheus APM
+#### [Prometheus APM](http://cloud.mrbird.cn:8404)
+
+Grafana账号密码：febs，123456
 
 <table>
   <tr>
@@ -194,7 +194,7 @@ Skywalking|11800、12800、8080|Skywalking APM
   </tr>
 </table>
 
-### Skywalking APM
+### [Skywalking APM](http://123.206.206.203:8080/)
 
 <table>
   <tr>
