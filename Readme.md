@@ -66,6 +66,12 @@ Kubernetes集群部署脚本：[https://github.com/wuyouzhuguli/FEBS-Cloud-K8S](
   <tr>
     <td align="center" style="background: #fff"><img src="images/skywalking_apm.png"/></td>
   </tr>
+   <tr>
+    <td align="center" style="background: #fff"><b>FEBS Kubernetes</b></td>
+  </tr>
+  <tr>
+    <td align="center" style="background: #fff"><img src="images/febs-k8s.png"/></td>
+  </tr>
 </table>
 
 ### 项目地址
