@@ -38,11 +38,11 @@ public interface ILogService extends IService<Log> {
      *
      * @param point     切点
      * @param method    Method
-     * @param request   HttpServletRequest
+     * @param ip        ip
      * @param operation 操作内容
      * @param username  操作用户
      * @param start     开始时间
      */
     @Async(FebsConstant.ASYNC_POOL)
-    void saveLog(ProceedingJoinPoint point, Method method, HttpServletRequest request, String operation, String username, long start);
+    void saveLog(ProceedingJoinPoint point, Method method, String ip, String operation, String username, long start);
 }

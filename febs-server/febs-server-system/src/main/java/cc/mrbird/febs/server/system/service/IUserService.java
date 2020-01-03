@@ -74,18 +74,16 @@ public interface IUserService extends IService<SystemUser> {
     /**
      * 更新用户头像
      *
-     * @param username 用户名
-     * @param avatar   用户头像
+     * @param avatar 用户头像
      */
-    void updateAvatar(String username, String avatar);
+    void updateAvatar(String avatar);
 
     /**
      * 更新用户密码
      *
-     * @param username 用户名
      * @param password 新密码
      */
-    void updatePassword(String username, String password);
+    void updatePassword(String password);
 
     /**
      * 重置密码

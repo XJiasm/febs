@@ -1,11 +1,12 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.FebsAuthUser;
+import cc.mrbird.febs.common.entity.CurrentUser;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.SystemUser;
 import cc.mrbird.febs.common.entity.system.UserRole;
 import cc.mrbird.febs.common.exception.FebsException;
+import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.server.system.mapper.UserMapper;
 import cc.mrbird.febs.server.system.service.IUserRoleService;
@@ -17,8 +18,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -124,18 +123,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
 
     @Override
     @Transactional
-    public void updateAvatar(String username, String avatar) {
+    public void updateAvatar(String avatar) {
         SystemUser user = new SystemUser();
         user.setAvatar(avatar);
-        this.baseMapper.update(user, new LambdaQueryWrapper<SystemUser>().eq(SystemUser::getUsername, username));
+        String currentUsername = FebsUtil.getCurrentUsername();
+        this.baseMapper.update(user, new LambdaQueryWrapper<SystemUser>().eq(SystemUser::getUsername, currentUsername));
     }
 
     @Override
     @Transactional
-    public void updatePassword(String username, String password) {
+    public void updatePassword(String password) {
         SystemUser user = new SystemUser();
         user.setPassword(passwordEncoder.encode(password));
-        this.baseMapper.update(user, new LambdaQueryWrapper<SystemUser>().eq(SystemUser::getUsername, username));
+        String currentUsername = FebsUtil.getCurrentUsername();
+        this.baseMapper.update(user, new LambdaQueryWrapper<SystemUser>().eq(SystemUser::getUsername, currentUsername));
     }
 
     @Override
@@ -161,8 +162,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     private boolean isCurrentUser(Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        FebsAuthUser authUser = (FebsAuthUser) authentication.getPrincipal();
-        return id.equals(authUser.getUserId());
+        CurrentUser currentUser = FebsUtil.getCurrentUser();
+        return currentUser != null && id.equals(currentUser.getUserId());
     }
 }

@@ -4,7 +4,6 @@ package cc.mrbird.febs.server.system.service.impl;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.Log;
-import cc.mrbird.febs.common.utils.ServletRequestIPUtil;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.server.system.mapper.LogMapper;
 import cc.mrbird.febs.server.system.service.ILogService;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -71,9 +69,8 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
     }
 
     @Override
-    public void saveLog(ProceedingJoinPoint point, Method method, HttpServletRequest request, String operation, String username, long start) {
+    public void saveLog(ProceedingJoinPoint point, Method method, String ip, String operation, String username, long start) {
         Log log = new Log();
-        String ip = ServletRequestIPUtil.getIpAddr(request);
         log.setIp(ip);
 
         log.setUsername(username);

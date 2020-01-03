@@ -35,16 +35,17 @@ public class LoginLogController {
         return new FebsResponse().data(dataTable);
     }
 
-    @GetMapping("/{username}")
-    public FebsResponse getUserLastSevenLoginLogs(@NotBlank(message = "{required}") @PathVariable String username) {
-        List<LoginLog> userLastSevenLoginLogs = this.loginLogService.findUserLastSevenLoginLogs(username);
+    @GetMapping("currentUser")
+    public FebsResponse getUserLastSevenLoginLogs() {
+        String currentUsername = FebsUtil.getCurrentUsername();
+        List<LoginLog> userLastSevenLoginLogs = this.loginLogService.findUserLastSevenLoginLogs(currentUsername);
         return new FebsResponse().data(userLastSevenLoginLogs);
     }
 
     @DeleteMapping("{ids}")
     @PreAuthorize("hasAuthority('loginlog:delete')")
     @ControllerEndpoint(operation = "删除登录日志", exceptionMessage = "删除登录日志失败")
-    public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) {
+    public void deleteLogs(@NotBlank(message = "{required}") @PathVariable String ids) {
         String[] loginLogIds = ids.split(StringPool.COMMA);
         this.loginLogService.deleteLoginLogs(loginLogIds);
     }

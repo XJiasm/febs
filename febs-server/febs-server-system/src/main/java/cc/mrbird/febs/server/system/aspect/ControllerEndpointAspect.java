@@ -3,7 +3,6 @@ package cc.mrbird.febs.server.system.aspect;
 import cc.mrbird.febs.common.annotation.ControllerEndpoint;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.FebsUtil;
-import cc.mrbird.febs.common.utils.HttpContextUtil;
 import cc.mrbird.febs.server.system.service.ILogService;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,11 +10,11 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
@@ -42,10 +41,10 @@ public class ControllerEndpointAspect extends AspectSupport {
         try {
             result = point.proceed();
             if (StringUtils.isNotBlank(operation)) {
-                HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                OAuth2Authentication authentication = (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();
+                OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
                 String username = (String) authentication.getPrincipal();
-                logService.saveLog(point, targetMethod, request, operation, username, start);
+                logService.saveLog(point, targetMethod, details.getRemoteAddress(), operation, username, start);
             }
             return result;
         } catch (Throwable throwable) {

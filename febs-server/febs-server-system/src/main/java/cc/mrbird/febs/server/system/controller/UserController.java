@@ -42,19 +42,20 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("success/{username}")
-    public void loginSuccess(@NotBlank(message = "{required}") @PathVariable String username, HttpServletRequest request) {
+    @GetMapping("success")
+    public void loginSuccess(HttpServletRequest request) {
+        String currentUsername = FebsUtil.getCurrentUsername();
         // update last login time
-        this.userService.updateLoginTime(username);
+        this.userService.updateLoginTime(currentUsername);
         // save login log
         LoginLog loginLog = new LoginLog();
-        loginLog.setUsername(username);
+        loginLog.setUsername(currentUsername);
         loginLog.setSystemBrowserInfo(request.getHeader("user-agent"));
         this.loginLogService.saveLoginLog(loginLog);
     }
 
-    @GetMapping("index/{username}")
-    public FebsResponse index(@NotBlank(message = "{required}") @PathVariable String username) {
+    @GetMapping("index")
+    public FebsResponse index() {
         Map<String, Object> data = new HashMap<>();
         // 获取系统访问记录
         Long totalVisitCount = loginLogService.findTotalVisitCount();
@@ -67,7 +68,7 @@ public class UserController {
         List<Map<String, Object>> lastTenVisitCount = loginLogService.findLastTenDaysVisitCount(null);
         data.put("lastTenVisitCount", lastTenVisitCount);
         SystemUser param = new SystemUser();
-        param.setUsername(username);
+        param.setUsername(FebsUtil.getCurrentUsername());
         List<Map<String, Object>> lastTenUserVisitCount = loginLogService.findLastTenDaysVisitCount(param);
         data.put("lastTenUserVisitCount", lastTenUserVisitCount);
         return new FebsResponse().data(data);
@@ -116,26 +117,21 @@ public class UserController {
 
     @PutMapping("avatar")
     @ControllerEndpoint(exceptionMessage = "修改头像失败")
-    public void updateAvatar(
-            @NotBlank(message = "{required}") String username,
-            @NotBlank(message = "{required}") String avatar) {
-        this.userService.updateAvatar(username, avatar);
+    public void updateAvatar(@NotBlank(message = "{required}") String avatar) {
+        this.userService.updateAvatar(avatar);
     }
 
     @GetMapping("password/check")
-    public boolean checkPassword(
-            @NotBlank(message = "{required}") String username,
-            @NotBlank(message = "{required}") String password) {
-        SystemUser user = userService.findByName(username);
+    public boolean checkPassword(@NotBlank(message = "{required}") String password) {
+        String currentUsername = FebsUtil.getCurrentUsername();
+        SystemUser user = userService.findByName(currentUsername);
         return user != null && passwordEncoder.matches(password, user.getPassword());
     }
 
     @PutMapping("password")
     @ControllerEndpoint(exceptionMessage = "修改密码失败")
-    public void updatePassword(
-            @NotBlank(message = "{required}") String username,
-            @NotBlank(message = "{required}") String password) {
-        userService.updatePassword(username, password);
+    public void updatePassword(@NotBlank(message = "{required}") String password) {
+        userService.updatePassword(password);
     }
 
     @PutMapping("password/reset")

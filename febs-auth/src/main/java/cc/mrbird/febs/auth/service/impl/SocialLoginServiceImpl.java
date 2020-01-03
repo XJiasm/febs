@@ -6,13 +6,13 @@ import cc.mrbird.febs.auth.manager.UserManager;
 import cc.mrbird.febs.auth.properties.FebsAuthProperties;
 import cc.mrbird.febs.auth.service.SocialLoginService;
 import cc.mrbird.febs.auth.service.UserConnectionService;
-import cc.mrbird.febs.common.entity.FebsAuthUser;
 import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.entity.constant.GrantTypeConstant;
 import cc.mrbird.febs.common.entity.constant.ParamsConstant;
 import cc.mrbird.febs.common.entity.constant.SocialConstant;
 import cc.mrbird.febs.common.entity.system.SystemUser;
 import cc.mrbird.febs.common.exception.FebsException;
+import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.common.utils.HttpContextUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xkcoding.justauth.AuthRequestFactory;
@@ -23,8 +23,6 @@ import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -190,9 +188,8 @@ public class SocialLoginServiceImpl implements SocialLoginService {
     }
 
     private boolean isCurrentUser(String username) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        FebsAuthUser authUser = (FebsAuthUser) authentication.getPrincipal();
-        return StringUtils.equalsIgnoreCase(username, authUser.getUsername());
+        String currentUsername = FebsUtil.getCurrentUsername();
+        return StringUtils.equalsIgnoreCase(username, currentUsername);
     }
 
     private OAuth2AccessToken getOAuth2AccessToken(SystemUser user) throws FebsException {
