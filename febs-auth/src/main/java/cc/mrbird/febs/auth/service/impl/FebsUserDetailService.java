@@ -5,7 +5,7 @@ import cc.mrbird.febs.common.entity.FebsAuthUser;
 import cc.mrbird.febs.common.entity.constant.ParamsConstant;
 import cc.mrbird.febs.common.entity.constant.SocialConstant;
 import cc.mrbird.febs.common.entity.system.SystemUser;
-import cc.mrbird.febs.common.utils.HttpContextUtil;
+import cc.mrbird.febs.common.utils.FebsUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class FebsUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        HttpServletRequest httpServletRequest = HttpContextUtil.getHttpServletRequest();
+        HttpServletRequest httpServletRequest = FebsUtil.getHttpServletRequest();
         SystemUser systemUser = userManager.findByName(username);
         if (systemUser != null) {
             String permissions = userManager.findUserPermissions(systemUser.getUsername());
