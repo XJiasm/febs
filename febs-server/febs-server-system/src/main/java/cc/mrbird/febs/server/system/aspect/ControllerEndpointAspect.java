@@ -10,9 +10,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -41,10 +38,9 @@ public class ControllerEndpointAspect extends AspectSupport {
         try {
             result = point.proceed();
             if (StringUtils.isNotBlank(operation)) {
-                OAuth2Authentication authentication = (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();
-                OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
-                String username = (String) authentication.getPrincipal();
-                logService.saveLog(point, targetMethod, details.getRemoteAddress(), operation, username, start);
+                String username = FebsUtil.getCurrentUsername();
+                String ip = FebsUtil.getHttpServletRequestIpAddress();
+                logService.saveLog(point, targetMethod, ip, operation, username, start);
             }
             return result;
         } catch (Throwable throwable) {

@@ -13,7 +13,6 @@ import cc.mrbird.febs.common.entity.constant.SocialConstant;
 import cc.mrbird.febs.common.entity.system.SystemUser;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.FebsUtil;
-import cc.mrbird.febs.common.utils.HttpContextUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xkcoding.justauth.AuthRequestFactory;
 import me.zhyd.oauth.config.AuthSource;
@@ -193,7 +192,7 @@ public class SocialLoginServiceImpl implements SocialLoginService {
     }
 
     private OAuth2AccessToken getOAuth2AccessToken(SystemUser user) throws FebsException {
-        final HttpServletRequest httpServletRequest = HttpContextUtil.getHttpServletRequest();
+        final HttpServletRequest httpServletRequest = FebsUtil.getHttpServletRequest();
         httpServletRequest.setAttribute(ParamsConstant.LOGIN_TYPE, SocialConstant.SOCIAL_LOGIN);
         String socialLoginClientId = properties.getSocialLoginClientId();
         ClientDetails clientDetails = null;

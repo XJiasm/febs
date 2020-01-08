@@ -57,4 +57,7 @@ public class FebsConstant {
      */
     public static final Long REGISTER_ROLE_ID = 2L;
 
+    public static final String LOCALHOST = "localhost";
+    public static final String LOCALHOST_IP = "127.0.0.1";
+
 }

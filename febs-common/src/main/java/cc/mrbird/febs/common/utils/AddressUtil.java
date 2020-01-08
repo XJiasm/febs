@@ -1,4 +1,4 @@
-package cc.mrbird.febs.server.system.utils;
+package cc.mrbird.febs.common.utils;
 
 import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import org.apache.commons.io.FileUtils;
@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
-import org.lionsoul.ip2region.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +40,6 @@ public class AddressUtil {
             DbConfig config = new DbConfig();
             searcher = new DbSearcher(config, file.getPath());
             Method method = searcher.getClass().getMethod("btreeSearch", String.class);
-            if (!Util.isIpAddress(ip)) {
-                log.error("Error: Invalid ip address");
-            }
             DataBlock dataBlock = (DataBlock) method.invoke(searcher, ip);
             return dataBlock.getRegion();
         } catch (Exception e) {

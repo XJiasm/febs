@@ -7,11 +7,19 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -107,6 +115,23 @@ public class FebsUtil {
     }
 
     /**
+     * 设置webflux模型响应
+     *
+     * @param response    ServerHttpResponse
+     * @param contentType content-type
+     * @param status      http状态码
+     * @param value       响应内容
+     * @return Mono<Void>
+     */
+    public static Mono<Void> makeWebFluxResponse(ServerHttpResponse response, String contentType,
+                                                 HttpStatus status, Object value) {
+        response.setStatusCode(status);
+        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
+        DataBuffer dataBuffer = response.bufferFactory().wrap(JSONObject.toJSONString(value).getBytes());
+        return response.writeWith(Mono.just(dataBuffer));
+    }
+
+    /**
      * 封装前端分页表格所需数据
      *
      * @param pageInfo pageInfo
@@ -117,6 +142,70 @@ public class FebsUtil {
         data.put(PageConstant.ROWS, pageInfo.getRecords());
         data.put(PageConstant.TOTAL, pageInfo.getTotal());
         return data;
+    }
+
+    /**
+     * 获取HttpServletRequest
+     *
+     * @return HttpServletRequest
+     */
+    public static HttpServletRequest getHttpServletRequest() {
+        return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+    }
+
+    /**
+     * 获取请求IP
+     *
+     * @return String IP
+     */
+    public static String getHttpServletRequestIpAddress() {
+        HttpServletRequest request = getHttpServletRequest();
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
+    }
+
+    /**
+     * 获取请求IP
+     *
+     * @param request ServerHttpRequest
+     * @return String IP
+     */
+    public static String getServerHttpRequestIpAddress(ServerHttpRequest request) {
+        HttpHeaders headers = request.getHeaders();
+        String ip = headers.getFirst("x-forwarded-for");
+        if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+            if (ip.contains(",")) {
+                ip = ip.split(",")[0];
+            }
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("X-Real-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = Objects.requireNonNull(request.getRemoteAddress()).getAddress().getHostAddress();
+        }
+        return ip;
     }
 
     /**
@@ -174,16 +263,6 @@ public class FebsUtil {
     public static String getCurrentTokenValue() {
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOAuth2Authentication().getDetails();
         return details.getTokenValue();
-    }
-
-    /**
-     * 获取当前请求IP地址
-     *
-     * @return String IP地址
-     */
-    public static String getCurrentRequestIpAddress() {
-        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOAuth2Authentication().getDetails();
-        return details.getRemoteAddress();
     }
 
     private static OAuth2Authentication getOAuth2Authentication() {

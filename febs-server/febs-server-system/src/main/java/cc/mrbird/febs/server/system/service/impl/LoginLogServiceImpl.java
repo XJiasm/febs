@@ -4,12 +4,11 @@ import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.LoginLog;
 import cc.mrbird.febs.common.entity.system.SystemUser;
-import cc.mrbird.febs.common.utils.HttpContextUtil;
-import cc.mrbird.febs.common.utils.ServletRequestIPUtil;
+import cc.mrbird.febs.common.utils.AddressUtil;
+import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.common.utils.SortUtil;
 import cc.mrbird.febs.server.system.mapper.LoginLogMapper;
 import cc.mrbird.febs.server.system.service.ILoginLogService;
-import cc.mrbird.febs.server.system.utils.AddressUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -55,8 +53,7 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
     @Transactional
     public void saveLoginLog(LoginLog loginLog) {
         loginLog.setLoginTime(new Date());
-        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        String ip = ServletRequestIPUtil.getIpAddr(request);
+        String ip = FebsUtil.getHttpServletRequestIpAddress();
         loginLog.setIp(ip);
         loginLog.setLocation(AddressUtil.getCityInfo(ip));
         this.save(loginLog);

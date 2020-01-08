@@ -41,7 +41,7 @@ public class TestController {
         map.put("currentUsername", FebsUtil.getCurrentUsername());
         map.put("currentUserAuthority", FebsUtil.getCurrentUserAuthority());
         map.put("currentTokenValue", FebsUtil.getCurrentTokenValue());
-        map.put("currentRequestIpAddress", FebsUtil.getCurrentRequestIpAddress());
+        map.put("currentRequestIpAddress", FebsUtil.getHttpServletRequestIpAddress());
         return map;
     }
 }
