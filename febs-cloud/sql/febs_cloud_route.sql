@@ -64,7 +64,7 @@ db.getCollection("rateLimitRule").insert([ {
     requestMethod: "GET",
     limitFrom: "06:00:00",
     limitTo: "22:30:00",
-    count: "1",
+    count: "3",
     intervalSec: "10",
     status: "1",
     createTime: "2020-01-12 14:28:46",
