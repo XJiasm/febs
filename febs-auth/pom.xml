@@ -5,12 +5,12 @@
     <parent>
         <groupId>cc.mrbird</groupId>
         <artifactId>febs-cloud</artifactId>
-        <version>1.4-RELEASE</version>
+        <version>1.6-RELEASE</version>
         <relativePath>../febs-cloud/pom.xml</relativePath>
     </parent>
 
     <artifactId>febs-auth</artifactId>
-    <version>1.4-RELEASE</version>
+    <version>1.6-RELEASE</version>
     <name>FEBS-Auth</name>
     <description>FEBS-Cloud认证服务器</description>
 
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>cc.mrbird</groupId>
             <artifactId>febs-common</artifactId>
-            <version>1.4-RELEASE</version>
+            <version>1.6-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

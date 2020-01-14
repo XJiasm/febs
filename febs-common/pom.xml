@@ -5,12 +5,12 @@
     <parent>
         <groupId>cc.mrbird</groupId>
         <artifactId>febs-cloud</artifactId>
-        <version>1.4-RELEASE</version>
+        <version>1.6-RELEASE</version>
         <relativePath>../febs-cloud/pom.xml</relativePath>
     </parent>
 
     <artifactId>febs-common</artifactId>
-    <version>1.4-RELEASE</version>
+    <version>1.6-RELEASE</version>
     <name>FEBS-Common</name>
     <description>FEBS-Common通用模块</description>
 

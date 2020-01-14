@@ -6,12 +6,12 @@
     <parent>
         <groupId>cc.mrbird</groupId>
         <artifactId>febs-server</artifactId>
-        <version>1.4-RELEASE</version>
+        <version>1.6-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>febs-server-test</artifactId>
-    <version>1.4-RELEASE</version>
+    <version>1.6-RELEASE</version>
     <name>FEBS-Server-Test</name>
     <description>FEBS-Server-Test测试服务模块</description>
 

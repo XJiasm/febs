@@ -6,7 +6,7 @@
 
     <groupId>cc.mrbird</groupId>
     <artifactId>febs-cloud</artifactId>
-    <version>1.4-RELEASE</version>
+    <version>1.6-RELEASE</version>
     <packaging>pom</packaging>
 
     <name>FEBS-Cloud</name>

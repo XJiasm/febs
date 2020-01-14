@@ -7,12 +7,12 @@
     <parent>
         <groupId>cc.mrbird</groupId>
         <artifactId>febs-cloud</artifactId>
-        <version>1.4-RELEASE</version>
+        <version>1.6-RELEASE</version>
         <relativePath>../febs-cloud/pom.xml</relativePath>
     </parent>
 
     <artifactId>febs-server</artifactId>
-    <version>1.4-RELEASE</version>
+    <version>1.6-RELEASE</version>
     <packaging>pom</packaging>
     <name>FEBS-Server</name>
     <description>FEBS-Server服务提供模块</description>
@@ -26,7 +26,7 @@
         <dependency>
             <groupId>cc.mrbird</groupId>
             <artifactId>febs-common</artifactId>
-            <version>1.4-RELEASE</version>
+            <version>1.6-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
