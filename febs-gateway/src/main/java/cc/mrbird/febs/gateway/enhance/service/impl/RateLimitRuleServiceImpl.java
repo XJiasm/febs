@@ -59,11 +59,7 @@ public class RateLimitRuleServiceImpl implements RateLimitRuleService {
     public Mono<RateLimitRule> create(RateLimitRule rateLimitRule) {
         rateLimitRule.setCreateTime(DateUtil.formatFullTime(LocalDateTime.now(), DateUtil.FULL_TIME_SPLIT_PATTERN));
         return rateLimitRuleMapper.insert(rateLimitRule)
-                .doOnSuccess(r -> {
-                    System.out.println(r);
-                    System.out.println(rateLimitRule);
-                    routeEnhanceCacheService.saveRateLimitRule(r);
-                });
+                .doOnSuccess(r -> routeEnhanceCacheService.saveRateLimitRule(r));
     }
 
     @Override
