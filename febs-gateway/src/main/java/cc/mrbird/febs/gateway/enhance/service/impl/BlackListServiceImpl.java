@@ -41,7 +41,8 @@ public class BlackListServiceImpl implements BlackListService {
     @Override
     public Mono<BlackList> create(BlackList blackList) {
         blackList.setCreateTime(DateUtil.formatFullTime(LocalDateTime.now(), DateUtil.FULL_TIME_SPLIT_PATTERN));
-        blackList.setLocation(AddressUtil.getCityInfo(blackList.getIp()));
+        if (StringUtils.isNotBlank(blackList.getIp()))
+            blackList.setLocation(AddressUtil.getCityInfo(blackList.getIp()));
         return blackListMapper.insert(blackList).doOnSuccess(b -> routeEnhanceCacheService.saveBlackList(blackList));
     }
 

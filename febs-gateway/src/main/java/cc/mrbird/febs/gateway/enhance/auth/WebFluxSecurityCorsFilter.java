@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class WebFluxSecurityCorsConfigure implements WebFilter {
+public class WebFluxSecurityCorsFilter implements WebFilter {
 
     @Override
     @SuppressWarnings("all")

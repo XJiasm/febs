@@ -63,15 +63,15 @@ public class BlockLogServiceImpl implements BlockLogService {
         if (StringUtils.isNotBlank(blockLog.getIp())) {
             criteria.and("ip").is(blockLog.getIp());
         }
-        if (StringUtils.isNotBlank(blockLog.getRequestUri())) {
-            criteria.and("requestUri").is(blockLog.getRequestUri());
-        }
         if (StringUtils.isNotBlank(blockLog.getCreateTimeFrom())
                 && StringUtils.isNotBlank(blockLog.getCreateTimeTo())) {
             criteria.andOperator(
                     Criteria.where("createTime").gt(blockLog.getCreateTimeFrom()),
                     Criteria.where("createTime").lt(blockLog.getCreateTimeTo())
             );
+        }
+        if (StringUtils.isNotBlank(blockLog.getRequestUri())) {
+            criteria.and("requestUri").is(blockLog.getRequestUri());
         }
         query.addCriteria(criteria);
         return query;

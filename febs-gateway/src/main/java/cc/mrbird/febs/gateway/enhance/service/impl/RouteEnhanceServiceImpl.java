@@ -160,7 +160,6 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
         }
     }
 
-
     private void doBlackListCheck(AtomicBoolean forbid, Set<Object> blackList, URI uri, String requestMethod) {
         for (Object o : blackList) {
             BlackList b = JSONObject.parseObject(o.toString(), BlackList.class);
