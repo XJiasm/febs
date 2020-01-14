@@ -17,7 +17,7 @@ FEBS Cloud是一款使用Spring Cloud Hoxton.RELEASE、Spring Cloud OAuth2 & Spr
 
 5. 集成Spring Cloud Alibaba Nacos服务治理和集中配置管理；
 
-6. 网关集成Sentinel流控；
+6. 网关限流，网关黑名单限制，网关日志（WebFlux编程实践）；
 
 7. ~~集成Zipkin，方便跟踪Feign调用链~~，集成Skywalking APM；
 
