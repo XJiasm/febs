@@ -39,6 +39,8 @@ public class SecurityConfigure {
                 .authenticationEntryPoint((s, e) -> Mono.fromRunnable(() -> s.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED)))
                 .accessDeniedHandler((s, e) -> Mono.fromRunnable(() -> s.getResponse().setStatusCode(HttpStatus.FORBIDDEN)))
                 .and()
+                .headers().frameOptions().disable()
+                .and()
                 .csrf().disable()
                 .formLogin().disable()
                 .httpBasic().disable()
