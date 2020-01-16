@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_mysql_5.7
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
  Source Server Version : 50726
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 02/12/2019 16:43:55
+ Date: 16/01/2020 14:03:23
 */
 
 SET NAMES utf8mb4;
@@ -130,7 +130,7 @@ CREATE TABLE `t_log`  (
                           `CREATE_TIME` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
                           `location` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作地点',
                           PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户操作日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户操作日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_login_log
@@ -145,7 +145,7 @@ CREATE TABLE `t_login_log`  (
                                 `SYSTEM` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作系统',
                                 `BROWSER` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '浏览器',
                                 PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_menu
@@ -164,7 +164,7 @@ CREATE TABLE `t_menu`  (
                            `CREATE_TIME` datetime(0) NOT NULL COMMENT '创建时间',
                            `MODIFY_TIME` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
                            PRIMARY KEY (`MENU_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 173 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 180 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_menu
@@ -201,9 +201,9 @@ INSERT INTO `t_menu` VALUES (150, 2, '登录日志', '/monitor/loginlog', 'febs/
 INSERT INTO `t_menu` VALUES (151, 150, '删除日志', NULL, NULL, 'loginlog:delete', NULL, '1', NULL, '2019-07-22 13:43:04', NULL);
 INSERT INTO `t_menu` VALUES (152, 150, '导出Excel', NULL, NULL, 'loginlog:export', NULL, '1', NULL, '2019-07-22 13:43:30', NULL);
 INSERT INTO `t_menu` VALUES (153, 2, '接口文档', '/monitor/swagger', 'febs/monitor/swagger/Index', 'monitor:swagger', '', '0', 7, '2019-07-22 20:59:46', '2019-09-01 10:48:16');
-INSERT INTO `t_menu` VALUES (154, 0, '其他模块', '/others', 'Layout', '', 'el-icon-present', '0', 4, '2019-07-25 10:16:16', '2019-07-25 10:22:59');
+INSERT INTO `t_menu` VALUES (154, 0, '其他模块', '/others', 'Layout', '', 'el-icon-present', '0', 5, '2019-07-25 10:16:16', '2020-01-16 13:59:52');
 INSERT INTO `t_menu` VALUES (155, 154, '导入导出', '/others/eximport', 'febs/others/eximport/Index', 'others:eximport', '', '0', 1, '2019-07-25 10:19:31', NULL);
-INSERT INTO `t_menu` VALUES (156, 0, '代码生成', '/gen', 'Layout', '', 'el-icon-printer', '0', 3, '2019-07-25 10:24:03', NULL);
+INSERT INTO `t_menu` VALUES (156, 0, '代码生成', '/gen', 'Layout', '', 'el-icon-printer', '0', 4, '2019-07-25 10:24:03', '2020-01-16 13:59:49');
 INSERT INTO `t_menu` VALUES (157, 156, '生成配置', '/gen/config', 'febs/gen/config/Index', 'gen:config', '', '0', 1, '2019-07-25 10:24:55', NULL);
 INSERT INTO `t_menu` VALUES (158, 156, '生成代码', '/gen/generate', 'febs/gen/generate/Index', 'gen:generate', '', '0', 2, '2019-07-25 10:25:26', '2019-07-25 11:13:20');
 INSERT INTO `t_menu` VALUES (159, 157, '修改配置', NULL, NULL, 'gen:config:update', NULL, '1', NULL, '2019-07-26 16:22:56', NULL);
@@ -215,11 +215,18 @@ INSERT INTO `t_menu` VALUES (164, 163, '新增', NULL, NULL, 'client:add', NULL,
 INSERT INTO `t_menu` VALUES (165, 163, '修改', NULL, NULL, 'client:update', NULL, '1', NULL, '2019-09-26 22:58:43', NULL);
 INSERT INTO `t_menu` VALUES (166, 163, '删除', NULL, NULL, 'client:delete', NULL, '1', NULL, '2019-09-26 22:58:55', NULL);
 INSERT INTO `t_menu` VALUES (167, 163, '解密', NULL, NULL, 'client:decrypt', NULL, '1', NULL, '2019-09-26 22:59:08', NULL);
-INSERT INTO `t_menu` VALUES (168, 0, '静态组件', '/components', 'Layout', '', 'el-icon-present', '0', 5, '2019-12-02 16:41:28', NULL);
+INSERT INTO `t_menu` VALUES (168, 0, '静态组件', '/components', 'Layout', '', 'el-icon-present', '0', 6, '2019-12-02 16:41:28', '2020-01-16 13:59:55');
 INSERT INTO `t_menu` VALUES (169, 168, '二级菜单', '/two', 'demos/two/Index', '', '', '0', 1, '2019-12-02 16:41:51', NULL);
 INSERT INTO `t_menu` VALUES (170, 169, '三级菜单', '/three', 'demos/two/three/Index', '', '', '0', 1, '2019-12-02 16:42:09', NULL);
 INSERT INTO `t_menu` VALUES (171, 168, 'MarkDown', '/components/markdown', 'demos/markdown', '', '', '0', 2, '2019-12-02 16:42:34', NULL);
 INSERT INTO `t_menu` VALUES (172, 168, '富文本编辑器', '/components/tinymce', 'demos/tinymce', '', '', '0', 3, '2019-12-02 16:42:50', NULL);
+INSERT INTO `t_menu` VALUES (173, 0, '网关管理', '/route', 'Layout', '', 'el-icon-odometer', '0', 3, '2020-01-16 14:00:15', NULL);
+INSERT INTO `t_menu` VALUES (174, 173, '网关用户', '/route/user', 'febs/route/routeuser/Index', '', '', '0', 1, '2020-01-16 14:00:32', NULL);
+INSERT INTO `t_menu` VALUES (175, 173, '网关日志', '/route/log', 'febs/route/routelog/Index', '', '', '0', 2, '2020-01-16 14:00:47', NULL);
+INSERT INTO `t_menu` VALUES (176, 173, '限流规则', '/route/ratelimitrule', 'febs/route/ratelimitrule/Index', '', '', '0', 3, '2020-01-16 14:01:01', NULL);
+INSERT INTO `t_menu` VALUES (177, 173, '限流日志', '/route/ratelimitlog', 'febs/route/ratelimitlog/Index', '', '', '0', 4, '2020-01-16 14:01:17', NULL);
+INSERT INTO `t_menu` VALUES (178, 173, '黑名单管理', '/route/blacklist', 'febs/route/blacklist/Index', '', '', '0', 5, '2020-01-16 14:01:32', NULL);
+INSERT INTO `t_menu` VALUES (179, 173, '黑名单日志', '/route/blocklog', 'febs/route/blocklog/Index', '', '', '0', 6, '2020-01-16 14:01:49', NULL);
 
 -- ----------------------------
 -- Table structure for t_role
@@ -237,8 +244,8 @@ CREATE TABLE `t_role`  (
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES (1, '管理员', '管理员', '2017-12-27 16:23:11', '2019-12-02 16:43:05');
-INSERT INTO `t_role` VALUES (2, '注册用户', '可查看，新增，导出', '2019-01-04 14:11:28', '2019-07-26 15:20:49');
+INSERT INTO `t_role` VALUES (1, '管理员', '管理员', '2017-12-27 16:23:11', '2020-01-16 14:02:06');
+INSERT INTO `t_role` VALUES (2, '注册用户', '可查看，新增，导出', '2019-01-04 14:11:28', '2020-01-16 14:02:21');
 INSERT INTO `t_role` VALUES (3, '系统监控员', '负责系统监控模块', '2019-09-01 10:30:25', '2019-09-01 10:30:37');
 
 -- ----------------------------
@@ -253,22 +260,6 @@ CREATE TABLE `t_role_menu`  (
 -- ----------------------------
 -- Records of t_role_menu
 -- ----------------------------
-INSERT INTO `t_role_menu` VALUES (2, 1);
-INSERT INTO `t_role_menu` VALUES (2, 3);
-INSERT INTO `t_role_menu` VALUES (2, 4);
-INSERT INTO `t_role_menu` VALUES (2, 5);
-INSERT INTO `t_role_menu` VALUES (2, 6);
-INSERT INTO `t_role_menu` VALUES (2, 2);
-INSERT INTO `t_role_menu` VALUES (2, 10);
-INSERT INTO `t_role_menu` VALUES (2, 150);
-INSERT INTO `t_role_menu` VALUES (2, 149);
-INSERT INTO `t_role_menu` VALUES (2, 148);
-INSERT INTO `t_role_menu` VALUES (2, 153);
-INSERT INTO `t_role_menu` VALUES (2, 156);
-INSERT INTO `t_role_menu` VALUES (2, 157);
-INSERT INTO `t_role_menu` VALUES (2, 158);
-INSERT INTO `t_role_menu` VALUES (2, 154);
-INSERT INTO `t_role_menu` VALUES (2, 155);
 INSERT INTO `t_role_menu` VALUES (3, 2);
 INSERT INTO `t_role_menu` VALUES (3, 10);
 INSERT INTO `t_role_menu` VALUES (3, 24);
@@ -318,6 +309,13 @@ INSERT INTO `t_role_menu` VALUES (1, 161);
 INSERT INTO `t_role_menu` VALUES (1, 162);
 INSERT INTO `t_role_menu` VALUES (1, 148);
 INSERT INTO `t_role_menu` VALUES (1, 153);
+INSERT INTO `t_role_menu` VALUES (1, 173);
+INSERT INTO `t_role_menu` VALUES (1, 174);
+INSERT INTO `t_role_menu` VALUES (1, 175);
+INSERT INTO `t_role_menu` VALUES (1, 176);
+INSERT INTO `t_role_menu` VALUES (1, 177);
+INSERT INTO `t_role_menu` VALUES (1, 178);
+INSERT INTO `t_role_menu` VALUES (1, 179);
 INSERT INTO `t_role_menu` VALUES (1, 156);
 INSERT INTO `t_role_menu` VALUES (1, 157);
 INSERT INTO `t_role_menu` VALUES (1, 159);
@@ -330,6 +328,47 @@ INSERT INTO `t_role_menu` VALUES (1, 169);
 INSERT INTO `t_role_menu` VALUES (1, 170);
 INSERT INTO `t_role_menu` VALUES (1, 171);
 INSERT INTO `t_role_menu` VALUES (1, 172);
+INSERT INTO `t_role_menu` VALUES (2, 1);
+INSERT INTO `t_role_menu` VALUES (2, 3);
+INSERT INTO `t_role_menu` VALUES (2, 4);
+INSERT INTO `t_role_menu` VALUES (2, 5);
+INSERT INTO `t_role_menu` VALUES (2, 6);
+INSERT INTO `t_role_menu` VALUES (2, 2);
+INSERT INTO `t_role_menu` VALUES (2, 10);
+INSERT INTO `t_role_menu` VALUES (2, 150);
+INSERT INTO `t_role_menu` VALUES (2, 149);
+INSERT INTO `t_role_menu` VALUES (2, 148);
+INSERT INTO `t_role_menu` VALUES (2, 153);
+INSERT INTO `t_role_menu` VALUES (2, 173);
+INSERT INTO `t_role_menu` VALUES (2, 174);
+INSERT INTO `t_role_menu` VALUES (2, 175);
+INSERT INTO `t_role_menu` VALUES (2, 176);
+INSERT INTO `t_role_menu` VALUES (2, 177);
+INSERT INTO `t_role_menu` VALUES (2, 178);
+INSERT INTO `t_role_menu` VALUES (2, 179);
+INSERT INTO `t_role_menu` VALUES (2, 156);
+INSERT INTO `t_role_menu` VALUES (2, 157);
+INSERT INTO `t_role_menu` VALUES (2, 158);
+INSERT INTO `t_role_menu` VALUES (2, 154);
+INSERT INTO `t_role_menu` VALUES (2, 155);
+INSERT INTO `t_role_menu` VALUES (2, 168);
+INSERT INTO `t_role_menu` VALUES (2, 169);
+INSERT INTO `t_role_menu` VALUES (2, 170);
+INSERT INTO `t_role_menu` VALUES (2, 171);
+INSERT INTO `t_role_menu` VALUES (2, 172);
+
+-- ----------------------------
+-- Table structure for t_trade_log
+-- ----------------------------
+DROP TABLE IF EXISTS `t_trade_log`;
+CREATE TABLE `t_trade_log`  (
+                                `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                                `goods_id` int(11) NOT NULL COMMENT '商品ID',
+                                `goods_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
+                                `status` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
+                                `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+                                PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for t_user
@@ -357,7 +396,7 @@ CREATE TABLE `t_user`  (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES (1, 'MrBird', '$2a$10$gzhiUb1ldc1Rf3lka4k/WOoFKKGPepHSzJxzcPSN5/65SzkMdc.SK', 2, 'mrbird@qq.com', '17788888888', '1', '2019-06-14 20:39:22', '2019-07-19 10:18:36', '2019-12-02 16:39:56', '0', '1', 'white', 'gaOngJwsRYRaVAuXXcmB.png', '我是帅比作者。');
+INSERT INTO `t_user` VALUES (1, 'MrBird', '$2a$10$gzhiUb1ldc1Rf3lka4k/WOoFKKGPepHSzJxzcPSN5/65SzkMdc.SK', 2, 'mrbird@qq.com', '17788888888', '1', '2019-06-14 20:39:22', '2019-07-19 10:18:36', '2020-01-16 13:58:28', '0', '1', 'white', 'gaOngJwsRYRaVAuXXcmB.png', '我是帅比作者。');
 INSERT INTO `t_user` VALUES (15, 'scott', '$2a$10$7tATi2STciLHnEgO/RfIxOYf2MQBu/SDVMRDs54rlSYVj2VmwwCHC', 5, 'scott@hotmail.com', '17720888888', '1', '2019-07-20 19:00:32', '2019-07-31 10:14:29', '2019-09-01 10:35:31', '2', NULL, NULL, 'BiazfanxmamNRoxxVxka.png', NULL);
 INSERT INTO `t_user` VALUES (16, 'Jane', '$2a$10$ECkfipOPY7hORVdlSzIOX.8hnig0shAZQPG8pQ7D5iVP.uVogmmHy', 4, 'Jane@hotmail.com', '13489898989', '1', '2019-09-01 10:31:21', '2019-09-01 10:32:10', '2019-09-01 10:32:27', '1', NULL, NULL, '2dd7a2d09fa94bf8b5c52e5318868b4d9.jpg', NULL);
 
@@ -394,65 +433,74 @@ INSERT INTO `t_user_role` VALUES (1, 1);
 INSERT INTO `t_user_role` VALUES (15, 2);
 INSERT INTO `t_user_role` VALUES (16, 3);
 
---
--- Copyright 2015-2019 The OpenZipkin Authors
---
--- Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
--- in compliance with the License. You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software distributed under the License
--- is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
--- or implied. See the License for the specific language governing permissions and limitations under
--- the License.
---
+-- ----------------------------
+-- Table structure for zipkin_annotations
+-- ----------------------------
+DROP TABLE IF EXISTS `zipkin_annotations`;
+CREATE TABLE `zipkin_annotations`  (
+                                       `trace_id_high` bigint(20) NOT NULL DEFAULT 0 COMMENT 'If non zero, this means the trace uses 128 bit traceIds instead of 64 bit',
+                                       `trace_id` bigint(20) NOT NULL COMMENT 'coincides with zipkin_spans.trace_id',
+                                       `span_id` bigint(20) NOT NULL COMMENT 'coincides with zipkin_spans.id',
+                                       `a_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'BinaryAnnotation.key or Annotation.value if type == -1',
+                                       `a_value` blob NULL COMMENT 'BinaryAnnotation.value(), which must be smaller than 64KB',
+                                       `a_type` int(11) NOT NULL COMMENT 'BinaryAnnotation.type() or -1 if Annotation',
+                                       `a_timestamp` bigint(20) NULL DEFAULT NULL COMMENT 'Used to implement TTL; Annotation.timestamp or zipkin_spans.timestamp',
+                                       `endpoint_ipv4` int(11) NULL DEFAULT NULL COMMENT 'Null when Binary/Annotation.endpoint is null',
+                                       `endpoint_ipv6` binary(16) NULL DEFAULT NULL COMMENT 'Null when Binary/Annotation.endpoint is null, or no IPv6 address',
+                                       `endpoint_port` smallint(6) NULL DEFAULT NULL COMMENT 'Null when Binary/Annotation.endpoint is null',
+                                       `endpoint_service_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Null when Binary/Annotation.endpoint is null',
+                                       UNIQUE INDEX `trace_id_high`(`trace_id_high`, `trace_id`, `span_id`, `a_key`, `a_timestamp`) USING BTREE COMMENT 'Ignore insert on duplicate',
+                                       UNIQUE INDEX `trace_id_high_4`(`trace_id_high`, `trace_id`, `span_id`, `a_key`, `a_timestamp`) USING BTREE COMMENT 'Ignore insert on duplicate',
+                                       INDEX `trace_id_high_2`(`trace_id_high`, `trace_id`, `span_id`) USING BTREE COMMENT 'for joining with zipkin_spans',
+                                       INDEX `trace_id_high_3`(`trace_id_high`, `trace_id`) USING BTREE COMMENT 'for getTraces/ByIds',
+                                       INDEX `endpoint_service_name`(`endpoint_service_name`) USING BTREE COMMENT 'for getTraces and getServiceNames',
+                                       INDEX `a_type`(`a_type`) USING BTREE COMMENT 'for getTraces and autocomplete values',
+                                       INDEX `a_key`(`a_key`) USING BTREE COMMENT 'for getTraces and autocomplete values',
+                                       INDEX `trace_id`(`trace_id`, `span_id`, `a_key`) USING BTREE COMMENT 'for dependencies job',
+                                       INDEX `trace_id_high_5`(`trace_id_high`, `trace_id`, `span_id`) USING BTREE COMMENT 'for joining with zipkin_spans',
+                                       INDEX `trace_id_high_6`(`trace_id_high`, `trace_id`) USING BTREE COMMENT 'for getTraces/ByIds',
+                                       INDEX `endpoint_service_name_2`(`endpoint_service_name`) USING BTREE COMMENT 'for getTraces and getServiceNames',
+                                       INDEX `a_type_2`(`a_type`) USING BTREE COMMENT 'for getTraces and autocomplete values',
+                                       INDEX `a_key_2`(`a_key`) USING BTREE COMMENT 'for getTraces and autocomplete values',
+                                       INDEX `trace_id_2`(`trace_id`, `span_id`, `a_key`) USING BTREE COMMENT 'for dependencies job'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compressed;
 
-CREATE TABLE IF NOT EXISTS zipkin_spans (
-                                            `trace_id_high` BIGINT NOT NULL DEFAULT 0 COMMENT 'If non zero, this means the trace uses 128 bit traceIds instead of 64 bit',
-                                            `trace_id` BIGINT NOT NULL,
-                                            `id` BIGINT NOT NULL,
-                                            `name` VARCHAR(255) NOT NULL,
-                                            `remote_service_name` VARCHAR(255),
-                                            `parent_id` BIGINT,
-                                            `debug` BIT(1),
-                                            `start_ts` BIGINT COMMENT 'Span.timestamp(): epoch micros used for endTs query and to implement TTL',
-                                            `duration` BIGINT COMMENT 'Span.duration(): micros used for minDuration and maxDuration query',
-                                            PRIMARY KEY (`trace_id_high`, `trace_id`, `id`)
-) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
+-- ----------------------------
+-- Table structure for zipkin_dependencies
+-- ----------------------------
+DROP TABLE IF EXISTS `zipkin_dependencies`;
+CREATE TABLE `zipkin_dependencies`  (
+                                        `day` date NOT NULL,
+                                        `parent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                        `child` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                        `call_count` bigint(20) NULL DEFAULT NULL,
+                                        `error_count` bigint(20) NULL DEFAULT NULL,
+                                        PRIMARY KEY (`day`, `parent`, `child`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compressed;
 
-ALTER TABLE zipkin_spans ADD INDEX(`trace_id_high`, `trace_id`) COMMENT 'for getTracesByIds';
-ALTER TABLE zipkin_spans ADD INDEX(`name`) COMMENT 'for getTraces and getSpanNames';
-ALTER TABLE zipkin_spans ADD INDEX(`remote_service_name`) COMMENT 'for getTraces and getRemoteServiceNames';
-ALTER TABLE zipkin_spans ADD INDEX(`start_ts`) COMMENT 'for getTraces ordering and range';
+-- ----------------------------
+-- Table structure for zipkin_spans
+-- ----------------------------
+DROP TABLE IF EXISTS `zipkin_spans`;
+CREATE TABLE `zipkin_spans`  (
+                                 `trace_id_high` bigint(20) NOT NULL DEFAULT 0 COMMENT 'If non zero, this means the trace uses 128 bit traceIds instead of 64 bit',
+                                 `trace_id` bigint(20) NOT NULL,
+                                 `id` bigint(20) NOT NULL,
+                                 `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                 `remote_service_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                                 `parent_id` bigint(20) NULL DEFAULT NULL,
+                                 `debug` bit(1) NULL DEFAULT NULL,
+                                 `start_ts` bigint(20) NULL DEFAULT NULL COMMENT 'Span.timestamp(): epoch micros used for endTs query and to implement TTL',
+                                 `duration` bigint(20) NULL DEFAULT NULL COMMENT 'Span.duration(): micros used for minDuration and maxDuration query',
+                                 PRIMARY KEY (`trace_id_high`, `trace_id`, `id`) USING BTREE,
+                                 INDEX `trace_id_high`(`trace_id_high`, `trace_id`) USING BTREE COMMENT 'for getTracesByIds',
+                                 INDEX `name`(`name`) USING BTREE COMMENT 'for getTraces and getSpanNames',
+                                 INDEX `remote_service_name`(`remote_service_name`) USING BTREE COMMENT 'for getTraces and getRemoteServiceNames',
+                                 INDEX `start_ts`(`start_ts`) USING BTREE COMMENT 'for getTraces ordering and range',
+                                 INDEX `trace_id_high_2`(`trace_id_high`, `trace_id`) USING BTREE COMMENT 'for getTracesByIds',
+                                 INDEX `name_2`(`name`) USING BTREE COMMENT 'for getTraces and getSpanNames',
+                                 INDEX `remote_service_name_2`(`remote_service_name`) USING BTREE COMMENT 'for getTraces and getRemoteServiceNames',
+                                 INDEX `start_ts_2`(`start_ts`) USING BTREE COMMENT 'for getTraces ordering and range'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compressed;
 
-CREATE TABLE IF NOT EXISTS zipkin_annotations (
-                                                  `trace_id_high` BIGINT NOT NULL DEFAULT 0 COMMENT 'If non zero, this means the trace uses 128 bit traceIds instead of 64 bit',
-                                                  `trace_id` BIGINT NOT NULL COMMENT 'coincides with zipkin_spans.trace_id',
-                                                  `span_id` BIGINT NOT NULL COMMENT 'coincides with zipkin_spans.id',
-                                                  `a_key` VARCHAR(255) NOT NULL COMMENT 'BinaryAnnotation.key or Annotation.value if type == -1',
-                                                  `a_value` BLOB COMMENT 'BinaryAnnotation.value(), which must be smaller than 64KB',
-                                                  `a_type` INT NOT NULL COMMENT 'BinaryAnnotation.type() or -1 if Annotation',
-                                                  `a_timestamp` BIGINT COMMENT 'Used to implement TTL; Annotation.timestamp or zipkin_spans.timestamp',
-                                                  `endpoint_ipv4` INT COMMENT 'Null when Binary/Annotation.endpoint is null',
-                                                  `endpoint_ipv6` BINARY(16) COMMENT 'Null when Binary/Annotation.endpoint is null, or no IPv6 address',
-                                                  `endpoint_port` SMALLINT COMMENT 'Null when Binary/Annotation.endpoint is null',
-                                                  `endpoint_service_name` VARCHAR(255) COMMENT 'Null when Binary/Annotation.endpoint is null'
-) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
-
-ALTER TABLE zipkin_annotations ADD UNIQUE KEY(`trace_id_high`, `trace_id`, `span_id`, `a_key`, `a_timestamp`) COMMENT 'Ignore insert on duplicate';
-ALTER TABLE zipkin_annotations ADD INDEX(`trace_id_high`, `trace_id`, `span_id`) COMMENT 'for joining with zipkin_spans';
-ALTER TABLE zipkin_annotations ADD INDEX(`trace_id_high`, `trace_id`) COMMENT 'for getTraces/ByIds';
-ALTER TABLE zipkin_annotations ADD INDEX(`endpoint_service_name`) COMMENT 'for getTraces and getServiceNames';
-ALTER TABLE zipkin_annotations ADD INDEX(`a_type`) COMMENT 'for getTraces and autocomplete values';
-ALTER TABLE zipkin_annotations ADD INDEX(`a_key`) COMMENT 'for getTraces and autocomplete values';
-ALTER TABLE zipkin_annotations ADD INDEX(`trace_id`, `span_id`, `a_key`) COMMENT 'for dependencies job';
-
-CREATE TABLE IF NOT EXISTS zipkin_dependencies (
-                                                   `day` DATE NOT NULL,
-                                                   `parent` VARCHAR(255) NOT NULL,
-                                                   `child` VARCHAR(255) NOT NULL,
-                                                   `call_count` BIGINT,
-                                                   `error_count` BIGINT,
-                                                   PRIMARY KEY (`day`, `parent`, `child`)
-) ENGINE=InnoDB ROW_FORMAT=COMPRESSED CHARACTER SET=utf8 COLLATE utf8_general_ci;
+SET FOREIGN_KEY_CHECKS = 1;
