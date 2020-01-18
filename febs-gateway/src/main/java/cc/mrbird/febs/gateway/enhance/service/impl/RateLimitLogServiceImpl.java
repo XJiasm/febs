@@ -57,6 +57,7 @@ public class RateLimitLogServiceImpl implements RateLimitLogService {
     private Query getQuery(RateLimitLog rateLimitLog) {
         Query query = new Query();
         Criteria criteria = new Criteria();
+
         if (StringUtils.isNotBlank(rateLimitLog.getIp())) {
             criteria.and("ip").is(rateLimitLog.getIp());
         }
