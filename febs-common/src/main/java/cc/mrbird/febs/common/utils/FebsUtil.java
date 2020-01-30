@@ -1,6 +1,7 @@
 package cc.mrbird.febs.common.utils;
 
 import cc.mrbird.febs.common.entity.CurrentUser;
+import cc.mrbird.febs.common.entity.FebsAuthUser;
 import cc.mrbird.febs.common.entity.constant.PageConstant;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -243,6 +244,10 @@ public class FebsUtil {
      * @return String 用户名
      */
     public static String getCurrentUsername() {
+        Object principal = getOAuth2Authentication().getPrincipal();
+        if (principal instanceof FebsAuthUser) {
+            return ((FebsAuthUser) principal).getUsername();
+        }
         return (String) getOAuth2Authentication().getPrincipal();
     }
 
