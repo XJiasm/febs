@@ -22,7 +22,7 @@ public class FebsAuthExceptionEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
         int status = HttpServletResponse.SC_UNAUTHORIZED;
-        String message = authException.getMessage();
+        String message = "token不合法";
         if (StringUtils.containsIgnoreCase(message, "Invalid access token")) {
             message = "访问令牌不正确";
         }
