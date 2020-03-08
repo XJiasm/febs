@@ -15,13 +15,13 @@ import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xkcoding.justauth.AuthRequestFactory;
+import lombok.RequiredArgsConstructor;
 import me.zhyd.oauth.config.AuthSource;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthRequest;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -38,6 +38,7 @@ import java.util.Map;
  * @author MrBird
  */
 @Service
+@RequiredArgsConstructor
 public class SocialLoginServiceImpl implements SocialLoginService {
 
     private static final String USERNAME = "username";
@@ -46,20 +47,13 @@ public class SocialLoginServiceImpl implements SocialLoginService {
     private static final String NOT_BIND = "not_bind";
     private static final String SOCIAL_LOGIN_SUCCESS = "social_login_success";
 
-    @Autowired
-    private UserManager userManager;
-    @Autowired
-    private AuthRequestFactory factory;
-    @Autowired
-    private FebsAuthProperties properties;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserConnectionService userConnectionService;
-    @Autowired
-    private ResourceOwnerPasswordTokenGranter granter;
-    @Autowired
-    private RedisClientDetailsService redisClientDetailsService;
+    private final UserManager userManager;
+    private final AuthRequestFactory factory;
+    private final FebsAuthProperties properties;
+    private final PasswordEncoder passwordEncoder;
+    private final UserConnectionService userConnectionService;
+    private final ResourceOwnerPasswordTokenGranter granter;
+    private final RedisClientDetailsService redisClientDetailsService;
 
     @Override
     public AuthRequest renderAuth(String oauthType) throws FebsException {
@@ -94,7 +88,7 @@ public class SocialLoginServiceImpl implements SocialLoginService {
                 if (user == null) {
                     throw new FebsException("系统中未找到与第三方账号对应的账户");
                 }
-                OAuth2AccessToken oAuth2AccessToken = getOAuth2AccessToken(user);
+                OAuth2AccessToken oAuth2AccessToken = getOauth2AccessToken(user);
                 febsResponse.message(SOCIAL_LOGIN_SUCCESS).data(oAuth2AccessToken);
                 febsResponse.put(USERNAME, user.getUsername());
             }
@@ -111,7 +105,7 @@ public class SocialLoginServiceImpl implements SocialLoginService {
             throw new FebsException("绑定系统账号失败，用户名或密码错误！");
         }
         this.createConnection(systemUser, authUser);
-        return this.getOAuth2AccessToken(systemUser);
+        return this.getOauth2AccessToken(systemUser);
     }
 
     @Override
@@ -123,7 +117,7 @@ public class SocialLoginServiceImpl implements SocialLoginService {
         String encryptPassword = passwordEncoder.encode(registUser.getBindPassword());
         SystemUser systemUser = this.userManager.registUser(registUser.getBindUsername(), encryptPassword);
         this.createConnection(systemUser, authUser);
-        return this.getOAuth2AccessToken(systemUser);
+        return this.getOauth2AccessToken(systemUser);
     }
 
     @Override
@@ -170,9 +164,10 @@ public class SocialLoginServiceImpl implements SocialLoginService {
     }
 
     private AuthCallback resolveAuthCallback(AuthCallback callback) {
+        int stateLength = 3;
         String state = callback.getState();
         String[] strings = StringUtils.splitByWholeSeparatorPreserveAllTokens(state, "::");
-        if (strings.length == 3) {
+        if (strings.length == stateLength) {
             callback.setState(strings[0] + "::" + strings[1]);
         }
         return callback;
@@ -191,7 +186,7 @@ public class SocialLoginServiceImpl implements SocialLoginService {
         return StringUtils.equalsIgnoreCase(username, currentUsername);
     }
 
-    private OAuth2AccessToken getOAuth2AccessToken(SystemUser user) throws FebsException {
+    private OAuth2AccessToken getOauth2AccessToken(SystemUser user) throws FebsException {
         final HttpServletRequest httpServletRequest = FebsUtil.getHttpServletRequest();
         httpServletRequest.setAttribute(ParamsConstant.LOGIN_TYPE, SocialConstant.SOCIAL_LOGIN);
         String socialLoginClientId = properties.getSocialLoginClientId();

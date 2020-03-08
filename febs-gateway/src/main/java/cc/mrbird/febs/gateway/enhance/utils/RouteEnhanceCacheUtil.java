@@ -12,7 +12,9 @@ public class RouteEnhanceCacheUtil {
     private static final String RATELIMIT_COUNT_KEY_PREFIX = "febs:route:ratelimit:cout:";
 
     public static String getBlackListCacheKey(String ip) {
-        if (FebsConstant.LOCALHOST.equalsIgnoreCase(ip)) ip = FebsConstant.LOCALHOST_IP;
+        if (FebsConstant.LOCALHOST.equalsIgnoreCase(ip)) {
+            ip = FebsConstant.LOCALHOST_IP;
+        }
         return String.format("%s%s", BLACKLIST_CHACHE_KEY_PREFIX, ip);
     }
 

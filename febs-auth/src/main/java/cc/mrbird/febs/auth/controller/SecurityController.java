@@ -3,7 +3,7 @@ package cc.mrbird.febs.auth.controller;
 import cc.mrbird.febs.auth.manager.UserManager;
 import cc.mrbird.febs.auth.service.ValidateCodeService;
 import cc.mrbird.febs.common.exception.ValidateCodeException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,12 +16,11 @@ import java.security.Principal;
  * @author MrBird
  */
 @RestController
+@RequiredArgsConstructor
 public class SecurityController {
 
-    @Autowired
-    private ValidateCodeService validateCodeService;
-    @Autowired
-    private UserManager userManager;
+    private final ValidateCodeService validateCodeService;
+    private final UserManager userManager;
 
     @GetMapping("user")
     public Principal currentUser(Principal principal) {

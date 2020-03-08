@@ -3,6 +3,9 @@ package cc.mrbird.febs.gateway.enhance.configure;
 import cc.mrbird.febs.common.annotation.EnableFebsLettuceRedis;
 import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.gateway.enhance.runner.FebsRouteEnhanceRunner;
+import cc.mrbird.febs.gateway.enhance.service.BlackListService;
+import cc.mrbird.febs.gateway.enhance.service.RateLimitRuleService;
+import cc.mrbird.febs.gateway.enhance.service.RouteEnhanceCacheService;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -39,7 +42,9 @@ public class FebsRouteEnhanceConfigure {
     }
 
     @Bean
-    public ApplicationRunner febsRoutenEhanceRunner() {
-        return new FebsRouteEnhanceRunner();
+    public ApplicationRunner febsRoutenEhanceRunner(RouteEnhanceCacheService cacheService,
+                                                    BlackListService blackListService,
+                                                    RateLimitRuleService rateLimitRuleService) {
+        return new FebsRouteEnhanceRunner(cacheService, blackListService, rateLimitRuleService);
     }
 }

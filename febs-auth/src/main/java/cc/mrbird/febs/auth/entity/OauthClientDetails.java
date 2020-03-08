@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName("oauth_client_details")
-public class OAuthClientDetails implements Serializable {
+public class OauthClientDetails implements Serializable {
 
     private static final long serialVersionUID = 421783821058285802L;
 

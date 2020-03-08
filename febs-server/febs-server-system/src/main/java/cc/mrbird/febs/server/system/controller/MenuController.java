@@ -7,9 +7,9 @@ import cc.mrbird.febs.common.entity.system.Menu;
 import cc.mrbird.febs.server.system.service.IMenuService;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,15 +27,15 @@ import java.util.Map;
 @Slf4j
 @Validated
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/menu")
 public class MenuController {
 
-    @Autowired
-    private IMenuService menuService;
+    private final IMenuService menuService;
 
     @GetMapping("/{username}")
     public FebsResponse getUserRouters(@NotBlank(message = "{required}") @PathVariable String username) {
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>(2);
         List<VueRouter<Menu>> userRouters = this.menuService.getUserRouters(username);
         String userPermissions = this.menuService.findUserPermissions(username);
         String[] permissionArray = new String[0];

@@ -38,6 +38,9 @@ import java.util.stream.IntStream;
 @Slf4j
 public class FebsUtil {
 
+    private static final Pattern CHINESE_PATTERN = Pattern.compile("[\u4e00-\u9fa5]");
+    private static final String UNKNOW = "unknown";
+
     /**
      * 驼峰转下划线
      *
@@ -45,17 +48,20 @@ public class FebsUtil {
      * @return 结果
      */
     public static String camelToUnderscore(String value) {
-        if (StringUtils.isBlank(value))
+        if (StringUtils.isBlank(value)) {
             return value;
+        }
         String[] arr = StringUtils.splitByCharacterTypeCamelCase(value);
-        if (arr.length == 0)
+        if (arr.length == 0) {
             return value;
+        }
         StringBuilder result = new StringBuilder();
         IntStream.range(0, arr.length).forEach(i -> {
-            if (i != arr.length - 1)
+            if (i != arr.length - 1) {
                 result.append(arr[i]).append("_");
-            else
+            } else {
                 result.append(arr[i]);
+            }
         });
         return StringUtils.lowerCase(result.toString());
     }
@@ -139,7 +145,7 @@ public class FebsUtil {
      * @return Map<String, Object>
      */
     public static Map<String, Object> getDataTable(IPage<?> pageInfo) {
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>(2);
         data.put(PageConstant.ROWS, pageInfo.getRecords());
         data.put(PageConstant.TOTAL, pageInfo.getTotal());
         return data;
@@ -162,13 +168,13 @@ public class FebsUtil {
     public static String getHttpServletRequestIpAddress() {
         HttpServletRequest request = getHttpServletRequest();
         String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
@@ -183,27 +189,27 @@ public class FebsUtil {
     public static String getServerHttpRequestIpAddress(ServerHttpRequest request) {
         HttpHeaders headers = request.getHeaders();
         String ip = headers.getFirst("x-forwarded-for");
-        if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+        if (ip != null && ip.length() != 0 && !UNKNOW.equalsIgnoreCase(ip)) {
             if (ip.contains(",")) {
                 ip = ip.split(",")[0];
             }
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("HTTP_CLIENT_IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("HTTP_X_FORWARDED_FOR");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("X-Real-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = Objects.requireNonNull(request.getRemoteAddress()).getAddress().getHostAddress();
         }
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
@@ -216,9 +222,8 @@ public class FebsUtil {
      * @return 结果
      */
     public static boolean containChinese(String value) {
-        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
-        Matcher m = p.matcher(value);
-        return m.find();
+        Matcher matcher = CHINESE_PATTERN.matcher(value);
+        return matcher.find();
     }
 
     /**
@@ -244,11 +249,11 @@ public class FebsUtil {
      * @return String 用户名
      */
     public static String getCurrentUsername() {
-        Object principal = getOAuth2Authentication().getPrincipal();
+        Object principal = getOauth2Authentication().getPrincipal();
         if (principal instanceof FebsAuthUser) {
             return ((FebsAuthUser) principal).getUsername();
         }
-        return (String) getOAuth2Authentication().getPrincipal();
+        return (String) getOauth2Authentication().getPrincipal();
     }
 
     /**
@@ -257,7 +262,7 @@ public class FebsUtil {
      * @return Collection<GrantedAuthority>权限集
      */
     public static Collection<GrantedAuthority> getCurrentUserAuthority() {
-        return getOAuth2Authentication().getAuthorities();
+        return getOauth2Authentication().getAuthorities();
     }
 
     /**
@@ -266,17 +271,17 @@ public class FebsUtil {
      * @return String 令牌内容
      */
     public static String getCurrentTokenValue() {
-        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOAuth2Authentication().getDetails();
+        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOauth2Authentication().getDetails();
         return details.getTokenValue();
     }
 
-    private static OAuth2Authentication getOAuth2Authentication() {
+    private static OAuth2Authentication getOauth2Authentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (OAuth2Authentication) authentication;
     }
 
     @SuppressWarnings("all")
     private static LinkedHashMap<String, Object> getAuthenticationDetails() {
-        return (LinkedHashMap<String, Object>) getOAuth2Authentication().getUserAuthentication().getDetails();
+        return (LinkedHashMap<String, Object>) getOauth2Authentication().getUserAuthentication().getDetails();
     }
 }

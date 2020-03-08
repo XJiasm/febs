@@ -3,7 +3,7 @@ package cc.mrbird.febs.gateway.enhance.controller;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.gateway.enhance.entity.RateLimitRule;
 import cc.mrbird.febs.gateway.enhance.service.RateLimitRuleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -13,11 +13,11 @@ import reactor.core.publisher.Mono;
  * @author MrBird
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("route/auth/rateLimitRule")
 public class RateLimitRuleController {
 
-    @Autowired
-    private RateLimitRuleService rateLimitRuleService;
+    private final RateLimitRuleService rateLimitRuleService;
 
     @GetMapping("data")
     public Flux<RateLimitRule> findUserPages(QueryRequest request, RateLimitRule rateLimitRule) {

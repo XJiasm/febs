@@ -6,8 +6,8 @@ import cc.mrbird.febs.server.system.properties.FesbSwaggerProperties;
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.extension.parsers.BlockAttackSqlParser;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -31,10 +31,10 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 @Configuration
 @EnableSwagger2
+@RequiredArgsConstructor
 public class FebsWebConfigure {
 
-    @Autowired
-    private FebsServerSystemProperties properties;
+    private final FebsServerSystemProperties properties;
 
     /**
      * 注册异步线程池

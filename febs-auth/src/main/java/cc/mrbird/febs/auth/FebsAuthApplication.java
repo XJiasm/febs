@@ -9,6 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
+/**
+ * @author MrBird
+ */
 @EnableDiscoveryClient
 @EnableFebsLettuceRedis
 @EnableFebsAuthExceptionHandler

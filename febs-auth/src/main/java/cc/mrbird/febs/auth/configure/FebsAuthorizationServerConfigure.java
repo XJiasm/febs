@@ -1,15 +1,15 @@
 package cc.mrbird.febs.auth.configure;
 
 import cc.mrbird.febs.auth.properties.FebsAuthProperties;
-import cc.mrbird.febs.auth.service.impl.FebsUserDetailService;
 import cc.mrbird.febs.auth.service.impl.RedisClientDetailsService;
 import cc.mrbird.febs.auth.translator.FebsWebResponseExceptionTranslator;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -35,22 +35,16 @@ import java.util.UUID;
  */
 @Configuration
 @EnableAuthorizationServer
+@RequiredArgsConstructor
 public class FebsAuthorizationServerConfigure extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private FebsUserDetailService userDetailService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private FebsWebResponseExceptionTranslator exceptionTranslator;
-    @Autowired
-    private FebsAuthProperties properties;
-    @Autowired
-    private RedisClientDetailsService redisClientDetailsService;
-    @Autowired
-    private RedisConnectionFactory redisConnectionFactory;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailService;
+    private final PasswordEncoder passwordEncoder;
+    private final FebsWebResponseExceptionTranslator exceptionTranslator;
+    private final FebsAuthProperties properties;
+    private final RedisClientDetailsService redisClientDetailsService;
+    private final RedisConnectionFactory redisConnectionFactory;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {

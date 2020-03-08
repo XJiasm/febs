@@ -24,10 +24,17 @@ import java.time.LocalDateTime;
 @Service
 public class RouteLogServiceImpl implements RouteLogService {
 
-    @Autowired(required = false)
     private RouteLogMapper routeLogMapper;
-    @Autowired(required = false)
     private ReactiveMongoTemplate template;
+
+    @Autowired(required = false)
+    public void setRouteLogMapper(RouteLogMapper routeLogMapper) {
+        this.routeLogMapper = routeLogMapper;
+    }
+    @Autowired(required = false)
+    public void setTemplate(ReactiveMongoTemplate template) {
+        this.template = template;
+    }
 
     @Override
     public Flux<RouteLog> findAll() {

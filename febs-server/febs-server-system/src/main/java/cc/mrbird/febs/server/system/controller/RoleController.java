@@ -8,8 +8,8 @@ import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.server.system.service.IRoleService;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,17 +20,17 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author MrBird
+ */
 @Slf4j
 @Validated
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("role")
 public class RoleController {
 
-    @Autowired
-    private IRoleService roleService;
-
-    private String message;
-
+    private final IRoleService roleService;
     @GetMapping
     public FebsResponse roleList(QueryRequest queryRequest, Role role) {
         Map<String, Object> dataTable = FebsUtil.getDataTable(roleService.findRoles(role, queryRequest));

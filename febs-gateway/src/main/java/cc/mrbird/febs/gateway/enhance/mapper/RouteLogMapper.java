@@ -11,5 +11,11 @@ import reactor.core.publisher.Flux;
 @Repository
 public interface RouteLogMapper extends ReactiveMongoRepository<RouteLog, String> {
 
+    /**
+     * 删除路由日志
+     *
+     * @param ids 路由日志id
+     * @return 被删除的路由日志
+     */
     Flux<RouteLog> deleteByIdIn(String[] ids);
 }

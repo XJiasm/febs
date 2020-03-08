@@ -1,9 +1,8 @@
 package cc.mrbird.febs.auth.configure;
 
 import cc.mrbird.febs.auth.filter.ValidateCodeFilter;
-import cc.mrbird.febs.auth.service.impl.FebsUserDetailService;
 import cc.mrbird.febs.common.entity.constant.EndpointConstant;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -21,16 +21,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Order(2)
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class FebsSecurityConfigure extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private FebsUserDetailService userDetailService;
-    @Autowired
-    private ValidateCodeFilter validateCodeFilter;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailService;
+    private final ValidateCodeFilter validateCodeFilter;
+    private final PasswordEncoder passwordEncoder;
 
     @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }

@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
@@ -26,11 +25,11 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
      */
     private static final String CACHE_CLIENT_KEY = "client_details";
 
-    @Autowired
-    RedisService redisService;
+    private final RedisService redisService;
 
-    public RedisClientDetailsService(DataSource dataSource) {
+    public RedisClientDetailsService(DataSource dataSource, RedisService redisService) {
         super(dataSource);
+        this.redisService = redisService;
     }
 
     @Override

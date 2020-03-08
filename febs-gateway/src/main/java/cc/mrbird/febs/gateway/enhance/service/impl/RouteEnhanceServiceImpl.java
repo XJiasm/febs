@@ -8,9 +8,9 @@ import cc.mrbird.febs.gateway.enhance.service.*;
 import cc.mrbird.febs.gateway.enhance.utils.AddressUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Stopwatch;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.http.HttpStatus;
@@ -33,19 +33,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class RouteEnhanceServiceImpl implements RouteEnhanceService {
 
-    @Autowired
-    private RouteLogService routeLogService;
-    @Autowired
-    private BlockLogService blockLogService;
-    @Autowired
-    private RateLimitLogService rateLimitLogService;
-    @Autowired
-    private RouteEnhanceCacheService routeEnhanceCacheService;
+    private final RouteLogService routeLogService;
+    private final BlockLogService blockLogService;
+    private final RateLimitLogService rateLimitLogService;
+    private final RouteEnhanceCacheService routeEnhanceCacheService;
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
     private static final String METHOD_ALL = "ALL";
+    private static final String TOKEN_CHECK_URL = "/auth/user";
 
     @Override
     public Mono<Void> filterBalckList(ServerWebExchange exchange) {
@@ -89,12 +87,16 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
                 String requestMethod = request.getMethodValue();
                 AtomicBoolean limit = new AtomicBoolean(false);
                 Object o = routeEnhanceCacheService.getRateLimitRule(originUri.getPath(), METHOD_ALL);
-                if (o == null) o = routeEnhanceCacheService.getRateLimitRule(originUri.getPath(), requestMethod);
+                if (o == null) {
+                    o = routeEnhanceCacheService.getRateLimitRule(originUri.getPath(), requestMethod);
+                }
                 if (o != null) {
                     RateLimitRule rule = JSONObject.parseObject(o.toString(), RateLimitRule.class);
                     Mono<Void> result = doRateLimitCheck(limit, rule, originUri, requestIp, requestMethod, response);
                     log.info("Rate limit verification completed - {}", stopwatch.stop());
-                    if (result != null) return result;
+                    if (result != null) {
+                        return result;
+                    }
                 }
             } else {
                 log.info("Request IP not obtained, no rate limit filter - {}", stopwatch.stop());
@@ -109,7 +111,7 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
     public void saveRequestLogs(ServerWebExchange exchange) {
         URI originUri = getGatewayOriginalRequestUrl(exchange);
         // /auth/user为令牌校验请求，是系统自发行为，非用户请求，故不记录
-        if (!StringUtils.equalsIgnoreCase("/auth/user", originUri.getPath())) {
+        if (!StringUtils.equalsIgnoreCase(TOKEN_CHECK_URL, originUri.getPath())) {
             URI url = getGatewayRequestUrl(exchange);
             Route route = getGatewayRoute(exchange);
             ServerHttpRequest request = exchange.getRequest();
@@ -167,14 +169,17 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
                 if (BlackList.METHOD_ALL.equalsIgnoreCase(b.getRequestMethod())
                         || StringUtils.equalsIgnoreCase(requestMethod, b.getRequestMethod())) {
                     if (StringUtils.isNotBlank(b.getLimitFrom()) && StringUtils.isNotBlank(b.getLimitTo())) {
-                        if (DateUtil.between(LocalTime.parse(b.getLimitFrom()), LocalTime.parse(b.getLimitTo())))
+                        if (DateUtil.between(LocalTime.parse(b.getLimitFrom()), LocalTime.parse(b.getLimitTo()))) {
                             forbid.set(true);
+                        }
                     } else {
                         forbid.set(true);
                     }
                 }
             }
-            if (forbid.get()) break;
+            if (forbid.get()) {
+                break;
+            }
         }
     }
 
@@ -184,8 +189,9 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
                 && (BlackList.METHOD_ALL.equalsIgnoreCase(rule.getRequestMethod())
                 || StringUtils.equalsIgnoreCase(requestMethod, rule.getRequestMethod()))) {
             if (StringUtils.isNotBlank(rule.getLimitFrom()) && StringUtils.isNotBlank(rule.getLimitTo())) {
-                if (DateUtil.between(LocalTime.parse(rule.getLimitFrom()), LocalTime.parse(rule.getLimitTo())))
+                if (DateUtil.between(LocalTime.parse(rule.getLimitFrom()), LocalTime.parse(rule.getLimitTo()))) {
                     limit.set(true);
+                }
             } else {
                 limit.set(true);
             }
@@ -193,12 +199,14 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
         if (limit.get()) {
             String requestUri = uri.getPath();
             int count = routeEnhanceCacheService.getCurrentRequestCount(requestUri, requestIp);
-            if (count == 0)
+            if (count == 0) {
                 routeEnhanceCacheService.setCurrentRequestCount(requestUri, requestIp, Long.parseLong(rule.getIntervalSec()));
-            else if (count >= Integer.parseInt(rule.getCount()))
+            } else if (count >= Integer.parseInt(rule.getCount())) {
                 return FebsUtil.makeWebFluxResponse(response, MediaType.APPLICATION_JSON_VALUE,
                         HttpStatus.TOO_MANY_REQUESTS, new FebsResponse().message("访问频率超限，请稍后再试"));
-            else routeEnhanceCacheService.incrCurrentRequestCount(requestUri, requestIp);
+            } else {
+                routeEnhanceCacheService.incrCurrentRequestCount(requestUri, requestIp);
+            }
         }
         return null;
     }
@@ -206,7 +214,9 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
     private URI getGatewayOriginalRequestUrl(ServerWebExchange exchange) {
         LinkedHashSet<URI> uris = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
         URI originUri = null;
-        if (uris != null) originUri = uris.stream().findFirst().orElse(null);
+        if (uris != null) {
+            originUri = uris.stream().findFirst().orElse(null);
+        }
         return originUri;
     }
 

@@ -7,7 +7,7 @@ import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.Menu;
 import cc.mrbird.febs.common.entity.system.SystemUser;
 import cc.mrbird.febs.common.entity.system.UserRole;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +22,13 @@ import java.util.stream.Collectors;
  * @author MrBird
  */
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@RequiredArgsConstructor
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class UserManager {
 
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private MenuMapper menuMapper;
-    @Autowired
-    private UserRoleMapper userRoleMapper;
+    private final UserMapper userMapper;
+    private final MenuMapper menuMapper;
+    private final UserRoleMapper userRoleMapper;
 
     /**
      * 通过用户名查询用户信息
@@ -60,8 +58,8 @@ public class UserManager {
      * @param password password
      * @return SystemUser SystemUser
      */
-    @Transactional
-    public SystemUser registUser(String username,String password) {
+    @Transactional(rollbackFor = Exception.class)
+    public SystemUser registUser(String username, String password) {
         SystemUser systemUser = new SystemUser();
         systemUser.setUsername(username);
         systemUser.setPassword(password);
@@ -74,7 +72,8 @@ public class UserManager {
 
         UserRole userRole = new UserRole();
         userRole.setUserId(systemUser.getUserId());
-        userRole.setRoleId(FebsConstant.REGISTER_ROLE_ID); // 注册用户角色 ID
+        // 注册用户角色 ID
+        userRole.setRoleId(FebsConstant.REGISTER_ROLE_ID);
         this.userRoleMapper.insert(userRole);
         return systemUser;
     }

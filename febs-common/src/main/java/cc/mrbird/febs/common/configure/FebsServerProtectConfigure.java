@@ -1,6 +1,7 @@
 package cc.mrbird.febs.common.configure;
 
 import cc.mrbird.febs.common.interceptor.FebsServerProtectInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 public class FebsServerProtectConfigure implements WebMvcConfigurer {
 
+    private HandlerInterceptor febsServerProtectInterceptor;
+
+    @Autowired
+    public void setFebsServerProtectInterceptor(HandlerInterceptor febsServerProtectInterceptor) {
+        this.febsServerProtectInterceptor = febsServerProtectInterceptor;
+    }
+
     @Bean
     @ConditionalOnMissingBean(value = PasswordEncoder.class)
     public PasswordEncoder passwordEncoder() {
@@ -29,6 +37,6 @@ public class FebsServerProtectConfigure implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(febsServerProtectInterceptor());
+        registry.addInterceptor(febsServerProtectInterceptor);
     }
 }

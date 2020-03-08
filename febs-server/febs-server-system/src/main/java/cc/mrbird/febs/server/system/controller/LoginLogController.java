@@ -8,8 +8,8 @@ import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.server.system.service.ILoginLogService;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +23,11 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("loginLog")
 public class LoginLogController {
 
-    @Autowired
-    private ILoginLogService loginLogService;
+    private final ILoginLogService loginLogService;
 
     @GetMapping
     public FebsResponse loginLogList(LoginLog loginLog, QueryRequest request) {

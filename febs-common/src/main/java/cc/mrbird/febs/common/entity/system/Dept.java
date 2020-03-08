@@ -14,12 +14,17 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author MrBird
+ */
 @Data
 @TableName("t_dept")
 @Excel("部门信息表")
 public class Dept implements Serializable {
 
     private static final long serialVersionUID = -7790334862410409053L;
+
+    public static final Long TOP_DEPT_ID = 0L;
 
     @TableId(value = "DEPT_ID", type = IdType.AUTO)
     private Long deptId;

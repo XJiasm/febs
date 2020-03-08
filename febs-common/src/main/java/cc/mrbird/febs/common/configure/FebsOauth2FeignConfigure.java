@@ -12,7 +12,7 @@ import org.springframework.util.Base64Utils;
  *
  * @author MrBird
  */
-public class FebsOAuth2FeignConfigure {
+public class FebsOauth2FeignConfigure {
 
     @Bean
     public RequestInterceptor oauth2FeignRequestInterceptor() {

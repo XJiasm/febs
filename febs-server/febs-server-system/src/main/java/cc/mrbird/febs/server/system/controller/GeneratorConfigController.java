@@ -5,9 +5,9 @@ import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.entity.system.GeneratorConfig;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.server.system.service.IGeneratorConfigService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +21,11 @@ import javax.validation.Valid;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("generatorConfig")
 public class GeneratorConfigController {
 
-    @Autowired
-    private IGeneratorConfigService generatorConfigService;
+    private final IGeneratorConfigService generatorConfigService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('gen:config')")
@@ -37,8 +37,9 @@ public class GeneratorConfigController {
     @PreAuthorize("hasAuthority('gen:config:update')")
     @ControllerEndpoint(operation = "修改生成代码配置", exceptionMessage = "修改GeneratorConfig失败")
     public void updateGeneratorConfig(@Valid GeneratorConfig generatorConfig) throws FebsException {
-        if (StringUtils.isBlank(generatorConfig.getId()))
+        if (StringUtils.isBlank(generatorConfig.getId())) {
             throw new FebsException("配置id不能为空");
+        }
         this.generatorConfigService.updateGeneratorConfig(generatorConfig);
     }
 }

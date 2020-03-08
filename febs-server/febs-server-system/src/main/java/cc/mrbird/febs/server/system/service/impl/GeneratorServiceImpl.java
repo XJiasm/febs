@@ -1,7 +1,7 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.QueryRequest;
+import cc.mrbird.febs.common.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.entity.system.Column;
 import cc.mrbird.febs.common.entity.system.Table;
 import cc.mrbird.febs.common.utils.SortUtil;
@@ -9,7 +9,7 @@ import cc.mrbird.febs.server.system.mapper.GeneratorMapper;
 import cc.mrbird.febs.server.system.service.IGeneratorService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +18,10 @@ import java.util.List;
  * @author MrBird
  */
 @Service
+@RequiredArgsConstructor
 public class GeneratorServiceImpl implements IGeneratorService {
-    @Autowired
-    private GeneratorMapper generatorMapper;
+
+    private final GeneratorMapper generatorMapper;
 
     @Override
     public List<String> getDatabases(String databaseType) {

@@ -24,10 +24,17 @@ import java.time.LocalDateTime;
 @Service
 public class RateLimitLogServiceImpl implements RateLimitLogService {
 
-    @Autowired(required = false)
     private RateLimitLogMapper rateLimitLogMapper;
-    @Autowired(required = false)
     private ReactiveMongoTemplate template;
+
+    @Autowired(required = false)
+    public void setRateLimitLogMapper(RateLimitLogMapper rateLimitLogMapper) {
+        this.rateLimitLogMapper = rateLimitLogMapper;
+    }
+    @Autowired(required = false)
+    public void setTemplate(ReactiveMongoTemplate template) {
+        this.template = template;
+    }
 
     @Override
     public Mono<RateLimitLog> create(RateLimitLog rateLimitLog) {

@@ -7,9 +7,9 @@ import cc.mrbird.febs.common.entity.constant.GrantTypeConstant;
 import cc.mrbird.febs.common.entity.constant.ParamsConstant;
 import cc.mrbird.febs.common.exception.ValidateCodeException;
 import cc.mrbird.febs.common.utils.FebsUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -34,10 +34,10 @@ import java.util.Base64;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class ValidateCodeFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private ValidateCodeService validateCodeService;
+    private final ValidateCodeService validateCodeService;
 
     @Override
     protected void doFilterInternal(@Nonnull HttpServletRequest httpServletRequest, @Nonnull HttpServletResponse httpServletResponse, @Nonnull FilterChain filterChain) throws ServletException, IOException {

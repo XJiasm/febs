@@ -15,7 +15,7 @@ import java.util.List;
  * @author MrBird
  */
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class UserConnectionServiceImpl extends ServiceImpl<UserConnectionMapper, UserConnection> implements UserConnectionService {
 
     @Override
@@ -34,13 +34,13 @@ public class UserConnectionServiceImpl extends ServiceImpl<UserConnectionMapper,
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void createUserConnection(UserConnection userConnection) {
         this.baseMapper.insert(userConnection);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteByCondition(String username, String providerName) {
         LambdaQueryWrapper<UserConnection> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(UserConnection::getUserName, username);

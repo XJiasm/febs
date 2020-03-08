@@ -17,6 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = FebsServerConstant.FEBS_SERVER_SYSTEM, contextId = "userServiceClient", fallbackFactory = UserServiceFallback.class)
 public interface IUserService {
 
+    /**
+     * remote /user endpoint
+     *
+     * @param queryRequest queryRequest
+     * @param user         user
+     * @return FebsResponse
+     */
     @GetMapping("user")
     FebsResponse userList(@RequestParam("queryRequest") QueryRequest queryRequest, @RequestParam("user") SystemUser user);
 }

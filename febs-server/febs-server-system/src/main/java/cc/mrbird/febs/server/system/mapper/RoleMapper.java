@@ -8,23 +8,27 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author MrBird
+ */
 public interface RoleMapper extends BaseMapper<Role> {
 
-	/**
-	 * 通过用户名查找用户角色
-	 *
-	 * @param username 用户名
-	 * @return 用户角色集合
-	 */
-	List<Role> findUserRole(String username);
+    /**
+     * 通过用户名查找用户角色
+     *
+     * @param username 用户名
+     * @return 用户角色集合
+     */
+    List<Role> findUserRole(String username);
 
-	/**
-	 * 查找角色详情
-	 *
-	 * @param page 分页
-	 * @param role 角色
-	 * @return IPage<User>
-	 */
-	IPage<Role> findRolePage(Page page, @Param("role") Role role);
-	
+    /**
+     * 查找角色详情
+     *
+     * @param page 分页
+     * @param role 角色
+     * @param <T>  type
+     * @return IPage<User>
+     */
+    <T> IPage<Role> findRolePage(Page<T> page, @Param("role") Role role);
+
 }

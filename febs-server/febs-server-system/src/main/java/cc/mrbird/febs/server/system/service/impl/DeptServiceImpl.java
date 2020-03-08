@@ -22,15 +22,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+/**
+ * @author MrBird
+ */
 @Slf4j
 @Service("deptService")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements IDeptService {
-
 
     @Override
     public Map<String, Object> findDepts(QueryRequest request, Dept dept) {
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>(2);
         try {
             List<Dept> depts = findDepts(dept, request);
             List<DeptTree> trees = new ArrayList<>();
@@ -51,36 +53,40 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     public List<Dept> findDepts(Dept dept, QueryRequest request) {
         QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
 
-        if (StringUtils.isNotBlank(dept.getDeptName()))
+        if (StringUtils.isNotBlank(dept.getDeptName())) {
             queryWrapper.lambda().like(Dept::getDeptName, dept.getDeptName());
-        if (StringUtils.isNotBlank(dept.getCreateTimeFrom()) && StringUtils.isNotBlank(dept.getCreateTimeTo()))
+        }
+        if (StringUtils.isNotBlank(dept.getCreateTimeFrom()) && StringUtils.isNotBlank(dept.getCreateTimeTo())) {
             queryWrapper.lambda()
                     .ge(Dept::getCreateTime, dept.getCreateTimeFrom())
                     .le(Dept::getCreateTime, dept.getCreateTimeTo());
+        }
         SortUtil.handleWrapperSort(request, queryWrapper, "orderNum", FebsConstant.ORDER_ASC, true);
         return this.baseMapper.selectList(queryWrapper);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void createDept(Dept dept) {
-        if (dept.getParentId() == null)
-            dept.setParentId(0L);
+        if (dept.getParentId() == null) {
+            dept.setParentId(Dept.TOP_DEPT_ID);
+        }
         dept.setCreateTime(new Date());
         this.save(dept);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateDept(Dept dept) {
-        if (dept.getParentId() == null)
-            dept.setParentId(0L);
+        if (dept.getParentId() == null) {
+            dept.setParentId(Dept.TOP_DEPT_ID);
+        }
         dept.setModifyTime(new Date());
         this.baseMapper.updateById(dept);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteDepts(String[] deptIds) {
         this.delete(Arrays.asList(deptIds));
     }

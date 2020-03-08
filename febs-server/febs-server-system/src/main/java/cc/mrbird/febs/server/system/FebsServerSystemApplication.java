@@ -8,6 +8,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * @author MrBird
+ */
 @EnableAsync
 @SpringBootApplication
 @FebsCloudApplication

@@ -9,5 +9,11 @@ import reactor.core.publisher.Flux;
  */
 public interface BlockLogMapper extends ReactiveMongoRepository<BlockLog, String> {
 
+    /**
+     * 删除拦截日志
+     *
+     * @param ids 日志id
+     * @return 被删除的拦截日志
+     */
     Flux<BlockLog> deleteByIdIn(String[] ids);
 }

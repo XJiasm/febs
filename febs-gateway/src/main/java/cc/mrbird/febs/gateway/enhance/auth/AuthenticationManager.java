@@ -1,8 +1,8 @@
 package cc.mrbird.febs.gateway.enhance.auth;
 
 import io.jsonwebtoken.Claims;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,10 +14,10 @@ import reactor.core.publisher.Mono;
  * @author MrBird
  */
 @Component
+@RequiredArgsConstructor
 public class AuthenticationManager implements ReactiveAuthenticationManager {
 
-    @Autowired
-    private JWTTokenHelper tokenHelper;
+    private final JwtTokenHelper tokenHelper;
 
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {

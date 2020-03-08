@@ -3,19 +3,19 @@ package cc.mrbird.febs.server.system.controller;
 import cc.mrbird.febs.common.annotation.ControllerEndpoint;
 import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.entity.QueryRequest;
+import cc.mrbird.febs.common.entity.constant.GeneratorConstant;
 import cc.mrbird.febs.common.entity.system.Column;
 import cc.mrbird.febs.common.entity.system.GeneratorConfig;
-import cc.mrbird.febs.common.entity.constant.GeneratorConstant;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.FebsUtil;
 import cc.mrbird.febs.common.utils.FileUtil;
 import cc.mrbird.febs.server.system.helper.GeneratorHelper;
 import cc.mrbird.febs.server.system.service.IGeneratorConfigService;
 import cc.mrbird.febs.server.system.service.IGeneratorService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,17 +32,15 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("generator")
 public class GeneratorController {
 
     private static final String SUFFIX = "_code.zip";
 
-    @Autowired
-    private IGeneratorService generatorService;
-    @Autowired
-    private IGeneratorConfigService generatorConfigService;
-    @Autowired
-    private GeneratorHelper generatorHelper;
+    private final IGeneratorService generatorService;
+    private final IGeneratorConfigService generatorConfigService;
+    private final GeneratorHelper generatorHelper;
 
     @GetMapping("tables")
     @PreAuthorize("hasAuthority('gen:generate')")

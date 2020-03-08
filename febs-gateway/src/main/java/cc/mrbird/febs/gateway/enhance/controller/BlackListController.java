@@ -3,7 +3,7 @@ package cc.mrbird.febs.gateway.enhance.controller;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.gateway.enhance.entity.BlackList;
 import cc.mrbird.febs.gateway.enhance.service.BlackListService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -13,11 +13,11 @@ import reactor.core.publisher.Mono;
  * @author MrBird
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("route/auth/blackList")
 public class BlackListController {
 
-    @Autowired
-    private BlackListService blackListService;
+    private final BlackListService blackListService;
 
     @GetMapping("data")
     public Flux<BlackList> findUserPages(QueryRequest request, BlackList blackList) {

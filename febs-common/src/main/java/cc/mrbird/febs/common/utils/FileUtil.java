@@ -57,8 +57,9 @@ public class FileUtil {
      */
     public static void download(String filePath, String fileName, Boolean delete, HttpServletResponse response) throws Exception {
         File file = new File(filePath);
-        if (!file.exists())
+        if (!file.exists()) {
             throw new Exception("文件未找到");
+        }
 
         String fileType = getFileType(file);
         if (!fileTypeIsValid(fileType)) {
@@ -74,8 +75,9 @@ public class FileUtil {
                 os.write(b, 0, length);
             }
         } finally {
-            if (delete)
+            if (delete) {
                 delete(filePath);
+            }
         }
     }
 
@@ -88,7 +90,9 @@ public class FileUtil {
         File file = new File(filePath);
         if (file.isDirectory()) {
             File[] files = file.listFiles();
-            if (files != null) Arrays.stream(files).forEach(f -> delete(f.getPath()));
+            if (files != null) {
+                Arrays.stream(files).forEach(f -> delete(f.getPath()));
+            }
         }
         file.delete();
     }

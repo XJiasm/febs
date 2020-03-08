@@ -21,8 +21,12 @@ import java.util.Set;
 @Service
 public class RouteEnhanceCacheServiceImpl implements RouteEnhanceCacheService {
 
-    @Autowired(required = false)
     private RedisService redisService;
+
+    @Autowired(required = false)
+    public void setRedisService(RedisService redisService) {
+        this.redisService = redisService;
+    }
 
     @Override
     public void saveAllBlackList(Flux<BlackList> blackList) {

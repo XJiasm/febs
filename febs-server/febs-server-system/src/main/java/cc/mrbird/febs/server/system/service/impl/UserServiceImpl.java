@@ -17,7 +17,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,13 +32,12 @@ import java.util.List;
  * @author MrBird
  */
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@RequiredArgsConstructor
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> implements IUserService {
 
-    @Autowired
-    private IUserRoleService userRoleService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final IUserRoleService userRoleService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public SystemUser findByName(String username) {
@@ -63,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateLoginTime(String username) {
         SystemUser user = new SystemUser();
         user.setLastLoginTime(new Date());
@@ -72,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void createUser(SystemUser user) {
         // 创建用户
         user.setCreateTime(new Date());
@@ -85,7 +84,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateUser(SystemUser user) {
         // 更新用户
         user.setPassword(null);
@@ -100,7 +99,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteUsers(String[] userIds) {
         List<String> list = Arrays.asList(userIds);
         removeByIds(list);
@@ -109,7 +108,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateProfile(SystemUser user) throws FebsException {
         user.setPassword(null);
         user.setUsername(null);
@@ -122,7 +121,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateAvatar(String avatar) {
         SystemUser user = new SystemUser();
         user.setAvatar(avatar);
@@ -131,7 +130,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updatePassword(String password) {
         SystemUser user = new SystemUser();
         user.setPassword(passwordEncoder.encode(password));
@@ -140,7 +139,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void resetPassword(String[] usernames) {
         SystemUser params = new SystemUser();
         params.setPassword(passwordEncoder.encode(SystemUser.DEFAULT_PASSWORD));

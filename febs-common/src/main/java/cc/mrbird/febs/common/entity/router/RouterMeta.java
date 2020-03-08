@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 /**
  * Vue路由 Meta
+ *
+ * @author MrBird
  */
 @Data
 @AllArgsConstructor

@@ -3,7 +3,7 @@ package cc.mrbird.febs.gateway.enhance.controller;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.gateway.enhance.entity.RouteUser;
 import cc.mrbird.febs.gateway.enhance.service.RouteUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -13,12 +13,11 @@ import reactor.core.publisher.Mono;
  * @author MrBird
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("route/auth/user")
 public class RouteUserController {
 
-    @Autowired
-    private RouteUserService routeUserService;
-
+    private final RouteUserService routeUserService;
 
     @GetMapping("data")
     public Flux<RouteUser> findUserPages(QueryRequest request, RouteUser routeUser) {

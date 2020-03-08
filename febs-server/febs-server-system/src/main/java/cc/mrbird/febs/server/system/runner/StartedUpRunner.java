@@ -1,8 +1,8 @@
 package cc.mrbird.febs.server.system.runner;
 
 import cc.mrbird.febs.common.entity.constant.FebsServerConstant;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -11,12 +11,15 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author MrBird
+ */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class StartedUpRunner implements ApplicationRunner {
 
-    @Autowired
-    private ConfigurableApplicationContext context;
+    private final ConfigurableApplicationContext context;
 
     @Value("${spring.application.name:'" + FebsServerConstant.FEBS_SERVER_SYSTEM + "'}")
     private String applicationName;

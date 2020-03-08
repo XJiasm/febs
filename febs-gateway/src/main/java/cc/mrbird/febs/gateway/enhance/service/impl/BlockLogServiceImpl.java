@@ -24,10 +24,17 @@ import java.time.LocalDateTime;
 @Service
 public class BlockLogServiceImpl implements BlockLogService {
 
-    @Autowired(required = false)
     private BlockLogMapper blockLogMapper;
-    @Autowired(required = false)
     private ReactiveMongoTemplate template;
+
+    @Autowired(required = false)
+    public void setBlockLogMapper(BlockLogMapper blockLogMapper) {
+        this.blockLogMapper = blockLogMapper;
+    }
+    @Autowired(required = false)
+    public void setTemplate(ReactiveMongoTemplate template) {
+        this.template = template;
+    }
 
     @Override
     public Mono<BlockLog> create(BlockLog blockLog) {

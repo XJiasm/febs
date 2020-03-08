@@ -7,8 +7,8 @@ import cc.mrbird.febs.common.entity.system.Dept;
 import cc.mrbird.febs.server.system.service.IDeptService;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +19,17 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author MrBird
+ */
 @Slf4j
 @Validated
 @RestController
 @RequestMapping("dept")
+@RequiredArgsConstructor
 public class DeptController {
 
-    @Autowired
-    private IDeptService deptService;
+    private final IDeptService deptService;
 
     @GetMapping
     public FebsResponse deptList(QueryRequest request, Dept dept) {

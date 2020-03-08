@@ -17,7 +17,7 @@ import java.util.Map;
  * @author MrBird
  */
 @Component
-public class JWTTokenHelper implements Serializable {
+public class JwtTokenHelper implements Serializable {
 
     private static final long serialVersionUID = 1579222883969867182L;
 
@@ -48,7 +48,7 @@ public class JWTTokenHelper implements Serializable {
     }
 
     public String generateToken(RouteUser routeUser) {
-        Map<String, Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>(1);
         claims.put("permission", routeUser.getRoles());
         return doGenerateToken(claims, routeUser.getUsername());
     }

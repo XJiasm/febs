@@ -3,7 +3,7 @@ package cc.mrbird.febs.gateway.enhance.controller;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.gateway.enhance.entity.RateLimitLog;
 import cc.mrbird.febs.gateway.enhance.service.RateLimitLogService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +16,11 @@ import reactor.core.publisher.Mono;
  * @author MrBird
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("route/auth/rateLimitLog")
 public class RateLimitLogController {
 
-    @Autowired
-    private RateLimitLogService rateLimitLogService;
+    private final RateLimitLogService rateLimitLogService;
 
     @GetMapping("data")
     public Flux<RateLimitLog> findUserPages(QueryRequest request, RateLimitLog rateLimitLog) {

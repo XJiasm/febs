@@ -11,16 +11,23 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author MrBird
+ */
 @Component
 public class StartedUpRunner implements ApplicationRunner {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    private ConfigurableApplicationContext context;
+    private final ConfigurableApplicationContext context;
 
     @Value("${spring.application.name:'FEBS-Monitor-Admin'}")
     private String applicationName;
+
+    @Autowired
+    public StartedUpRunner(ConfigurableApplicationContext context) {
+        this.context = context;
+    }
 
     @Override
     public void run(ApplicationArguments args) {

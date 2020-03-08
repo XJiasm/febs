@@ -3,7 +3,7 @@ package cc.mrbird.febs.gateway.enhance.controller;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.gateway.enhance.entity.RouteLog;
 import cc.mrbird.febs.gateway.enhance.service.RouteLogService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +16,11 @@ import reactor.core.publisher.Mono;
  * @author MrBird
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("route/auth/log")
 public class RouteLogController {
 
-    @Autowired
-    private RouteLogService routeLogService;
+    private final RouteLogService routeLogService;
 
     @GetMapping("data")
     public Flux<RouteLog> findRouteLogsPages(QueryRequest request, RouteLog routeLog) {

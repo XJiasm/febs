@@ -1,7 +1,7 @@
 package cc.mrbird.febs.gateway.common.configure;
 
 import cc.mrbird.febs.gateway.common.handler.FebsGatewayExceptionHandler;
-import org.springframework.beans.factory.ObjectProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.reactive.error.ErrorAttributes;
@@ -14,13 +14,13 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.web.reactive.result.view.ViewResolver;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author MrBird
  */
 @Configuration
+@RequiredArgsConstructor
 public class FebsGatewayErrorConfigure {
 
     private final ServerProperties serverProperties;
@@ -28,18 +28,6 @@ public class FebsGatewayErrorConfigure {
     private final ResourceProperties resourceProperties;
     private final List<ViewResolver> viewResolvers;
     private final ServerCodecConfigurer serverCodecConfigurer;
-
-    public FebsGatewayErrorConfigure(ServerProperties serverProperties,
-                                     ResourceProperties resourceProperties,
-                                     ObjectProvider<List<ViewResolver>> viewResolversProvider,
-                                     ServerCodecConfigurer serverCodecConfigurer,
-                                     ApplicationContext applicationContext) {
-        this.serverProperties = serverProperties;
-        this.applicationContext = applicationContext;
-        this.resourceProperties = resourceProperties;
-        this.viewResolvers = viewResolversProvider.getIfAvailable(Collections::emptyList);
-        this.serverCodecConfigurer = serverCodecConfigurer;
-    }
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)

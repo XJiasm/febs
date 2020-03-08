@@ -13,10 +13,10 @@ import com.google.common.collect.Lists;
 import com.wuwenze.poi.ExcelKit;
 import com.wuwenze.poi.handler.ExcelReadHandler;
 import com.wuwenze.poi.pojo.ExcelErrorField;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,10 +37,11 @@ import java.util.stream.IntStream;
 @Slf4j
 @RestController
 @RequestMapping("eximport")
+@RequiredArgsConstructor
 public class EximportController {
 
-    @Autowired
-    private IEximportService eximportService;
+    private final IEximportService eximportService;
+    private static final String XLSX = ".xlsx";
 
     @GetMapping
     public FebsResponse findEximports(QueryRequest request) {
@@ -68,7 +69,7 @@ public class EximportController {
             throw new FebsException("导入数据为空");
         }
         String filename = file.getOriginalFilename();
-        if (!StringUtils.endsWith(filename, ".xlsx")) {
+        if (!StringUtils.endsWith(filename, XLSX)) {
             throw new FebsException("只支持.xlsx类型文件导入");
         }
         Stopwatch stopwatch = Stopwatch.createStarted();

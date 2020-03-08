@@ -27,7 +27,7 @@ import java.util.Map;
  * @author MrBird
  */
 @Service("loginLogService")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> implements ILoginLogService {
 
     @Override
@@ -50,7 +50,7 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void saveLoginLog(LoginLog loginLog) {
         loginLog.setLoginTime(new Date());
         String ip = FebsUtil.getHttpServletRequestIpAddress();
@@ -60,7 +60,7 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteLoginLogs(String[] ids) {
         List<String> list = Arrays.asList(ids);
         baseMapper.deleteBatchIds(list);
@@ -93,7 +93,8 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
 
         QueryRequest request = new QueryRequest();
         request.setPageNum(1);
-        request.setPageSize(7); // 近7日记录
+        // 近7日记录
+        request.setPageSize(7);
 
         IPage<LoginLog> loginLogs = this.findLoginLogs(loginLog, request);
         return loginLogs.getRecords();

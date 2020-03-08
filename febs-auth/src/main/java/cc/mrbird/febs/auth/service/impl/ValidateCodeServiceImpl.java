@@ -11,8 +11,8 @@ import cc.mrbird.febs.common.service.RedisService;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -27,12 +27,11 @@ import java.io.IOException;
  * @author MrBird
  */
 @Service
+@RequiredArgsConstructor
 public class ValidateCodeServiceImpl implements ValidateCodeService {
 
-    @Autowired
-    private RedisService redisService;
-    @Autowired
-    private FebsAuthProperties properties;
+    private final RedisService redisService;
+    private final FebsAuthProperties properties;
 
     @Override
     public void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ValidateCodeException {

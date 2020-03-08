@@ -6,13 +6,13 @@ import cc.mrbird.febs.auth.service.SocialLoginService;
 import cc.mrbird.febs.common.entity.FebsResponse;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.FebsUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
@@ -30,16 +30,17 @@ import java.util.List;
  */
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("social")
 public class SocialLoginController {
 
     private static final String TYPE_LOGIN = "login";
     private static final String TYPE_BIND = "bind";
 
-    @Autowired
-    private SocialLoginService socialLoginService;
+    private final SocialLoginService socialLoginService;
     @Value("${febs.frontUrl}")
     private String frontUrl;
+
 
     /**
      * 登录

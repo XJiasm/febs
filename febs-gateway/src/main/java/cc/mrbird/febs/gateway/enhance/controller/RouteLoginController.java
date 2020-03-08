@@ -1,9 +1,9 @@
 package cc.mrbird.febs.gateway.enhance.controller;
 
 import cc.mrbird.febs.common.entity.FebsResponse;
-import cc.mrbird.febs.gateway.enhance.auth.JWTTokenHelper;
+import cc.mrbird.febs.gateway.enhance.auth.JwtTokenHelper;
 import cc.mrbird.febs.gateway.enhance.service.RouteUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,15 +16,13 @@ import reactor.core.publisher.Mono;
  * @author MrBird
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("route")
 public class RouteLoginController {
 
-    @Autowired
-    private JWTTokenHelper tokenHelper;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RouteUserService routeUserService;
+    private final JwtTokenHelper tokenHelper;
+    private final PasswordEncoder passwordEncoder;
+    private final RouteUserService routeUserService;
 
     @GetMapping("login")
     public Mono<ResponseEntity<FebsResponse>> login(String username, String password) {

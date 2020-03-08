@@ -65,7 +65,7 @@ public class DateUtil {
      * @return 格式化后的字符串
      * @throws ParseException 异常
      */
-    public static String formatCSTTime(String date, String format) throws ParseException {
+    public static String formatCstTime(String date, String format) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(CST_TIME_PATTERN, Locale.US);
         Date usDate = simpleDateFormat.parse(date);
         return getDateFormat(usDate, format);

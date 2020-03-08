@@ -1,17 +1,17 @@
 package cc.mrbird.febs.auth.service.impl;
 
-import cc.mrbird.febs.auth.entity.OAuthClientDetails;
-import cc.mrbird.febs.auth.mapper.OAuthClientDetailsMapper;
-import cc.mrbird.febs.auth.service.OAuthClientDetailsService;
+import cc.mrbird.febs.auth.entity.OauthClientDetails;
+import cc.mrbird.febs.auth.mapper.OauthClientDetailsMapper;
+import cc.mrbird.febs.auth.service.OauthClientDetailsService;
 import cc.mrbird.febs.common.entity.QueryRequest;
 import cc.mrbird.febs.common.exception.FebsException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -26,24 +26,23 @@ import java.util.List;
  */
 @Slf4j
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
-public class OAuthClientDetailsServiceImpl extends ServiceImpl<OAuthClientDetailsMapper, OAuthClientDetails> implements OAuthClientDetailsService {
+@RequiredArgsConstructor
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetailsMapper, OauthClientDetails> implements OauthClientDetailsService {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RedisClientDetailsService redisClientDetailsService;
+    private final PasswordEncoder passwordEncoder;
+    private final RedisClientDetailsService redisClientDetailsService;
 
     @Override
-    public IPage<OAuthClientDetails> findOAuthClientDetails(QueryRequest request, OAuthClientDetails oauthClientDetails) {
-        LambdaQueryWrapper<OAuthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
+    public IPage<OauthClientDetails> findOauthClientDetails(QueryRequest request, OauthClientDetails oauthClientDetails) {
+        LambdaQueryWrapper<OauthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(oauthClientDetails.getClientId())) {
-            queryWrapper.eq(OAuthClientDetails::getClientId, oauthClientDetails.getClientId());
+            queryWrapper.eq(OauthClientDetails::getClientId, oauthClientDetails.getClientId());
         }
-        Page<OAuthClientDetails> page = new Page<>(request.getPageNum(), request.getPageSize());
-        IPage<OAuthClientDetails> result = this.page(page, queryWrapper);
+        Page<OauthClientDetails> page = new Page<>(request.getPageNum(), request.getPageSize());
+        IPage<OauthClientDetails> result = this.page(page, queryWrapper);
 
-        List<OAuthClientDetails> records = new ArrayList<>();
+        List<OauthClientDetails> records = new ArrayList<>();
         result.getRecords().forEach(o -> {
             o.setOriginSecret(null);
             o.setClientSecret(null);
@@ -54,14 +53,14 @@ public class OAuthClientDetailsServiceImpl extends ServiceImpl<OAuthClientDetail
     }
 
     @Override
-    public OAuthClientDetails findById(String clientId) {
+    public OauthClientDetails findById(String clientId) {
         return this.baseMapper.selectById(clientId);
     }
 
     @Override
-    @Transactional
-    public void createOAuthClientDetails(OAuthClientDetails oauthClientDetails) throws FebsException {
-        OAuthClientDetails byId = this.findById(oauthClientDetails.getClientId());
+    @Transactional(rollbackFor = Exception.class)
+    public void createOauthClientDetails(OauthClientDetails oauthClientDetails) throws FebsException {
+        OauthClientDetails byId = this.findById(oauthClientDetails.getClientId());
         if (byId != null) {
             throw new FebsException("该Client已存在");
         }
@@ -75,12 +74,12 @@ public class OAuthClientDetailsServiceImpl extends ServiceImpl<OAuthClientDetail
     }
 
     @Override
-    @Transactional
-    public void updateOAuthClientDetails(OAuthClientDetails oauthClientDetails) {
+    @Transactional(rollbackFor = Exception.class)
+    public void updateOauthClientDetails(OauthClientDetails oauthClientDetails) {
         String clientId = oauthClientDetails.getClientId();
 
-        LambdaQueryWrapper<OAuthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(OAuthClientDetails::getClientId, oauthClientDetails.getClientId());
+        LambdaQueryWrapper<OauthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(OauthClientDetails::getClientId, oauthClientDetails.getClientId());
 
         oauthClientDetails.setClientId(null);
         oauthClientDetails.setClientSecret(null);
@@ -93,11 +92,11 @@ public class OAuthClientDetailsServiceImpl extends ServiceImpl<OAuthClientDetail
     }
 
     @Override
-    @Transactional
-    public void deleteOAuthClientDetails(String clientIds) {
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteOauthClientDetails(String clientIds) {
         Object[] clientIdArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(clientIds, ",");
-        LambdaQueryWrapper<OAuthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(OAuthClientDetails::getClientId, clientIdArray);
+        LambdaQueryWrapper<OauthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(OauthClientDetails::getClientId, clientIdArray);
         boolean removed = this.remove(queryWrapper);
         if (removed) {
             log.info("删除ClientId为({})的Client", clientIds);

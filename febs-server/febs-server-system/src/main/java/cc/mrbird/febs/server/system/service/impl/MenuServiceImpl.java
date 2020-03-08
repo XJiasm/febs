@@ -21,9 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author MrBird
+ */
 @Slf4j
 @Service("menuService")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
     @Override
@@ -39,7 +42,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     @Override
     public Map<String, Object> findMenus(Menu menu) {
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>(2);
         try {
             LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.orderByAsc(Menu::getOrderNum);
@@ -93,7 +96,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void createMenu(Menu menu) {
         menu.setCreateTime(new Date());
         setMenu(menu);
@@ -101,7 +104,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateMenu(Menu menu) {
         menu.setModifyTime(new Date());
         setMenu(menu);
@@ -109,7 +112,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteMeuns(String[] menuIds) {
         this.delete(Arrays.asList(menuIds));
     }
@@ -131,8 +134,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     private void setMenu(Menu menu) {
-        if (menu.getParentId() == null)
-            menu.setParentId(0L);
+        if (menu.getParentId() == null) {
+            menu.setParentId(Menu.TOP_MENU_ID);
+        }
         if (Menu.TYPE_BUTTON.equals(menu.getType())) {
             menu.setPath(null);
             menu.setIcon(null);

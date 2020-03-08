@@ -11,8 +11,8 @@ import cc.mrbird.febs.server.system.service.ILoginLogService;
 import cc.mrbird.febs.server.system.service.IUserService;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -32,15 +32,13 @@ import java.util.Map;
 @Slf4j
 @Validated
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("user")
 public class UserController {
 
-    @Autowired
-    private IUserService userService;
-    @Autowired
-    private ILoginLogService loginLogService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final IUserService userService;
+    private final ILoginLogService loginLogService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("success")
     public void loginSuccess(HttpServletRequest request) {
@@ -56,7 +54,7 @@ public class UserController {
 
     @GetMapping("index")
     public FebsResponse index() {
-        Map<String, Object> data = new HashMap<>();
+        Map<String, Object> data = new HashMap<>(5);
         // 获取系统访问记录
         Long totalVisitCount = loginLogService.findTotalVisitCount();
         data.put("totalVisitCount", totalVisitCount);
