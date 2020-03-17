@@ -41,6 +41,10 @@ Kubernetes集群部署脚本：[https://github.com/wuyouzhuguli/FEBS-Cloud-K8S](
 
 分布式事务方案（RocketMQ、TX-LCN、Seata）：[https://www.kancloud.cn/mrbird/spring-cloud/1456142](https://www.kancloud.cn/mrbird/spring-cloud/1456142)。
 
+### 常见问题
+
+[https://mrbird.cc/FEBS-Cloud常见问题汇总.html](https://mrbird.cc/FEBS-Cloud常见问题汇总.html)
+
 ### 更新日志
 
 [https://www.kancloud.cn/mrbird/spring-cloud/1292659](https://www.kancloud.cn/mrbird/spring-cloud/1292659)
