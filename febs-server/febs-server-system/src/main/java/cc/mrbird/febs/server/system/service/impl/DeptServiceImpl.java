@@ -1,19 +1,21 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.DeptTree;
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.Tree;
-import cc.mrbird.febs.common.entity.constant.PageConstant;
-import cc.mrbird.febs.common.entity.system.Dept;
-import cc.mrbird.febs.common.utils.SortUtil;
-import cc.mrbird.febs.common.utils.TreeUtil;
+import cc.mrbird.febs.common.core.entity.DeptTree;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.Tree;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.core.entity.constant.PageConstant;
+import cc.mrbird.febs.common.core.entity.system.Dept;
+import cc.mrbird.febs.common.core.utils.SortUtil;
+import cc.mrbird.febs.common.core.utils.TreeUtil;
 import cc.mrbird.febs.server.system.mapper.DeptMapper;
 import cc.mrbird.febs.server.system.service.IDeptService;
+import cc.mrbird.febs.server.system.service.IUserDataPermissionService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,11 @@ import java.util.*;
  */
 @Slf4j
 @Service("deptService")
+@RequiredArgsConstructor
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements IDeptService {
+
+    private final IUserDataPermissionService userDataPermissionService;
 
     @Override
     public Map<String, Object> findDepts(QueryRequest request, Dept dept) {
@@ -104,6 +109,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
 
     private void delete(List<String> deptIds) {
         removeByIds(deptIds);
+        userDataPermissionService.deleteByDeptIds(deptIds);
 
         LambdaQueryWrapper<Dept> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(Dept::getParentId, deptIds);

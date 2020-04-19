@@ -28,4 +28,9 @@
         group by u.username,u.user_id,u.email,u.mobile,u.password, u.status,u.create_time,u.ssex,u.dept_id
 				,u.last_login_time,u.modify_time,u.description,u.avatar
     </select>
+
+    <select id="findUserDataPermissions" parameterType="long" resultType="userDataPermission">
+        select user_id userId, dept_id deptId from t_user_data_permission
+        where user_id = #{userId}
+    </select>
 </mapper>

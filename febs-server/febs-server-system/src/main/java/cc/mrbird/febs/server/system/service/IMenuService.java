@@ -1,7 +1,7 @@
 package cc.mrbird.febs.server.system.service;
 
-import cc.mrbird.febs.common.entity.router.VueRouter;
-import cc.mrbird.febs.common.entity.system.Menu;
+import cc.mrbird.febs.common.core.entity.router.VueRouter;
+import cc.mrbird.febs.common.core.entity.system.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

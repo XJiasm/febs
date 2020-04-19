@@ -1,6 +1,6 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.system.RoleMenu;
+import cc.mrbird.febs.common.core.entity.system.RoleMenu;
 import cc.mrbird.febs.server.system.mapper.RoleMenuMapper;
 import cc.mrbird.febs.server.system.service.IRoleMenuService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -19,23 +19,23 @@ import java.util.List;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> implements IRoleMenuService {
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public void deleteRoleMenusByRoleId(String[] roleIds) {
-		List<String> list = Arrays.asList(roleIds);
-		baseMapper.delete(new LambdaQueryWrapper<RoleMenu>().in(RoleMenu::getRoleId, list));
-	}
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteRoleMenusByRoleId(String[] roleIds) {
+        List<String> list = Arrays.asList(roleIds);
+        baseMapper.delete(new LambdaQueryWrapper<RoleMenu>().in(RoleMenu::getRoleId, list));
+    }
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public void deleteRoleMenusByMenuId(String[] menuIds) {
-		List<String> list = Arrays.asList(menuIds);
-		baseMapper.delete(new LambdaQueryWrapper<RoleMenu>().in(RoleMenu::getMenuId, list));
-	}
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteRoleMenusByMenuId(String[] menuIds) {
+        List<String> list = Arrays.asList(menuIds);
+        baseMapper.delete(new LambdaQueryWrapper<RoleMenu>().in(RoleMenu::getMenuId, list));
+    }
 
-	@Override
-	public List<RoleMenu> getRoleMenusByRoleId(String roleId) {
-		return baseMapper.selectList(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, roleId));
-	}
+    @Override
+    public List<RoleMenu> getRoleMenusByRoleId(String roleId) {
+        return baseMapper.selectList(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, roleId));
+    }
 
 }

@@ -1,10 +1,11 @@
 package cc.mrbird.febs.server.system.aspect;
 
-import cc.mrbird.febs.common.annotation.ControllerEndpoint;
-import cc.mrbird.febs.common.exception.FebsException;
-import cc.mrbird.febs.common.utils.FebsUtil;
+import cc.mrbird.febs.common.core.exception.FebsException;
+import cc.mrbird.febs.common.core.utils.FebsUtil;
+import cc.mrbird.febs.server.system.annotation.ControllerEndpoint;
 import cc.mrbird.febs.server.system.service.ILogService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -18,13 +19,14 @@ import java.lang.reflect.Method;
  * @author MrBird
  */
 @Aspect
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ControllerEndpointAspect extends BaseAspectSupport {
 
     private final ILogService logService;
 
-    @Pointcut("@annotation(cc.mrbird.febs.common.annotation.ControllerEndpoint)")
+    @Pointcut("@annotation(cc.mrbird.febs.server.system.annotation.ControllerEndpoint)")
     public void pointcut() {
     }
 
@@ -44,6 +46,7 @@ public class ControllerEndpointAspect extends BaseAspectSupport {
             }
             return result;
         } catch (Throwable throwable) {
+            log.error(throwable.getMessage(), throwable);
             String exceptionMessage = annotation.exceptionMessage();
             String message = throwable.getMessage();
             String error = FebsUtil.containChinese(message) ? exceptionMessage + "，" + message : exceptionMessage;

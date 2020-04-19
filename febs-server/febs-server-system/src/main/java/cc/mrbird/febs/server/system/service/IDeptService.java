@@ -1,8 +1,8 @@
 package cc.mrbird.febs.server.system.service;
 
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.Dept;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.system.Dept;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

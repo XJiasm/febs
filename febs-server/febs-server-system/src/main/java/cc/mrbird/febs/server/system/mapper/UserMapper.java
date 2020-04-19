@@ -1,6 +1,6 @@
 package cc.mrbird.febs.server.system.mapper;
 
-import cc.mrbird.febs.common.entity.system.SystemUser;
+import cc.mrbird.febs.common.core.entity.system.SystemUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

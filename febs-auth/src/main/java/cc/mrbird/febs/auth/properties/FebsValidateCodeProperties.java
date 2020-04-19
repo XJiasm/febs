@@ -1,6 +1,6 @@
 package cc.mrbird.febs.auth.properties;
 
-import cc.mrbird.febs.common.entity.constant.ImageTypeConstant;
+import cc.mrbird.febs.common.core.entity.constant.ImageTypeConstant;
 import lombok.Data;
 
 /**

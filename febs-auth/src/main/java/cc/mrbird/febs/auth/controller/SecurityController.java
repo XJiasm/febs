@@ -1,8 +1,8 @@
 package cc.mrbird.febs.auth.controller;
 
+import cc.mrbird.febs.common.core.exception.ValidateCodeException;
 import cc.mrbird.febs.auth.manager.UserManager;
 import cc.mrbird.febs.auth.service.ValidateCodeService;
-import cc.mrbird.febs.common.exception.ValidateCodeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

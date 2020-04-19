@@ -1,6 +1,6 @@
 package cc.mrbird.febs.auth.translator;
 
-import cc.mrbird.febs.common.entity.FebsResponse;
+import cc.mrbird.febs.common.core.entity.FebsResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@SuppressWarnings("all")
 public class FebsWebResponseExceptionTranslator implements WebResponseExceptionTranslator {
 
     @Override

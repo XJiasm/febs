@@ -1,7 +1,7 @@
 package cc.mrbird.febs.gateway.enhance.service.impl;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.utils.DateUtil;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.utils.DateUtil;
 import cc.mrbird.febs.gateway.enhance.entity.RateLimitRule;
 import cc.mrbird.febs.gateway.enhance.mapper.RateLimitRuleMapper;
 import cc.mrbird.febs.gateway.enhance.service.RateLimitRuleService;
@@ -19,6 +19,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 /**
  * @author MrBird
@@ -84,7 +85,7 @@ public class RateLimitRuleServiceImpl implements RateLimitRuleService {
     @Override
     public Flux<RateLimitRule> delete(String ids) {
         String[] idArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(ids, ",");
-        return rateLimitRuleMapper.deleteByIdIn(idArray)
+        return rateLimitRuleMapper.deleteByIdIn(Arrays.asList(idArray))
                 .doOnNext(routeEnhanceCacheService::removeRateLimitRule);
     }
 

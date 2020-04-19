@@ -1,9 +1,9 @@
 package cc.mrbird.febs.auth.service;
 
+import cc.mrbird.febs.common.core.entity.FebsResponse;
+import cc.mrbird.febs.common.core.exception.FebsException;
 import cc.mrbird.febs.auth.entity.BindUser;
 import cc.mrbird.febs.auth.entity.UserConnection;
-import cc.mrbird.febs.common.entity.FebsResponse;
-import cc.mrbird.febs.common.exception.FebsException;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthRequest;

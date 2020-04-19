@@ -10,9 +10,23 @@ spring:
         file-extension: yaml
       discovery:
         server-addr: ${nacos.url}:8001
+  boot:
+    admin:
+      client:
+        instance:
+          prefer-ip: true
 
 logging:
   level:
+    org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              EndpointId: error
+        data:
+          convert:
+            CustomConversions: error
     com:
       alibaba:
         cloud:

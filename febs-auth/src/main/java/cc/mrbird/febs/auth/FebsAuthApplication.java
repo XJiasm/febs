@@ -1,27 +1,22 @@
 package cc.mrbird.febs.auth;
 
-import cc.mrbird.febs.common.annotation.EnableFebsAuthExceptionHandler;
-import cc.mrbird.febs.common.annotation.EnableFebsLettuceRedis;
-import cc.mrbird.febs.common.annotation.EnableFebsServerProtect;
+import cc.mrbird.febs.common.security.starter.annotation.EnableFebsCloudResourceServer;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
  * @author MrBird
  */
-@EnableDiscoveryClient
-@EnableFebsLettuceRedis
-@EnableFebsAuthExceptionHandler
-@EnableFebsServerProtect
 @SpringBootApplication
+@EnableFebsCloudResourceServer
 @MapperScan("cc.mrbird.febs.auth.mapper")
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class FebsAuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FebsAuthApplication.class, args);
+        new SpringApplicationBuilder(FebsAuthApplication.class)
+                .web(WebApplicationType.SERVLET)
+                .run(args);
     }
 }

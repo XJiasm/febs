@@ -1,6 +1,6 @@
 package cc.mrbird.febs.server.system.configure;
 
-import cc.mrbird.febs.common.utils.DateUtil;
+import cc.mrbird.febs.common.core.utils.DateUtil;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
 import org.apache.commons.lang3.StringUtils;
 

@@ -63,4 +63,5 @@ public class OauthClientDetails implements Serializable {
 
     @TableField("origin_secret")
     private String originSecret;
+
 }

@@ -1,6 +1,6 @@
 package cc.mrbird.febs.gateway.enhance.auth;
 
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;

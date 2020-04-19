@@ -1,6 +1,6 @@
 package cc.mrbird.febs.gateway.enhance.service;
 
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;

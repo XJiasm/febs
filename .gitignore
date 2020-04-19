@@ -3,3 +3,5 @@
 **/.idea/
 **/log/
 **/*.iml
+**/.txlcn/
+**/spy.log

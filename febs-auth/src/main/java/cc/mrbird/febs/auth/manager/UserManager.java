@@ -3,10 +3,12 @@ package cc.mrbird.febs.auth.manager;
 import cc.mrbird.febs.auth.mapper.MenuMapper;
 import cc.mrbird.febs.auth.mapper.UserMapper;
 import cc.mrbird.febs.auth.mapper.UserRoleMapper;
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
-import cc.mrbird.febs.common.entity.system.Menu;
-import cc.mrbird.febs.common.entity.system.SystemUser;
-import cc.mrbird.febs.common.entity.system.UserRole;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.core.entity.system.Menu;
+import cc.mrbird.febs.common.core.entity.system.SystemUser;
+import cc.mrbird.febs.common.core.entity.system.UserDataPermission;
+import cc.mrbird.febs.common.core.entity.system.UserRole;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -37,7 +39,11 @@ public class UserManager {
      * @return 用户
      */
     public SystemUser findByName(String username) {
-        return userMapper.findByName(username);
+        SystemUser user = userMapper.findByName(username);
+        List<UserDataPermission> permissions = userMapper.findUserDataPermissions(user.getUserId());
+        String deptIds = permissions.stream().map(p -> String.valueOf(p.getDeptId())).collect(Collectors.joining(StringPool.COMMA));
+        user.setDeptIds(deptIds);
+        return user;
     }
 
     /**

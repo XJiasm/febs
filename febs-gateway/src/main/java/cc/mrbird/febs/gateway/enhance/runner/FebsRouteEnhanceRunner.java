@@ -3,16 +3,13 @@ package cc.mrbird.febs.gateway.enhance.runner;
 import cc.mrbird.febs.gateway.enhance.service.BlackListService;
 import cc.mrbird.febs.gateway.enhance.service.RateLimitRuleService;
 import cc.mrbird.febs.gateway.enhance.service.RouteEnhanceCacheService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
 /**
  * @author MrBird
  */
-@Slf4j
 @RequiredArgsConstructor
 public class FebsRouteEnhanceRunner implements ApplicationRunner {
 
@@ -22,6 +19,7 @@ public class FebsRouteEnhanceRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+        System.out.println("已开启网关增强功能：请求日志、黑名单&限流。");
         cacheService.saveAllBlackList(blackListService.findAll());
         cacheService.saveAllRateLimitRules(rateLimitRuleService.findAll());
     }

@@ -13,11 +13,6 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = {"classpath:febs-auth.properties"})
 @ConfigurationProperties(prefix = "febs.auth")
 public class FebsAuthProperties {
-
-    /**
-     * 免认证访问路径
-     */
-    private String anonUrl;
     /**
      * 验证码配置
      */

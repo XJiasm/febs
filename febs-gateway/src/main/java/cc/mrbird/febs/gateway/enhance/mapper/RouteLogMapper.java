@@ -5,6 +5,8 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
+import java.util.Collection;
+
 /**
  * @author MrBird
  */
@@ -17,5 +19,5 @@ public interface RouteLogMapper extends ReactiveMongoRepository<RouteLog, String
      * @param ids 路由日志id
      * @return 被删除的路由日志
      */
-    Flux<RouteLog> deleteByIdIn(String[] ids);
+    Flux<RouteLog> deleteByIdIn(Collection<String> ids);
 }

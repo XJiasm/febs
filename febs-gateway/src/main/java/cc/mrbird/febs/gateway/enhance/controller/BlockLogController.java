@@ -1,6 +1,6 @@
 package cc.mrbird.febs.gateway.enhance.controller;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
 import cc.mrbird.febs.gateway.enhance.entity.BlockLog;
 import cc.mrbird.febs.gateway.enhance.service.BlockLogService;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class BlockLogController {
 
     @DeleteMapping
     @PreAuthorize("hasAuthority('admin')")
-    public Flux<BlockLog> deleteBlockLog(String ids){
+    public Flux<BlockLog> deleteBlockLog(String ids) {
         return blockLogService.delete(ids);
     }
 }

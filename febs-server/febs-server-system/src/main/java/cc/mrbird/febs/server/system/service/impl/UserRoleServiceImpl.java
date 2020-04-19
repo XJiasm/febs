@@ -1,6 +1,6 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.system.UserRole;
+import cc.mrbird.febs.common.core.entity.system.UserRole;
 import cc.mrbird.febs.server.system.mapper.UserRoleMapper;
 import cc.mrbird.febs.server.system.service.IUserRoleService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

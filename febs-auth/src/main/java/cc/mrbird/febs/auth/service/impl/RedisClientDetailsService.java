@@ -1,6 +1,6 @@
 package cc.mrbird.febs.auth.service.impl;
 
-import cc.mrbird.febs.common.service.RedisService;
+import cc.mrbird.febs.common.redis.service.RedisService;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

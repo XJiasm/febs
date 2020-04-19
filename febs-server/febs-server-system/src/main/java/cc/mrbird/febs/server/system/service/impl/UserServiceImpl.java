@@ -1,14 +1,16 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.CurrentUser;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
-import cc.mrbird.febs.common.entity.system.SystemUser;
-import cc.mrbird.febs.common.entity.system.UserRole;
-import cc.mrbird.febs.common.exception.FebsException;
-import cc.mrbird.febs.common.utils.FebsUtil;
-import cc.mrbird.febs.common.utils.SortUtil;
+import cc.mrbird.febs.common.core.entity.CurrentUser;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.core.entity.system.SystemUser;
+import cc.mrbird.febs.common.core.entity.system.UserDataPermission;
+import cc.mrbird.febs.common.core.entity.system.UserRole;
+import cc.mrbird.febs.common.core.exception.FebsException;
+import cc.mrbird.febs.common.core.utils.FebsUtil;
+import cc.mrbird.febs.common.core.utils.SortUtil;
 import cc.mrbird.febs.server.system.mapper.UserMapper;
+import cc.mrbird.febs.server.system.service.IUserDataPermissionService;
 import cc.mrbird.febs.server.system.service.IUserRoleService;
 import cc.mrbird.febs.server.system.service.IUserService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -18,6 +20,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -37,6 +40,7 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> implements IUserService {
 
     private final IUserRoleService userRoleService;
+    private final IUserDataPermissionService userDataPermissionService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -79,8 +83,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
         user.setPassword(passwordEncoder.encode(SystemUser.DEFAULT_PASSWORD));
         save(user);
         // 保存用户角色
-        String[] roles = user.getRoleId().split(StringPool.COMMA);
+        String[] roles = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getRoleId(), StringPool.COMMA);
         setUserRoles(user, roles);
+        // 保存用户数据权限关联关系
+        String[] deptIds = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getDeptIds(), StringPool.COMMA);
+        setUserDataPermissions(user, deptIds);
     }
 
     @Override
@@ -93,9 +100,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
         user.setModifyTime(new Date());
         updateById(user);
 
-        userRoleService.remove(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getUserId()));
-        String[] roles = user.getRoleId().split(StringPool.COMMA);
+        String[] userIds = {String.valueOf(user.getUserId())};
+        userRoleService.deleteUserRolesByUserId(userIds);
+        String[] roles = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getRoleId(), StringPool.COMMA);
         setUserRoles(user, roles);
+
+        userDataPermissionService.deleteByUserIds(userIds);
+        String[] deptIds = StringUtils.splitByWholeSeparatorPreserveAllTokens(user.getDeptIds(), StringPool.COMMA);
+        setUserDataPermissions(user, deptIds);
     }
 
     @Override
@@ -105,6 +117,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
         removeByIds(list);
         // 删除用户角色
         this.userRoleService.deleteUserRolesByUserId(userIds);
+        this.userDataPermissionService.deleteByUserIds(userIds);
     }
 
     @Override
@@ -158,6 +171,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
             userRoles.add(userRole);
         });
         userRoleService.saveBatch(userRoles);
+    }
+
+    private void setUserDataPermissions(SystemUser user, String[] deptIds) {
+        List<UserDataPermission> userDataPermissions = new ArrayList<>();
+        Arrays.stream(deptIds).forEach(deptId -> {
+            UserDataPermission permission = new UserDataPermission();
+            permission.setDeptId(Long.valueOf(deptId));
+            permission.setUserId(user.getUserId());
+            userDataPermissions.add(permission);
+        });
+        userDataPermissionService.saveBatch(userDataPermissions);
     }
 
     private boolean isCurrentUser(Long id) {

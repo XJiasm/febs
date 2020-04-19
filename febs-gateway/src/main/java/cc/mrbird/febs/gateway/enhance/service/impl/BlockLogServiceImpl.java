@@ -1,7 +1,7 @@
 package cc.mrbird.febs.gateway.enhance.service.impl;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.utils.DateUtil;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.utils.DateUtil;
 import cc.mrbird.febs.gateway.enhance.entity.BlockLog;
 import cc.mrbird.febs.gateway.enhance.mapper.BlockLogMapper;
 import cc.mrbird.febs.gateway.enhance.service.BlockLogService;
@@ -17,6 +17,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 /**
  * @author MrBird
@@ -31,6 +32,7 @@ public class BlockLogServiceImpl implements BlockLogService {
     public void setBlockLogMapper(BlockLogMapper blockLogMapper) {
         this.blockLogMapper = blockLogMapper;
     }
+
     @Autowired(required = false)
     public void setTemplate(ReactiveMongoTemplate template) {
         this.template = template;
@@ -46,7 +48,7 @@ public class BlockLogServiceImpl implements BlockLogService {
     @Override
     public Flux<BlockLog> delete(String ids) {
         String[] idArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(ids, ",");
-        return blockLogMapper.deleteByIdIn(idArray);
+        return blockLogMapper.deleteByIdIn(Arrays.asList(idArray));
     }
 
     @Override

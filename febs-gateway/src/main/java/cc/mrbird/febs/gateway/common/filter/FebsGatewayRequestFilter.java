@@ -1,7 +1,6 @@
 package cc.mrbird.febs.gateway.common.filter;
 
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
-import cc.mrbird.febs.gateway.common.properties.FebsGatewayProperties;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
 import cc.mrbird.febs.gateway.enhance.service.RouteEnhanceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +24,12 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class FebsGatewayRequestFilter implements GlobalFilter {
 
-    private final FebsGatewayProperties properties;
     private final RouteEnhanceService routeEnhanceService;
 
     @Value("${febs.gateway.enhance:false}")
     private Boolean routeEhance;
 
-    private AntPathMatcher pathMatcher = new AntPathMatcher();
+    private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

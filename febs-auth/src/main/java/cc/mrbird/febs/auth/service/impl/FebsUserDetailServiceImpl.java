@@ -1,11 +1,11 @@
 package cc.mrbird.febs.auth.service.impl;
 
+import cc.mrbird.febs.common.core.entity.FebsAuthUser;
+import cc.mrbird.febs.common.core.entity.constant.ParamsConstant;
+import cc.mrbird.febs.common.core.entity.constant.SocialConstant;
+import cc.mrbird.febs.common.core.entity.system.SystemUser;
+import cc.mrbird.febs.common.core.utils.FebsUtil;
 import cc.mrbird.febs.auth.manager.UserManager;
-import cc.mrbird.febs.common.entity.FebsAuthUser;
-import cc.mrbird.febs.common.entity.constant.ParamsConstant;
-import cc.mrbird.febs.common.entity.constant.SocialConstant;
-import cc.mrbird.febs.common.entity.system.SystemUser;
-import cc.mrbird.febs.common.utils.FebsUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;

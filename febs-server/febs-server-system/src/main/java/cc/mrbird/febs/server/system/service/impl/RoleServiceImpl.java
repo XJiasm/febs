@@ -1,10 +1,10 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
-import cc.mrbird.febs.common.entity.system.Role;
-import cc.mrbird.febs.common.entity.system.RoleMenu;
-import cc.mrbird.febs.common.utils.SortUtil;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.core.entity.system.Role;
+import cc.mrbird.febs.common.core.entity.system.RoleMenu;
+import cc.mrbird.febs.common.core.utils.SortUtil;
 import cc.mrbird.febs.server.system.mapper.RoleMapper;
 import cc.mrbird.febs.server.system.service.IRoleMenuService;
 import cc.mrbird.febs.server.system.service.IRoleService;

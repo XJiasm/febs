@@ -1,6 +1,6 @@
 package cc.mrbird.febs.gateway.enhance.controller;
 
-import cc.mrbird.febs.common.entity.FebsResponse;
+import cc.mrbird.febs.common.core.entity.FebsResponse;
 import cc.mrbird.febs.gateway.enhance.auth.JwtTokenHelper;
 import cc.mrbird.febs.gateway.enhance.service.RouteUserService;
 import lombok.RequiredArgsConstructor;

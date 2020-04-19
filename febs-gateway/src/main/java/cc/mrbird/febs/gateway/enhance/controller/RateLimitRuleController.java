@@ -1,6 +1,6 @@
 package cc.mrbird.febs.gateway.enhance.controller;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
 import cc.mrbird.febs.gateway.enhance.entity.RateLimitRule;
 import cc.mrbird.febs.gateway.enhance.service.RateLimitRuleService;
 import lombok.RequiredArgsConstructor;

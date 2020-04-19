@@ -1,8 +1,8 @@
 package cc.mrbird.febs.server.system.service;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.SystemUser;
-import cc.mrbird.febs.common.exception.FebsException;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.system.SystemUser;
+import cc.mrbird.febs.common.core.exception.FebsException;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -68,6 +68,7 @@ public interface IUserService extends IService<SystemUser> {
      * 更新个人信息
      *
      * @param user 个人信息
+     * @throws FebsException 异常
      */
     void updateProfile(SystemUser user) throws FebsException;
 

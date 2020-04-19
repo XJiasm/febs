@@ -5,6 +5,8 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
+import java.util.Collection;
+
 /**
  * @author MrBird
  */
@@ -17,7 +19,7 @@ public interface BlackListMapper extends ReactiveMongoRepository<BlackList, Stri
      * @param ids 黑名单id
      * @return 被删除的黑名单
      */
-    Flux<BlackList> deleteByIdIn(String[] ids);
+    Flux<BlackList> deleteByIdIn(Collection<String> ids);
 
     /**
      * 查询黑名单

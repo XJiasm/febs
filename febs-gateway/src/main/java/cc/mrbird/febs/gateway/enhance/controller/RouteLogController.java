@@ -1,6 +1,6 @@
 package cc.mrbird.febs.gateway.enhance.controller;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
 import cc.mrbird.febs.gateway.enhance.entity.RouteLog;
 import cc.mrbird.febs.gateway.enhance.service.RouteLogService;
 import lombok.RequiredArgsConstructor;

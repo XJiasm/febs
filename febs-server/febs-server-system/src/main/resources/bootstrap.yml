@@ -16,6 +16,12 @@ spring:
 
 logging:
   level:
+    org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              EndpointId: error
     com:
       alibaba:
         cloud:

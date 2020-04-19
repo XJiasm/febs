@@ -1,10 +1,10 @@
 package cc.mrbird.febs.server.system.service.impl;
 
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
-import cc.mrbird.febs.common.entity.system.Log;
-import cc.mrbird.febs.common.utils.SortUtil;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.core.entity.system.Log;
+import cc.mrbird.febs.common.core.utils.SortUtil;
 import cc.mrbird.febs.server.system.mapper.LogMapper;
 import cc.mrbird.febs.server.system.service.ILogService;
 import cc.mrbird.febs.server.system.utils.AddressUtil;
@@ -18,8 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -31,7 +29,6 @@ import java.util.*;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogService {
 
     private final ObjectMapper objectMapper;
@@ -62,7 +59,6 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void deleteLogs(String[] logIds) {
         List<String> list = Arrays.asList(logIds);
         baseMapper.deleteBatchIds(list);

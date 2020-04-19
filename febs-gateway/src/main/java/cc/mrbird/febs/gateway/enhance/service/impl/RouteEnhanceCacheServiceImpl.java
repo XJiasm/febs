@@ -1,6 +1,6 @@
 package cc.mrbird.febs.gateway.enhance.service.impl;
 
-import cc.mrbird.febs.common.service.RedisService;
+import cc.mrbird.febs.common.redis.service.RedisService;
 import cc.mrbird.febs.gateway.enhance.entity.BlackList;
 import cc.mrbird.febs.gateway.enhance.entity.RateLimitRule;
 import cc.mrbird.febs.gateway.enhance.service.RouteEnhanceCacheService;

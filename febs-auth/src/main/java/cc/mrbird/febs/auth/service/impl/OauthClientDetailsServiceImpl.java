@@ -1,10 +1,10 @@
 package cc.mrbird.febs.auth.service.impl;
 
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.exception.FebsException;
 import cc.mrbird.febs.auth.entity.OauthClientDetails;
 import cc.mrbird.febs.auth.mapper.OauthClientDetailsMapper;
 import cc.mrbird.febs.auth.service.OauthClientDetailsService;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.exception.FebsException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

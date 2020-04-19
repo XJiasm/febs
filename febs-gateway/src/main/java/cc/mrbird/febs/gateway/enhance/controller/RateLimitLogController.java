@@ -1,6 +1,6 @@
 package cc.mrbird.febs.gateway.enhance.controller;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
 import cc.mrbird.febs.gateway.enhance.entity.RateLimitLog;
 import cc.mrbird.febs.gateway.enhance.service.RateLimitLogService;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class RateLimitLogController {
 
     @DeleteMapping
     @PreAuthorize("hasAuthority('admin')")
-    public Flux<RateLimitLog> deleteRateLimitLog(String ids){
+    public Flux<RateLimitLog> deleteRateLimitLog(String ids) {
         return rateLimitLogService.delete(ids);
     }
 }

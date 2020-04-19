@@ -7,47 +7,30 @@
 
 FEBS Cloud是一款使用Spring Cloud Hoxton.RELEASE、Spring Cloud OAuth2 & Spring Cloud Alibaba构建的低耦合权限管理系统，前端（FEBS Cloud Web）采用vue element admin构建。FEBS意指：**F**ast，**E**asy use，**B**eautiful和**S**afe。该系统具有如下特点：
 
-1. 前后端分离架构，客户端和服务端纯Token交互；
- 
-2. 认证服务器与资源服务器分离，方便接入自己的微服务系统；
-
-3. 微服务防护，客户端请求资源只能通过微服务网关获取；
-
-4. 集成Prometheus，SpringBootAdmin，多维度监控微服务；
-
-5. 集成Spring Cloud Alibaba Nacos服务治理和集中配置管理；
-
-6. 网关限流，网关黑名单限制，网关日志（WebFlux编程实践）；
-
-7. ~~集成Zipkin，方便跟踪Feign调用链~~，集成Skywalking APM；
-
-8. 集成ELK，集中管理日志，便于问题分析；
-
-9. 微服务Docker化，使用Docker Compose一键部署；
-
-10. 支持Kubernetes集群部署；
-
-11. 提供详细的使用文档和搭建教程；
-
-12. 前后端请求参数校验，Excel导入导出，代码生成等。
+序号 | 特点
+---|---
+1 | 前后端分离架构，客户端和服务端纯Token交互； 
+2 | 认证服务器与资源服务器分离，方便接入自己的微服务系统
+3 | 集成Prometheus，SpringBootAdmin，Skywalking APM
+4 | 网关限流，网关黑名单限制，网关日志（WebFlux编程实践）
+5 | 微服务Docker化，使用Docker Compose一键部署，K8S集群
+6 | 社交登录，认证授权，数据权限，前后端参数校验，Starter开箱即用等
+7 | Doc Starter，几行配置自动生成系统api接口文档
+8 | 提供详细的导入教程、使用教程和开发教程，对于想深入了解的用户还提供了搭建教程
 
 ### 文档与教程
 
-项目导入及使用文档：[https://www.kancloud.cn/mrbird/spring-cloud/1263681](https://www.kancloud.cn/mrbird/spring-cloud/1263681)。
+> 在这浮躁的社会里，还请您耐心阅读文档，99%的问题在文档中都能找到答案。
 
-项目从零搭建到部署教程：[https://www.kancloud.cn/mrbird/spring-cloud/1263685](https://www.kancloud.cn/mrbird/spring-cloud/1263685)。
+文档 | 地址
+---|---
 
-Kubernetes集群部署脚本：[https://github.com/wuyouzhuguli/FEBS-Cloud-K8S](https://github.com/wuyouzhuguli/FEBS-Cloud-K8S)。
-
-分布式事务方案（RocketMQ、TX-LCN、Seata）：[https://www.kancloud.cn/mrbird/spring-cloud/1456142](https://www.kancloud.cn/mrbird/spring-cloud/1456142)。
-
-### 常见问题
-
-[https://mrbird.cc/FEBS-Cloud常见问题汇总.html](https://mrbird.cc/FEBS-Cloud常见问题汇总.html)
-
-### 更新日志
-
-[https://www.kancloud.cn/mrbird/spring-cloud/1292659](https://www.kancloud.cn/mrbird/spring-cloud/1292659)
+项目导入教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1647283](https://www.kancloud.cn/mrbird/spring-cloud/1647283)
+管理页面使用教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1647284](https://www.kancloud.cn/mrbird/spring-cloud/1647284)
+二次开发教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1265030](https://www.kancloud.cn/mrbird/spring-cloud/1265030)
+项目从零搭建教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1263685](https://www.kancloud.cn/mrbird/spring-cloud/1263685)
+系统常见问题解答 | [https://mrbird.cc/FEBS-Cloud常见问题汇总.html](https://mrbird.cc/FEBS-Cloud常见问题汇总.html)
+系统更新日志 | [https://www.kancloud.cn/mrbird/spring-cloud/1292659](https://www.kancloud.cn/mrbird/spring-cloud/1292659)
 
 ### 系统架构
 
@@ -110,6 +93,14 @@ jane | 1234qwer |系统监测员，负责整个系统监控模块
 Jack | 123456 |网关管理模块查看权限
 admin | 123456 |网关管理模块所有权限
 
+APM平台相关账号密码：
+
+平台 | 账号| 密码
+---|---|---
+febs-admin | febs |123456
+febs-tx-manager | 无 | 123456
+Grafana | febs | 123456
+
 ### 服务模块
 
 FEBS模块：
@@ -117,19 +108,20 @@ FEBS模块：
 服务名称 | 端口 | 描述
 ---|---|---
 FEBS-Auth| 8101| 微服务认证服务器 
-FEBS-Server-System| 8201 | 微服务子系统（资源服务器）
-FEBS-Server-Test|8202 | 微服务子系统（资源服务器）
+FEBS-Server-System| 8201 | 微服务子系统，系统核心模块
+FEBS-Server-Test|8202 | 微服务子系统，Demo模块
+FEBS-Server-Generator|8203 | 微服务子系统，代码生成模块
+FEBS-Server-Job|8203 | 微服务子系统，任务调度模块
 FEBS-Gateway|8301|微服务网关
-FEBS-Monitor-Admin|8401|微服务监控子系统
+FEBS-Admin|8401|微服务监控子系统
+FEBS-Tx-Manager|8501|微服务分布式事务控制器
 
 第三方模块：
 
 服务名称 | 端口 | 描述
 ---|---|---
 Nacos| 8001 |注册中心，配置中心 
-Zipkin-Server|8402|Zipkin服务器
 MySQL| 3306 |MySQL 数据库 
-RabbitMQ|5672|RabbitMQ 消息中间件 
 Redis| 6379 | K-V 缓存数据库 
 Elasticsearch|9200 | 日志存储
 Logstash|4560|日志收集
@@ -139,24 +131,30 @@ Skywalking|11800、12800、8080|Skywalking APM
 
 ### 目录结构
 ```
+├─febs-apm                        ------ 微服务APM模块
+│  ├─febs-admin                   ------ 微服务监控中心
+│  ├─prometheus-grafana           ------ prometheus grafana apm相关配置，docker文件
+│  └─skywalking-elk               ------ skywalking elk相关配置，docker文件
 ├─febs-auth                       ------ 微服务认证服务器
 ├─febs-cloud                      ------ 整个项目的父模块
 │  ├─sql                          ------ SQL脚本
-│  ├─config                       ------ 第三方应用配置
-│  └─docker compose               ------ 存放docker compose文件
-│      ├─elk                      ------ ELK docker compose文件
-│      ├─febs-cloud               ------ 聚合所有微服务子项目的docker compose文件
-│      ├─prometheus               ------ Prometheus docker compose文件
-│      ├─skywalking               ------ Skywalking docker compose文件
-│      └─third-part               ------ 第三方服务（MySQL，Redis等）docker compose文件
+│  ├─postman                      ------ postman脚本
+│  └─docker compose               ------ 项目相关docker compose文件
 ├─febs-common                     ------ 通用模块
+│  ├─febs-common-core                   ------ 系统核心依赖包
+│  ├─febs-common-datasource-starter     ------ 系统数据库自动装配starter
+│  ├─febs-common-doc                    ------ 文档模块的核心依赖包
+│  ├─febs-common-doc-gateway-starter    ------ 网关聚合微服务子系统api文档自动装配starter
+│  ├─febs-common-doc-starter            ------ 微服务子系统api文档自动装配starter
+│  ├─febs-common-redis-starter          ------ 系统Redis自动装配starter
+│  └─febs-common-security-starter       ------ 微服务子系统安全配置自动装配starter
 ├─febs-gateway                    ------ 微服务网关
-├─febs-monitor                    ------ 微服务监控父模块
-│  ├─febs-monitor-admin           ------ 微服务监控中心
-│  └─zipkin-server                ------ zipkin 服务
-└─febs-server                     ------ 资源服务器
-   ├─febs-server-system           ------ 资源服务器系统模块
-   └─febs-server-test             ------ 资源服务器demo，演示如何整合自己的微服务系统
+├─febs-server                     ------ 微服务子系统
+│  ├─ebs-server-system            ------ 微服务子系统系统核心模块
+│  ├─febs-server-test             ------ 微服务子系统demo模块
+│  ├─febs-server-generator        ------ 微服务子系统代码生成模块
+│  └─febs-server-job              ------ 微服务子系统任务调度模块
+└─febs-server                     ------ 微服务分布式事务控制器
 ```
 ### 系统截图
 
@@ -181,8 +179,6 @@ Skywalking|11800、12800、8080|Skywalking APM
 ### 服务APM
 
 #### [Prometheus APM](http://cloud.mrbird.cn:8404)
-
-Grafana账号密码：febs，123456
 
 <table>
   <tr>

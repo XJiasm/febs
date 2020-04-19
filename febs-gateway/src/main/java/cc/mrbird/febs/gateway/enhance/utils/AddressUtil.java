@@ -1,6 +1,6 @@
 package cc.mrbird.febs.gateway.enhance.utils;
 
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;

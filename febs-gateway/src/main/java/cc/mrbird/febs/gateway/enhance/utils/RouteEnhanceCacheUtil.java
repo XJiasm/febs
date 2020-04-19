@@ -1,6 +1,7 @@
 package cc.mrbird.febs.gateway.enhance.utils;
 
-import cc.mrbird.febs.common.entity.constant.FebsConstant;
+
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
 
 /**
  * @author MrBird

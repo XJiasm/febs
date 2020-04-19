@@ -1,7 +1,8 @@
 package cc.mrbird.febs.gateway;
 
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
  * @author MrBird
@@ -10,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FebsGatewayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FebsGatewayApplication.class, args);
+        new SpringApplicationBuilder(FebsGatewayApplication.class)
+                .web(WebApplicationType.REACTIVE)
+                .run(args);
     }
 }

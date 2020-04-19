@@ -1,7 +1,7 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.Eximport;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.system.Eximport;
 import cc.mrbird.febs.server.system.mapper.EximportMapper;
 import cc.mrbird.febs.server.system.properties.FebsServerSystemProperties;
 import cc.mrbird.febs.server.system.service.IEximportService;
