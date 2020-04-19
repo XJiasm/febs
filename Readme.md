@@ -110,7 +110,7 @@ FEBS-Auth| 8101| 微服务认证服务器
 FEBS-Server-System| 8201 | 微服务子系统，系统核心模块
 FEBS-Server-Test|8202 | 微服务子系统，Demo模块
 FEBS-Server-Generator|8203 | 微服务子系统，代码生成模块
-FEBS-Server-Job|8203 | 微服务子系统，任务调度模块
+FEBS-Server-Job|8204 | 微服务子系统，任务调度模块
 FEBS-Gateway|8301|微服务网关
 FEBS-Admin|8401|微服务监控子系统
 FEBS-Tx-Manager|8501|微服务分布式事务控制器
@@ -153,7 +153,7 @@ Skywalking|11800、12800、8080|Skywalking APM
 │  ├─febs-server-test             ------ 微服务子系统demo模块
 │  ├─febs-server-generator        ------ 微服务子系统代码生成模块
 │  └─febs-server-job              ------ 微服务子系统任务调度模块
-└─febs-server                     ------ 微服务分布式事务控制器
+└─febs-tx-manager                 ------ 微服务分布式事务控制器
 ```
 ### 系统截图
 
