@@ -24,7 +24,6 @@ FEBS Cloud是一款使用Spring Cloud Hoxton.RELEASE、Spring Cloud OAuth2 & Spr
 
 文档 | 地址
 ---|---
-
 项目导入教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1647283](https://www.kancloud.cn/mrbird/spring-cloud/1647283)
 管理页面使用教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1647284](https://www.kancloud.cn/mrbird/spring-cloud/1647284)
 二次开发教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1265030](https://www.kancloud.cn/mrbird/spring-cloud/1265030)
