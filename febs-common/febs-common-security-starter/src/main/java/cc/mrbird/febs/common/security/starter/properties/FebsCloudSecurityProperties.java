@@ -16,7 +16,7 @@ public class FebsCloudSecurityProperties {
     /**
      * 配置需要认证的uri，默认为所有/**
      */
-    private String AuthUri = EndpointConstant.ALL;
+    private String authUri = EndpointConstant.ALL;
     /**
      * 免认证资源路径，支持通配符
      * 多个值时使用逗号分隔
@@ -32,11 +32,11 @@ public class FebsCloudSecurityProperties {
     }
 
     public String getAuthUri() {
-        return AuthUri;
+        return authUri;
     }
 
     public void setAuthUri(String authUri) {
-        AuthUri = authUri;
+        this.authUri = authUri;
     }
 
     public String getAnonUris() {
@@ -51,7 +51,7 @@ public class FebsCloudSecurityProperties {
     public String toString() {
         return "FebsCloudSecurityProperties{" +
                 "enable=" + enable +
-                ", AuthUri='" + AuthUri + '\'' +
+                ", authUri='" + authUri + '\'' +
                 ", anonUris='" + anonUris + '\'' +
                 '}';
     }
