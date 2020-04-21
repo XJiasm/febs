@@ -38,7 +38,6 @@ services:
       - "--nacos.url=127.0.0.1"
       - "--mysql.url=127.0.0.1"
       - "--redis.url=127.0.0.1"
-      - "--spring.profiles.active=prod"
     environment:
       - "TZ=Asia/Shanghai"
     ports:
@@ -55,7 +54,6 @@ services:
       - "--nacos.url=127.0.0.1"
       - "--mysql.url=127.0.0.1"
       - "--febs-tx-manager=127.0.0.1"
-      - "--spring.profiles.active=prod"
     environment:
       - "TZ=Asia/Shanghai"
     ports:
