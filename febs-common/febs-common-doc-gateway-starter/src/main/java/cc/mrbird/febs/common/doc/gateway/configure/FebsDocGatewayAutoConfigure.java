@@ -22,9 +22,9 @@ import springfox.documentation.swagger.web.UiConfiguration;
 @ConditionalOnProperty(value = "febs.doc.gateway.enable", havingValue = "true", matchIfMissing = true)
 public class FebsDocGatewayAutoConfigure {
 
+    private final FebsDocGatewayProperties febsDocGatewayProperties;
     private SecurityConfiguration securityConfiguration;
     private UiConfiguration uiConfiguration;
-    private final FebsDocGatewayProperties febsDocGatewayProperties;
 
     public FebsDocGatewayAutoConfigure(FebsDocGatewayProperties febsDocGatewayProperties) {
         this.febsDocGatewayProperties = febsDocGatewayProperties;

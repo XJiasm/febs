@@ -36,14 +36,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @RequiredArgsConstructor
 public class RouteEnhanceServiceImpl implements RouteEnhanceService {
 
+    private static final String METHOD_ALL = "ALL";
+    private static final String TOKEN_CHECK_URL = "/auth/user";
     private final RouteLogService routeLogService;
     private final BlockLogService blockLogService;
     private final RateLimitLogService rateLimitLogService;
     private final RouteEnhanceCacheService routeEnhanceCacheService;
-
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
-    private static final String METHOD_ALL = "ALL";
-    private static final String TOKEN_CHECK_URL = "/auth/user";
 
     @Override
     public Mono<Void> filterBalckList(ServerWebExchange exchange) {

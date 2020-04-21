@@ -5,7 +5,6 @@ import cc.mrbird.febs.common.datasource.starter.annotation.DataPermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- *
  * @author MrBird
  */
 @DataPermission(methods = {"selectPage"})

@@ -22,10 +22,8 @@ import java.util.Date;
 @Excel("部门信息表")
 public class Dept implements Serializable {
 
-    private static final long serialVersionUID = -7790334862410409053L;
-
     public static final Long TOP_DEPT_ID = 0L;
-
+    private static final long serialVersionUID = -7790334862410409053L;
     @TableId(value = "DEPT_ID", type = IdType.AUTO)
     private Long deptId;
 

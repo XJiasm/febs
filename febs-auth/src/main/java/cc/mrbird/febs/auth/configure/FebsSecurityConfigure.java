@@ -1,7 +1,7 @@
 package cc.mrbird.febs.auth.configure;
 
-import cc.mrbird.febs.common.core.entity.constant.EndpointConstant;
 import cc.mrbird.febs.auth.filter.ValidateCodeFilter;
+import cc.mrbird.febs.common.core.entity.constant.EndpointConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;

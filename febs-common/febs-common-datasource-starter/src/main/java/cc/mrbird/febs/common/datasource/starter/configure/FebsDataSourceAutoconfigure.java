@@ -22,7 +22,7 @@ public class FebsDataSourceAutoconfigure {
      */
     @Bean
     @Order(-1)
-    public DataPermissionInterceptor dataPermissionInterceptor(){
+    public DataPermissionInterceptor dataPermissionInterceptor() {
         return new DataPermissionInterceptor();
     }
 

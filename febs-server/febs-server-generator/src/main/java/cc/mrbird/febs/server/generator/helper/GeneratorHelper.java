@@ -30,6 +30,20 @@ import java.util.Objects;
 @Helper
 public class GeneratorHelper {
 
+    private static String getFilePath(GeneratorConfig configure, String packagePath, String suffix, boolean serviceInterface) {
+        String filePath = GeneratorConstant.TEMP_PATH + configure.getJavaPath() +
+                packageConvertPath(configure.getBasePackage() + "." + packagePath);
+        if (serviceInterface) {
+            filePath += "I";
+        }
+        filePath += configure.getClassName() + suffix;
+        return filePath;
+    }
+
+    private static String packageConvertPath(String packageName) {
+        return String.format("/%s/", packageName.contains(".") ? packageName.replaceAll("\\.", "/") : packageName);
+    }
+
     public void generateEntityFile(List<Column> columns, GeneratorConfig configure) throws Exception {
         String suffix = GeneratorConstant.JAVA_FILE_SUFFIX;
         String path = getFilePath(configure, configure.getEntityPackage(), suffix, false);
@@ -106,20 +120,6 @@ public class GeneratorHelper {
             log.error(message, e);
             throw new Exception(message);
         }
-    }
-
-    private static String getFilePath(GeneratorConfig configure, String packagePath, String suffix, boolean serviceInterface) {
-        String filePath = GeneratorConstant.TEMP_PATH + configure.getJavaPath() +
-                packageConvertPath(configure.getBasePackage() + "." + packagePath);
-        if (serviceInterface) {
-            filePath += "I";
-        }
-        filePath += configure.getClassName() + suffix;
-        return filePath;
-    }
-
-    private static String packageConvertPath(String packageName) {
-        return String.format("/%s/", packageName.contains(".") ? packageName.replaceAll("\\.", "/") : packageName);
     }
 
     private JSONObject toJsonObject(Object o) {

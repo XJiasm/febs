@@ -15,7 +15,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class FebsServerJobApplication {
 
     public static void main(String[] args) {
-         new SpringApplicationBuilder(FebsServerJobApplication.class)
+        new SpringApplicationBuilder(FebsServerJobApplication.class)
                 .web(WebApplicationType.SERVLET)
                 .run(args);
     }

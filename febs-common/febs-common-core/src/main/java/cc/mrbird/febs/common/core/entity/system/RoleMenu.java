@@ -12,10 +12,10 @@ import java.io.Serializable;
 @TableName("t_role_menu")
 @Data
 public class RoleMenu implements Serializable {
-	
-	private static final long serialVersionUID = -7573904024872252113L;
 
-	@TableId(value = "ROLE_ID")
+    private static final long serialVersionUID = -7573904024872252113L;
+
+    @TableId(value = "ROLE_ID")
     private Long roleId;
     @TableId(value = "MENU_ID")
     private Long menuId;

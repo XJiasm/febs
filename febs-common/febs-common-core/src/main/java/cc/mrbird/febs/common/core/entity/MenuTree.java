@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MenuTree extends Tree<Menu>{
+public class MenuTree extends Tree<Menu> {
 
     private String path;
     private String component;

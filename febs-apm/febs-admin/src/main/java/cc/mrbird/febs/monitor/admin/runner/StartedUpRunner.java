@@ -24,13 +24,6 @@ public class StartedUpRunner implements ApplicationRunner {
         this.environment = environment;
     }
 
-    @Override
-    public void run(ApplicationArguments args) {
-        if (context.isActive()) {
-            printSystemUpBanner(environment);
-        }
-    }
-
     private static void printSystemUpBanner(Environment environment) {
         String banner = "-----------------------------------------\n" +
                 "服务启动成功，时间：" + LocalDateTime.now() + "\n" +
@@ -38,5 +31,12 @@ public class StartedUpRunner implements ApplicationRunner {
                 "端口号：" + environment.getProperty("server.port") + "\n" +
                 "-----------------------------------------";
         System.out.println(banner);
+    }
+
+    @Override
+    public void run(ApplicationArguments args) {
+        if (context.isActive()) {
+            printSystemUpBanner(environment);
+        }
     }
 }

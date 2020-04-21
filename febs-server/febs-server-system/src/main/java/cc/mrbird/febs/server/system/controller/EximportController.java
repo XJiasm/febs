@@ -40,8 +40,8 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class EximportController {
 
-    private final IEximportService eximportService;
     private static final String XLSX = ".xlsx";
+    private final IEximportService eximportService;
 
     @GetMapping
     public FebsResponse findEximports(QueryRequest request) {

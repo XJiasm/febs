@@ -25,11 +25,9 @@ import reactor.core.publisher.Mono;
 public class FebsGatewayRequestFilter implements GlobalFilter {
 
     private final RouteEnhanceService routeEnhanceService;
-
+    private final AntPathMatcher pathMatcher = new AntPathMatcher();
     @Value("${febs.gateway.enhance:false}")
     private Boolean routeEhance;
-
-    private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

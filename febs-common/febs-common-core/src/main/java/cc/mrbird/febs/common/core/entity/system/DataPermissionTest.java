@@ -1,12 +1,12 @@
 package cc.mrbird.febs.common.core.entity.system;
 
-import java.util.Date;
-
-import lombok.Data;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @author MrBird

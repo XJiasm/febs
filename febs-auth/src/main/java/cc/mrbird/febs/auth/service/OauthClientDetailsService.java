@@ -1,8 +1,8 @@
 package cc.mrbird.febs.auth.service;
 
+import cc.mrbird.febs.auth.entity.OauthClientDetails;
 import cc.mrbird.febs.common.core.entity.QueryRequest;
 import cc.mrbird.febs.common.core.exception.FebsException;
-import cc.mrbird.febs.auth.entity.OauthClientDetails;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 

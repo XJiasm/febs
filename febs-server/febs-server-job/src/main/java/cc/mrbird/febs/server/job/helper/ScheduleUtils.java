@@ -1,8 +1,8 @@
 package cc.mrbird.febs.server.job.helper;
 
+import cc.mrbird.febs.server.job.entity.Job;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import cc.mrbird.febs.server.job.entity.Job;
 
 /**
  * 定时任务工具类

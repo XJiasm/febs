@@ -5,9 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
-*
-* @author MrBird
-*/
+ * @author MrBird
+ */
 @Data
 @TableName("t_user_data_permission")
 public class UserDataPermission {

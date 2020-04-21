@@ -7,14 +7,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 
 /**
- *
  * @author MrBird
  */
 public interface IDataPermissionTestService extends IService<DataPermissionTest> {
     /**
      * 查询（分页）
      *
-     * @param request QueryRequest
+     * @param request            QueryRequest
      * @param dataPermissionTest dataPermissionTest
      * @return IPage<DataPermissionTest>
      */

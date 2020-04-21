@@ -30,6 +30,7 @@ import java.util.Arrays;
 public class BlackListServiceImpl implements BlackListService {
 
 
+    private final RouteEnhanceCacheService routeEnhanceCacheService;
     private BlackListMapper blackListMapper;
     private ReactiveMongoTemplate template;
 
@@ -42,8 +43,6 @@ public class BlackListServiceImpl implements BlackListService {
     public void setTemplate(ReactiveMongoTemplate template) {
         this.template = template;
     }
-
-    private final RouteEnhanceCacheService routeEnhanceCacheService;
 
     @Override
     public Flux<BlackList> findAll() {

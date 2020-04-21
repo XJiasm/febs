@@ -25,7 +25,7 @@ public class Tree<T> {
 
     private boolean hasChildren = false;
 
-    public void initChildren(){
+    public void initChildren() {
         this.children = new ArrayList<>();
     }
 

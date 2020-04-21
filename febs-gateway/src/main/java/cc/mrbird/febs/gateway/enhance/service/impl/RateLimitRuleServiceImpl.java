@@ -28,6 +28,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class RateLimitRuleServiceImpl implements RateLimitRuleService {
 
+    private final RouteEnhanceCacheService routeEnhanceCacheService;
     private RateLimitRuleMapper rateLimitRuleMapper;
     private ReactiveMongoTemplate template;
 
@@ -40,8 +41,6 @@ public class RateLimitRuleServiceImpl implements RateLimitRuleService {
     public void setTemplate(ReactiveMongoTemplate template) {
         this.template = template;
     }
-
-    private final RouteEnhanceCacheService routeEnhanceCacheService;
 
     @Override
     public Flux<RateLimitRule> findAll() {

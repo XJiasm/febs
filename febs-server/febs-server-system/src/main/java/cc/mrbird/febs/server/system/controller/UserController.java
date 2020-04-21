@@ -103,7 +103,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('user:update')")
-    public FebsResponse findUserDataPermissions(@NotBlank(message = "{required}") @PathVariable String userId){
+    public FebsResponse findUserDataPermissions(@NotBlank(message = "{required}") @PathVariable String userId) {
         String dataPermissions = this.userDataPermissionService.findByUserId(userId);
         return new FebsResponse().data(dataPermissions);
     }

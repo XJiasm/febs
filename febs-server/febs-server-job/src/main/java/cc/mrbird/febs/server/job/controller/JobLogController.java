@@ -26,7 +26,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("log")
 @RequiredArgsConstructor
-public class JobLogController{
+public class JobLogController {
 
     private final IJobLogService jobLogService;
 

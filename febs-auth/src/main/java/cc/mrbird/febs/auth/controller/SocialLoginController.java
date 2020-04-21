@@ -1,11 +1,11 @@
 package cc.mrbird.febs.auth.controller;
 
-import cc.mrbird.febs.common.core.entity.FebsResponse;
-import cc.mrbird.febs.common.core.exception.FebsException;
-import cc.mrbird.febs.common.core.utils.FebsUtil;
 import cc.mrbird.febs.auth.entity.BindUser;
 import cc.mrbird.febs.auth.entity.UserConnection;
 import cc.mrbird.febs.auth.service.SocialLoginService;
+import cc.mrbird.febs.common.core.entity.FebsResponse;
+import cc.mrbird.febs.common.core.exception.FebsException;
+import cc.mrbird.febs.common.core.utils.FebsUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthCallback;

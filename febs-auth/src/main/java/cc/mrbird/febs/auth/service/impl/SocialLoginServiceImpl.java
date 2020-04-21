@@ -1,5 +1,11 @@
 package cc.mrbird.febs.auth.service.impl;
 
+import cc.mrbird.febs.auth.entity.BindUser;
+import cc.mrbird.febs.auth.entity.UserConnection;
+import cc.mrbird.febs.auth.manager.UserManager;
+import cc.mrbird.febs.auth.properties.FebsAuthProperties;
+import cc.mrbird.febs.auth.service.SocialLoginService;
+import cc.mrbird.febs.auth.service.UserConnectionService;
 import cc.mrbird.febs.common.core.entity.FebsResponse;
 import cc.mrbird.febs.common.core.entity.constant.GrantTypeConstant;
 import cc.mrbird.febs.common.core.entity.constant.ParamsConstant;
@@ -7,12 +13,6 @@ import cc.mrbird.febs.common.core.entity.constant.SocialConstant;
 import cc.mrbird.febs.common.core.entity.system.SystemUser;
 import cc.mrbird.febs.common.core.exception.FebsException;
 import cc.mrbird.febs.common.core.utils.FebsUtil;
-import cc.mrbird.febs.auth.entity.BindUser;
-import cc.mrbird.febs.auth.entity.UserConnection;
-import cc.mrbird.febs.auth.manager.UserManager;
-import cc.mrbird.febs.auth.properties.FebsAuthProperties;
-import cc.mrbird.febs.auth.service.SocialLoginService;
-import cc.mrbird.febs.auth.service.UserConnectionService;
 import cn.hutool.core.util.StrUtil;
 import com.xkcoding.justauth.AuthRequestFactory;
 import lombok.RequiredArgsConstructor;

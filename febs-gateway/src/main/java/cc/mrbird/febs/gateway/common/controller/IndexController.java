@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 public class IndexController {
 
     @RequestMapping("/")
-    public Mono<String> index(){
+    public Mono<String> index() {
         return Mono.just("febs cloud gateway");
     }
 }

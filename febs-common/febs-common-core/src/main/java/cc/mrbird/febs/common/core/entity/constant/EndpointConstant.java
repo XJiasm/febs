@@ -23,5 +23,5 @@ public class EndpointConstant {
 
     public static final String OAUTH_ERROR = "/oauth/error";
 
-    public static final String ACTUATOR_ALL= "/actuator/**";
+    public static final String ACTUATOR_ALL = "/actuator/**";
 }
