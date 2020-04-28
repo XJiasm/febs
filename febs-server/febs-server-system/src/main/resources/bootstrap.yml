@@ -1,8 +1,6 @@
 spring:
   application:
     name: FEBS-Server-System
-  profiles:
-    active: dev
   cloud:
     nacos:
       config:
