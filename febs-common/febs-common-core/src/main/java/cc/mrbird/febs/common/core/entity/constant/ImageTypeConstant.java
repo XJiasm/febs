@@ -5,14 +5,14 @@ package cc.mrbird.febs.common.core.entity.constant;
  *
  * @author MrBird
  */
-public class ImageTypeConstant {
+public interface ImageTypeConstant {
 
     /**
      * gif类型
      */
-    public static final String GIF = "gif";
+    String GIF = "gif";
     /**
      * png类型
      */
-    public static final String PNG = "png";
+    String PNG = "png";
 }

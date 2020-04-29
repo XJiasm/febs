@@ -3,8 +3,8 @@ package cc.mrbird.febs.common.core.entity.constant;
 /**
  * @author MrBird
  */
-public class SocialConstant {
+public interface SocialConstant {
 
-    public static final String SOCIAL_LOGIN = "social_login";
-    public static final String SOCIAL_LOGIN_PASSWORD = "febs_social_login_password";
+    String SOCIAL_LOGIN = "social_login";
+    String SOCIAL_LOGIN_PASSWORD = "febs_social_login_password";
 }

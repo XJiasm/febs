@@ -5,23 +5,23 @@ package cc.mrbird.febs.common.core.entity.constant;
  *
  * @author MrBird
  */
-public class ParamsConstant {
+public interface ParamsConstant {
 
     /**
      * 验证码 key
      */
-    public static final String VALIDATE_CODE_KEY = "key";
+    String VALIDATE_CODE_KEY = "key";
     /**
      * 验证码 code
      */
-    public static final String VALIDATE_CODE_CODE = "code";
+    String VALIDATE_CODE_CODE = "code";
     /**
      * 认证类型参数 key
      */
-    public static final String GRANT_TYPE = "grant_type";
+    String GRANT_TYPE = "grant_type";
     /**
      * 登录类型
      */
-    public static final String LOGIN_TYPE = "login_type";
+    String LOGIN_TYPE = "login_type";
 
 }

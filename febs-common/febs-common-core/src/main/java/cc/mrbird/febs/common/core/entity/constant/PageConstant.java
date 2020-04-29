@@ -5,8 +5,8 @@ package cc.mrbird.febs.common.core.entity.constant;
  *
  * @author MrBird
  */
-public class PageConstant {
+public interface PageConstant {
 
-    public static final String ROWS = "rows";
-    public static final String TOTAL = "total";
+    String ROWS = "rows";
+    String TOTAL = "total";
 }
