@@ -40,9 +40,11 @@ public class UserManager {
      */
     public SystemUser findByName(String username) {
         SystemUser user = userMapper.findByName(username);
-        List<UserDataPermission> permissions = userMapper.findUserDataPermissions(user.getUserId());
-        String deptIds = permissions.stream().map(p -> String.valueOf(p.getDeptId())).collect(Collectors.joining(StringPool.COMMA));
-        user.setDeptIds(deptIds);
+        if (user != null) {
+            List<UserDataPermission> permissions = userMapper.findUserDataPermissions(user.getUserId());
+            String deptIds = permissions.stream().map(p -> String.valueOf(p.getDeptId())).collect(Collectors.joining(StringPool.COMMA));
+            user.setDeptIds(deptIds);
+        }
         return user;
     }
 
