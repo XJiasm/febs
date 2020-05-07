@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
-import org.springframework.security.oauth2.common.exceptions.InvalidScopeException;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
-import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTypeException;
+import org.springframework.security.oauth2.common.exceptions.*;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.stereotype.Component;
 
@@ -41,9 +38,27 @@ public class FebsWebResponseExceptionTranslator implements WebResponseExceptionT
             message = "不是有效的scope值";
             return status.body(response.message(message));
         }
+        if (e instanceof RedirectMismatchException) {
+            message = "redirect_uri值不正确";
+            return status.body(response.message(message));
+        }
+        if (e instanceof BadClientCredentialsException) {
+            message = "client值不合法";
+            return status.body(response.message(message));
+        }
+        if (e instanceof UnsupportedResponseTypeException) {
+            String code = StringUtils.substringBetween(e.getMessage(), "[", "]");
+            message = code + "不是合法的response_type值";
+            return status.body(response.message(message));
+        }
         if (e instanceof InvalidGrantException) {
             if (StringUtils.containsIgnoreCase(e.getMessage(), "Invalid refresh token")) {
                 message = "refresh token无效";
+                return status.body(response.message(message));
+            }
+            if (StringUtils.containsIgnoreCase(e.getMessage(), "Invalid authorization code")) {
+                String code = StringUtils.substringAfterLast(e.getMessage(), ": ");
+                message = "授权码" + code + "不合法";
                 return status.body(response.message(message));
             }
             if (StringUtils.containsIgnoreCase(e.getMessage(), "locked")) {

@@ -2,7 +2,6 @@ package cc.mrbird.febs.common.security.starter.handler;
 
 import cc.mrbird.febs.common.core.entity.FebsResponse;
 import cc.mrbird.febs.common.core.utils.FebsUtil;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
@@ -18,8 +17,6 @@ public class FebsAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
         FebsResponse febsResponse = new FebsResponse();
-        FebsUtil.makeResponse(
-                response, MediaType.APPLICATION_JSON_VALUE,
-                HttpServletResponse.SC_FORBIDDEN, febsResponse.message("没有权限访问该资源"));
+        FebsUtil.makeJsonResponse(response, HttpServletResponse.SC_FORBIDDEN, febsResponse.message("没有权限访问该资源"));
     }
 }

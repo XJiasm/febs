@@ -3,8 +3,8 @@ package cc.mrbird.febs.common.security.starter.interceptor;
 import cc.mrbird.febs.common.core.entity.FebsResponse;
 import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.core.utils.FebsUtil;
+import cc.mrbird.febs.common.security.starter.properties.FebsCloudSecurityProperties;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.MediaType;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -17,19 +17,25 @@ import java.io.IOException;
  */
 public class FebsServerProtectInterceptor implements HandlerInterceptor {
 
+    private FebsCloudSecurityProperties properties;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-        // 从请求头中获取 Gateway Token
+        if (!properties.getOnlyFetchByGateway()) {
+            return true;
+        }
         String token = request.getHeader(FebsConstant.GATEWAY_TOKEN_HEADER);
         String gatewayToken = new String(Base64Utils.encode(FebsConstant.GATEWAY_TOKEN_VALUE.getBytes()));
-        // 校验 Gateway Token的正确性
         if (StringUtils.equals(gatewayToken, token)) {
             return true;
         } else {
             FebsResponse febsResponse = new FebsResponse();
-            FebsUtil.makeResponse(response, MediaType.APPLICATION_JSON_VALUE,
-                    HttpServletResponse.SC_FORBIDDEN, febsResponse.message("请通过网关获取资源"));
+            FebsUtil.makeJsonResponse(response, HttpServletResponse.SC_FORBIDDEN, febsResponse.message("请通过网关获取资源"));
             return false;
         }
+    }
+
+    public void setProperties(FebsCloudSecurityProperties properties) {
+        this.properties = properties;
     }
 }

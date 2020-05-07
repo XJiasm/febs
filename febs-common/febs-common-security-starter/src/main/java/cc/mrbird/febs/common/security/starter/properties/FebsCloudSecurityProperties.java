@@ -22,6 +22,10 @@ public class FebsCloudSecurityProperties {
      * 多个值时使用逗号分隔
      */
     private String anonUris;
+    /**
+     * 是否只能通过网关获取资源
+     */
+    private Boolean onlyFetchByGateway = Boolean.TRUE;
 
     public Boolean getEnable() {
         return enable;
@@ -47,12 +51,21 @@ public class FebsCloudSecurityProperties {
         this.anonUris = anonUris;
     }
 
+    public Boolean getOnlyFetchByGateway() {
+        return onlyFetchByGateway;
+    }
+
+    public void setOnlyFetchByGateway(Boolean onlyFetchByGateway) {
+        this.onlyFetchByGateway = onlyFetchByGateway;
+    }
+
     @Override
     public String toString() {
         return "FebsCloudSecurityProperties{" +
                 "enable=" + enable +
                 ", authUri='" + authUri + '\'' +
                 ", anonUris='" + anonUris + '\'' +
+                ", onlyFetchByGateway=" + onlyFetchByGateway +
                 '}';
     }
 }

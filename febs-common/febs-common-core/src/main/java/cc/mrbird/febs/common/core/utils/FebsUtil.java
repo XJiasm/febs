@@ -3,6 +3,7 @@ package cc.mrbird.febs.common.core.utils;
 import cc.mrbird.febs.common.core.entity.CurrentUser;
 import cc.mrbird.febs.common.core.entity.FebsAuthUser;
 import cc.mrbird.febs.common.core.entity.constant.PageConstant;
+import cc.mrbird.febs.common.core.entity.constant.RegexpConstant;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +13,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.Authentication;
@@ -40,7 +42,6 @@ import java.util.stream.IntStream;
 @Slf4j
 public class FebsUtil {
 
-    private static final Pattern CHINESE_PATTERN = Pattern.compile("[\u4e00-\u9fa5]");
     private static final String UNKNOW = "unknown";
 
     /**
@@ -91,7 +92,7 @@ public class FebsUtil {
      */
     public static boolean isAjaxRequest(HttpServletRequest request) {
         return (request.getHeader("X-Requested-With") != null
-                && "XMLHttpRequest".equals(request.getHeader("X-Requested-With")));
+                && "XMLHttpRequest" .equals(request.getHeader("X-Requested-With")));
     }
 
     /**
@@ -121,6 +122,40 @@ public class FebsUtil {
         response.setContentType(contentType);
         response.setStatus(status);
         response.getOutputStream().write(JSONObject.toJSONString(value).getBytes());
+    }
+
+    /**
+     * 设置成功响应
+     *
+     * @param response HttpServletResponse
+     * @param value    响应内容
+     * @throws IOException IOException
+     */
+    public static void makeSuccessResponse(HttpServletResponse response, Object value) throws IOException {
+        makeResponse(response, MediaType.APPLICATION_JSON_VALUE, HttpServletResponse.SC_OK, value);
+    }
+
+    /**
+     * 设置失败响应
+     *
+     * @param response HttpServletResponse
+     * @param value    响应内容
+     * @throws IOException IOException
+     */
+    public static void makeFailureResponse(HttpServletResponse response, Object value) throws IOException {
+        makeResponse(response, MediaType.APPLICATION_JSON_VALUE, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, value);
+    }
+
+    /**
+     * 设置JSON类型响应
+     *
+     * @param response HttpServletResponse
+     * @param status   http状态码
+     * @param value    响应内容
+     * @throws IOException IOException
+     */
+    public static void makeJsonResponse(HttpServletResponse response, int status, Object value) throws IOException {
+        makeResponse(response, MediaType.APPLICATION_JSON_VALUE, status, value);
     }
 
     /**
@@ -179,7 +214,7 @@ public class FebsUtil {
         if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
+        return "0:0:0:0:0:0:0:1" .equals(ip) ? "127.0.0.1" : ip;
     }
 
     /**
@@ -214,7 +249,7 @@ public class FebsUtil {
         if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = Objects.requireNonNull(request.getRemoteAddress()).getAddress().getHostAddress();
         }
-        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
+        return "0:0:0:0:0:0:0:1" .equals(ip) ? "127.0.0.1" : ip;
     }
 
     /**
@@ -227,7 +262,7 @@ public class FebsUtil {
         if (StringUtils.isBlank(value)) {
             return Boolean.FALSE;
         }
-        Matcher matcher = CHINESE_PATTERN.matcher(value);
+        Matcher matcher = RegexpConstant.CHINESE.matcher(value);
         return matcher.find();
     }
 

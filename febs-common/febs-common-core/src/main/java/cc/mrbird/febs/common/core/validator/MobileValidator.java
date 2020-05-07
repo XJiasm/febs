@@ -25,7 +25,7 @@ public class MobileValidator implements ConstraintValidator<IsMobile, String> {
             if (StringUtils.isBlank(s)) {
                 return true;
             } else {
-                String regex = RegexpConstant.MOBILE_REG;
+                String regex = RegexpConstant.MOBILE;
                 return FebsUtil.match(regex, s);
             }
         } catch (Exception e) {

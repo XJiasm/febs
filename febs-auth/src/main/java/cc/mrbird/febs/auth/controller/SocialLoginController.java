@@ -78,7 +78,7 @@ public class SocialLoginController {
         } catch (Exception e) {
             String errorMessage = FebsUtil.containChinese(e.getMessage()) ? e.getMessage() : "第三方登录失败";
             model.addAttribute("error", e.getMessage());
-            return "error";
+            return "fail";
         }
     }
 
