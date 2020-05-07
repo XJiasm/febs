@@ -5,7 +5,7 @@
     <parent>
         <groupId>cc.mrbird</groupId>
         <artifactId>febs-cloud</artifactId>
-        <version>2.0-RELEASE</version>
+        <version>2.1-RELEASE</version>
         <relativePath>../febs-cloud/pom.xml</relativePath>
     </parent>
 
@@ -14,7 +14,7 @@
     <description>FEBS-Cloud认证服务器</description>
 
     <properties>
-        <febs-cloud.version>2.0-RELEASE</febs-cloud.version>
+        <febs-cloud.version>2.1-RELEASE</febs-cloud.version>
     </properties>
 
     <dependencies>

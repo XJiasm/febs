@@ -49,7 +49,7 @@ VALUES ('app', '', '$2a$10$8Qk/efslEpO1Af1kyw/rp.DdJGsdnET8UCp1vGDzpQEa.1qBklvua
         NULL, 86400, 864000, NULL, NULL, '123456');
 INSERT INTO `oauth_client_details`
 VALUES ('febs', ' ', '$2a$10$aSZTvMOtUAYUQ.75z2n3ceJd6dCIk9Vy3J/SKZUE4hBLd6sz7.6ge', 'all', 'password,refresh_token',
-        NULL, NULL, 86400, 8640000, NULL, 1, '123456');
+        NULL, NULL, 86400, 8640000, NULL, 0, '123456');
 COMMIT;
 
 -- ----------------------------

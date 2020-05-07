@@ -5,13 +5,13 @@
     <parent>
         <artifactId>febs-cloud</artifactId>
         <groupId>cc.mrbird</groupId>
-        <version>2.0-RELEASE</version>
+        <version>2.1-RELEASE</version>
         <relativePath>../febs-cloud/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>febs-apm</artifactId>
-    <version>2.0-RELEASE</version>
+    <version>2.1-RELEASE</version>
     <packaging>pom</packaging>
     <name>FEBS-APM</name>
     <description>FEBS-APM(Application Performance Monitor)</description>

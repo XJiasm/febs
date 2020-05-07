@@ -7,12 +7,12 @@
     <parent>
         <groupId>cc.mrbird</groupId>
         <artifactId>febs-cloud</artifactId>
-        <version>2.0-RELEASE</version>
+        <version>2.1-RELEASE</version>
         <relativePath>../febs-cloud/pom.xml</relativePath>
     </parent>
 
     <artifactId>febs-server</artifactId>
-    <version>2.0-RELEASE</version>
+    <version>2.1-RELEASE</version>
     <packaging>pom</packaging>
     <name>FEBS-Server</name>
     <description>FEBS-Server服务提供模块</description>

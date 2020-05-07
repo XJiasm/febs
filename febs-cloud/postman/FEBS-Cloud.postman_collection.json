@@ -6,7 +6,7 @@
   },
   "item": [
     {
-      "name": "1. 获取令牌",
+      "name": "1. 密码模式获取令牌",
       "request": {
         "auth": {
           "type": "noauth"
@@ -21,7 +21,7 @@
           }
         ],
         "url": {
-          "raw": "http://localhost:8301/auth/oauth/token?grant_type=password&username=mrbird&password=1234qwer&key=1234&code=9976",
+          "raw": "http://localhost:8301/auth/oauth/token?grant_type=password&username=mrbird&password=1234qwer&key=1234&code=8873",
           "protocol": "http",
           "host": [
             "localhost"
@@ -55,7 +55,7 @@
             },
             {
               "key": "code",
-              "value": "9976",
+              "value": "8873",
               "description": "验证码值（验证码的值可以通过浏览器访问http://localhost:8301/auth/captcha?key=1234获取）"
             }
           ]
@@ -107,7 +107,7 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "bearer 41171c4d-5b22-41d3-bb41-cb08564b2373",
+            "value": "bearer 4597893b-4ab3-468d-baa2-6ae0faf8ae9e",
             "equals": true,
             "description": "值格式：bearer空格+访问令牌"
           }
@@ -136,7 +136,7 @@
             "description": "值格式：bearer空格+访问令牌",
             "equals": true,
             "key": "Authorization",
-            "value": "bearer 41171c4d-5b22-41d3-bb41-cb08564b2373"
+            "value": "bearer 684d687c-5d10-48fd-a58d-8484896cf9f6"
           }
         ],
         "url": {
@@ -185,6 +185,97 @@
               "key": "goodsName",
               "value": "iPhone SE",
               "description": "商品名称"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. 授权码模式获取令牌",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "description": "客户端凭证，值的格式为Basic空格 + client_id:client_secret经过Base64加密后的值",
+            "key": "Authorization",
+            "type": "text",
+            "value": "Basic Y29kZToxMjM0NTY="
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8301/auth/oauth/token?grant_type=authorization_code&code=HLapQA&redirect_uri=http://www.baidu.com",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8301",
+          "path": [
+            "auth",
+            "oauth",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "authorization_code",
+              "description": "认证类型，authorization_code授权码模式"
+            },
+            {
+              "key": "code",
+              "value": "HLapQA",
+              "description": "授权码"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "http://www.baidu.com",
+              "description": "重定向地址"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. 客户端模式获取令牌",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "description": "客户端凭证，值的格式为Basic空格 + client_id:client_secret经过Base64加密后的值",
+            "key": "Authorization",
+            "type": "text",
+            "value": "Basic Y29kZToxMjM0NTY="
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8301/auth/oauth/token?grant_type=client_credentials&client=code",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8301",
+          "path": [
+            "auth",
+            "oauth",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "client_credentials",
+              "description": "认证类型，client_credentials客户端模式"
+            },
+            {
+              "key": "client",
+              "value": "code",
+              "description": "客户端client_id"
             }
           ]
         }
