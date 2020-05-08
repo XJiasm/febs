@@ -2,11 +2,11 @@ package cc.mrbird.febs.server.system.controller;
 
 import cc.mrbird.febs.common.core.entity.FebsResponse;
 import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import cc.mrbird.febs.common.core.entity.system.Log;
 import cc.mrbird.febs.common.core.utils.FebsUtil;
 import cc.mrbird.febs.server.system.annotation.ControllerEndpoint;
 import cc.mrbird.febs.server.system.service.ILogService;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class LogController {
     @PreAuthorize("hasAuthority('log:delete')")
     @ControllerEndpoint(exceptionMessage = "删除日志失败")
     public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) {
-        String[] logIds = ids.split(StringPool.COMMA);
+        String[] logIds = ids.split(StringConstant.COMMA);
         this.logService.deleteLogs(logIds);
     }
 

@@ -16,6 +16,7 @@ public interface ValidateCodeService {
      *
      * @param request  HttpServletRequest
      * @param response HttpServletResponse
+     * @throws IOException           IO异常
      * @throws ValidateCodeException 验证码异常
      */
     void create(HttpServletRequest request, HttpServletResponse response) throws IOException, ValidateCodeException;

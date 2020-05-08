@@ -2,11 +2,11 @@ package cc.mrbird.febs.server.system.controller;
 
 import cc.mrbird.febs.common.core.entity.FebsResponse;
 import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import cc.mrbird.febs.common.core.entity.system.Role;
 import cc.mrbird.febs.common.core.utils.FebsUtil;
 import cc.mrbird.febs.server.system.annotation.ControllerEndpoint;
 import cc.mrbird.febs.server.system.service.IRoleService;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +61,7 @@ public class RoleController {
     @PreAuthorize("hasAuthority('role:delete')")
     @ControllerEndpoint(operation = "删除角色", exceptionMessage = "删除角色失败")
     public void deleteRoles(@NotBlank(message = "{required}") @PathVariable String roleIds) {
-        String[] ids = roleIds.split(StringPool.COMMA);
+        String[] ids = roleIds.split(StringConstant.COMMA);
         this.roleService.deleteRoles(ids);
     }
 

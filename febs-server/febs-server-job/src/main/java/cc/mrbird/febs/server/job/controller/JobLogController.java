@@ -2,10 +2,10 @@ package cc.mrbird.febs.server.job.controller;
 
 import cc.mrbird.febs.common.core.entity.FebsResponse;
 import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import cc.mrbird.febs.common.core.utils.FebsUtil;
 import cc.mrbird.febs.server.job.entity.JobLog;
 import cc.mrbird.febs.server.job.service.IJobLogService;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class JobLogController {
     @DeleteMapping("{jobIds}")
     @PreAuthorize("hasAuthority('job:log:delete')")
     public void deleteJobLog(@NotBlank(message = "{required}") @PathVariable String jobIds) {
-        String[] ids = jobIds.split(StringPool.COMMA);
+        String[] ids = jobIds.split(StringConstant.COMMA);
         this.jobLogService.deleteJobLogs(ids);
     }
 

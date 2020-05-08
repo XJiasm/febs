@@ -4,6 +4,7 @@ import cc.mrbird.febs.auth.entity.BindUser;
 import cc.mrbird.febs.auth.entity.UserConnection;
 import cc.mrbird.febs.auth.service.SocialLoginService;
 import cc.mrbird.febs.common.core.entity.FebsResponse;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import cc.mrbird.febs.common.core.exception.FebsException;
 import cc.mrbird.febs.common.core.utils.FebsUtil;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,7 @@ public class SocialLoginController {
     @GetMapping("/login/{oauthType}/{type}")
     public void renderAuth(@PathVariable String oauthType, @PathVariable String type, HttpServletResponse response) throws IOException, FebsException {
         AuthRequest authRequest = socialLoginService.renderAuth(oauthType);
-        response.sendRedirect(authRequest.authorize(oauthType + "::" + AuthStateUtils.createState()) + "::" + type);
+        response.sendRedirect(authRequest.authorize(oauthType + StringConstant.DOUBLE_COLON + AuthStateUtils.createState()) + "::" + type);
     }
 
     /**
@@ -66,7 +67,7 @@ public class SocialLoginController {
     public String login(@PathVariable String oauthType, AuthCallback callback, String state, Model model) {
         try {
             FebsResponse febsResponse = null;
-            String type = StringUtils.substringAfterLast(state, "::");
+            String type = StringUtils.substringAfterLast(state, StringConstant.DOUBLE_COLON);
             if (StringUtils.equals(type, TYPE_BIND)) {
                 febsResponse = socialLoginService.resolveBind(oauthType, callback);
             } else {

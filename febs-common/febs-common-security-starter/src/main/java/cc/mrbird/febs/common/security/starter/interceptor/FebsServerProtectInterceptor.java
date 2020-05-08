@@ -5,6 +5,7 @@ import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
 import cc.mrbird.febs.common.core.utils.FebsUtil;
 import cc.mrbird.febs.common.security.starter.properties.FebsCloudSecurityProperties;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -20,7 +21,7 @@ public class FebsServerProtectInterceptor implements HandlerInterceptor {
     private FebsCloudSecurityProperties properties;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws IOException {
         if (!properties.getOnlyFetchByGateway()) {
             return true;
         }

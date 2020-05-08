@@ -9,6 +9,7 @@ import cc.mrbird.febs.common.core.utils.FebsUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author MrBird
@@ -43,8 +45,13 @@ public class FebsUserDetailServiceImpl implements UserDetailsService {
             if (StringUtils.equals(loginType, SocialConstant.SOCIAL_LOGIN)) {
                 password = passwordEncoder.encode(SocialConstant.SOCIAL_LOGIN_PASSWORD);
             }
+
+            List<GrantedAuthority> grantedAuthorities = AuthorityUtils.NO_AUTHORITIES;
+            if (StringUtils.isNotBlank(permissions)) {
+                grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(permissions);
+            }
             FebsAuthUser authUser = new FebsAuthUser(systemUser.getUsername(), password, true, true, true, notLocked,
-                    AuthorityUtils.commaSeparatedStringToAuthorityList(permissions));
+                    grantedAuthorities);
 
             BeanUtils.copyProperties(systemUser, authUser);
             return authUser;

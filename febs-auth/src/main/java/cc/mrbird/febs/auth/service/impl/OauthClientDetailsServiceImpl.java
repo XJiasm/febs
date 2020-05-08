@@ -4,6 +4,7 @@ import cc.mrbird.febs.auth.entity.OauthClientDetails;
 import cc.mrbird.febs.auth.mapper.OauthClientDetailsMapper;
 import cc.mrbird.febs.auth.service.OauthClientDetailsService;
 import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import cc.mrbird.febs.common.core.exception.FebsException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -94,7 +95,7 @@ public class OauthClientDetailsServiceImpl extends ServiceImpl<OauthClientDetail
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteOauthClientDetails(String clientIds) {
-        Object[] clientIdArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(clientIds, ",");
+        Object[] clientIdArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(clientIds, StringConstant.COMMA);
         LambdaQueryWrapper<OauthClientDetails> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(OauthClientDetails::getClientId, clientIdArray);
         boolean removed = this.remove(queryWrapper);

@@ -4,6 +4,7 @@ import cc.mrbird.febs.common.core.entity.CurrentUser;
 import cc.mrbird.febs.common.core.entity.FebsAuthUser;
 import cc.mrbird.febs.common.core.entity.constant.PageConstant;
 import cc.mrbird.febs.common.core.entity.constant.RegexpConstant;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -77,7 +78,7 @@ public class FebsUtil {
      */
     public static String underscoreToCamel(String value) {
         StringBuilder result = new StringBuilder();
-        String[] arr = value.split("_");
+        String[] arr = value.split(StringConstant.UNDER_LINE);
         for (String s : arr) {
             result.append((String.valueOf(s.charAt(0))).toUpperCase()).append(s.substring(1));
         }
@@ -227,8 +228,8 @@ public class FebsUtil {
         HttpHeaders headers = request.getHeaders();
         String ip = headers.getFirst("x-forwarded-for");
         if (ip != null && ip.length() != 0 && !UNKNOW.equalsIgnoreCase(ip)) {
-            if (ip.contains(",")) {
-                ip = ip.split(",")[0];
+            if (ip.contains(StringConstant.COMMA)) {
+                ip = ip.split(StringConstant.COMMA)[0];
             }
         }
         if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
