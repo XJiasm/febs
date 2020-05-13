@@ -312,8 +312,12 @@ public class FebsUtil {
      * @return String 令牌内容
      */
     public static String getCurrentTokenValue() {
-        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOauth2Authentication().getDetails();
-        return details == null ? null : details.getTokenValue();
+        try {
+            OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOauth2Authentication().getDetails();
+            return details.getTokenValue();
+        } catch (Exception ignore) {
+            return null;
+        }
     }
 
     public static void printSystemUpBanner(Environment environment) {
