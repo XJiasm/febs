@@ -93,7 +93,7 @@ public class FebsUtil {
      */
     public static boolean isAjaxRequest(HttpServletRequest request) {
         return (request.getHeader("X-Requested-With") != null
-                && "XMLHttpRequest" .equals(request.getHeader("X-Requested-With")));
+                && "XMLHttpRequest".equals(request.getHeader("X-Requested-With")));
     }
 
     /**
@@ -215,7 +215,7 @@ public class FebsUtil {
         if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        return "0:0:0:0:0:0:0:1" .equals(ip) ? "127.0.0.1" : ip;
+        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
     }
 
     /**
@@ -250,7 +250,7 @@ public class FebsUtil {
         if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
             ip = Objects.requireNonNull(request.getRemoteAddress()).getAddress().getHostAddress();
         }
-        return "0:0:0:0:0:0:0:1" .equals(ip) ? "127.0.0.1" : ip;
+        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
     }
 
     /**
@@ -313,7 +313,7 @@ public class FebsUtil {
      */
     public static String getCurrentTokenValue() {
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOauth2Authentication().getDetails();
-        return details.getTokenValue();
+        return details == null ? null : details.getTokenValue();
     }
 
     public static void printSystemUpBanner(Environment environment) {

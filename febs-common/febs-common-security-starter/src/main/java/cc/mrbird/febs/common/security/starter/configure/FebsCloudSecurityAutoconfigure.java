@@ -6,6 +6,7 @@ import cc.mrbird.febs.common.security.starter.handler.FebsAccessDeniedHandler;
 import cc.mrbird.febs.common.security.starter.handler.FebsAuthExceptionEntryPoint;
 import cc.mrbird.febs.common.security.starter.properties.FebsCloudSecurityProperties;
 import feign.RequestInterceptor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -53,7 +54,9 @@ public class FebsCloudSecurityAutoconfigure {
             String gatewayToken = new String(Base64Utils.encode(FebsConstant.GATEWAY_TOKEN_VALUE.getBytes()));
             requestTemplate.header(FebsConstant.GATEWAY_TOKEN_HEADER, gatewayToken);
             String authorizationToken = FebsUtil.getCurrentTokenValue();
-            requestTemplate.header(HttpHeaders.AUTHORIZATION, FebsConstant.OAUTH2_TOKEN_TYPE + authorizationToken);
+            if (StringUtils.isNotBlank(authorizationToken)) {
+                requestTemplate.header(HttpHeaders.AUTHORIZATION, FebsConstant.OAUTH2_TOKEN_TYPE + authorizationToken);
+            }
         };
     }
 }
