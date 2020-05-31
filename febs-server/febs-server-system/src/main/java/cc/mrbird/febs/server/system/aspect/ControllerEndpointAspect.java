@@ -26,7 +26,7 @@ public class ControllerEndpointAspect extends BaseAspectSupport {
 
     private final ILogService logService;
 
-    @Pointcut("@annotation(cc.mrbird.febs.server.system.annotation.ControllerEndpoint)")
+    @Pointcut("execution(* cc.mrbird.febs.server.system.controller.*.*(..)) && @annotation(cc.mrbird.febs.server.system.annotation.ControllerEndpoint)")
     public void pointcut() {
     }
 
