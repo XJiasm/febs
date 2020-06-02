@@ -34,7 +34,7 @@
         <com-alibaba-cloud.version>2.1.1.RELEASE</com-alibaba-cloud.version>
         <codingapi.txlcn.version>5.0.2.RELEASE</codingapi.txlcn.version>
 
-        <fastjson.version>1.2.62</fastjson.version>
+        <fastjson.version>1.2.70</fastjson.version>
         <xml-api.version>1.4.01</xml-api.version>
         <ip2region.version>1.7</ip2region.version>
         <guava.version>27.0-jre</guava.version>
