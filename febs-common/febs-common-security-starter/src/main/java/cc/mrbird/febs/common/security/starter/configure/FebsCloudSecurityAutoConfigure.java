@@ -23,7 +23,7 @@ import org.springframework.util.Base64Utils;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties(FebsCloudSecurityProperties.class)
 @ConditionalOnProperty(value = "febs.cloud.security.enable", havingValue = "true", matchIfMissing = true)
-public class FebsCloudSecurityAutoconfigure {
+public class FebsCloudSecurityAutoConfigure {
 
     @Bean
     @ConditionalOnMissingBean(name = "accessDeniedHandler")

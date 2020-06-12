@@ -15,7 +15,7 @@ import java.util.List;
  * @author MrBird
  */
 @Configuration
-public class FebsDataSourceAutoconfigure {
+public class FebsDataSourceAutoConfigure {
 
     /**
      * 注册数据权限

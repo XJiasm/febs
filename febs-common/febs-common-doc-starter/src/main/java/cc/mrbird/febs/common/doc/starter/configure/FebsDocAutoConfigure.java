@@ -30,11 +30,11 @@ import java.util.List;
 @Import(BeanValidatorPluginsConfiguration.class)
 @EnableConfigurationProperties(FebsDocProperties.class)
 @ConditionalOnProperty(value = "febs.doc.enable", havingValue = "true", matchIfMissing = true)
-public class FebsDocAutoconfigure {
+public class FebsDocAutoConfigure {
 
     private final FebsDocProperties properties;
 
-    public FebsDocAutoconfigure(FebsDocProperties properties) {
+    public FebsDocAutoConfigure(FebsDocProperties properties) {
         this.properties = properties;
     }
 
