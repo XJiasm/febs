@@ -1,6 +1,7 @@
 package cc.mrbird.febs.gateway.enhance.service.impl;
 
 import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import cc.mrbird.febs.common.core.utils.DateUtil;
 import cc.mrbird.febs.gateway.enhance.entity.BlackList;
 import cc.mrbird.febs.gateway.enhance.mapper.BlackListMapper;
@@ -70,7 +71,7 @@ public class BlackListServiceImpl implements BlackListService {
 
     @Override
     public Flux<BlackList> delete(String ids) {
-        String[] idArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(ids, ",");
+        String[] idArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(ids, StringConstant.COMMA);
         return blackListMapper.deleteByIdIn(Arrays.asList(idArray))
                 .doOnNext(routeEnhanceCacheService::removeBlackList);
     }

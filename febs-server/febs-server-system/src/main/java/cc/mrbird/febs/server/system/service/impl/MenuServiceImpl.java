@@ -3,6 +3,7 @@ package cc.mrbird.febs.server.system.service.impl;
 import cc.mrbird.febs.common.core.entity.MenuTree;
 import cc.mrbird.febs.common.core.entity.Tree;
 import cc.mrbird.febs.common.core.entity.constant.PageConstant;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import cc.mrbird.febs.common.core.entity.router.RouterMeta;
 import cc.mrbird.febs.common.core.entity.router.VueRouter;
 import cc.mrbird.febs.common.core.entity.system.Menu;
@@ -32,7 +33,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     public String findUserPermissions(String username) {
         List<Menu> userPermissions = this.baseMapper.findUserPermissions(username);
-        return userPermissions.stream().map(Menu::getPerms).collect(Collectors.joining(","));
+        return userPermissions.stream().map(Menu::getPerms).collect(Collectors.joining(StringConstant.COMMA));
     }
 
     @Override

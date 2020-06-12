@@ -40,7 +40,7 @@ public class MenuController {
         String userPermissions = this.menuService.findUserPermissions(username);
         String[] permissionArray = new String[0];
         if (StringUtils.isNoneBlank(userPermissions)) {
-            permissionArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(userPermissions, ",");
+            permissionArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(userPermissions, StringConstant.COMMA);
         }
         result.put("routes", userRouters);
         result.put("permissions", permissionArray);

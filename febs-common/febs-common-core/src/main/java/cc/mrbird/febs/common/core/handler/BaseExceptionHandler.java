@@ -1,6 +1,7 @@
 package cc.mrbird.febs.common.core.handler;
 
 import cc.mrbird.febs.common.core.entity.FebsResponse;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import cc.mrbird.febs.common.core.exception.FebsException;
 import cc.mrbird.febs.common.core.exception.FileDownloadException;
 import cc.mrbird.febs.common.core.utils.FebsUtil;
@@ -55,7 +56,7 @@ public class BaseExceptionHandler {
         StringBuilder message = new StringBuilder();
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         for (FieldError error : fieldErrors) {
-            message.append(error.getField()).append(error.getDefaultMessage()).append(",");
+            message.append(error.getField()).append(error.getDefaultMessage()).append(StringConstant.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         log.error(message.toString());
@@ -76,7 +77,7 @@ public class BaseExceptionHandler {
         for (ConstraintViolation<?> violation : violations) {
             Path path = violation.getPropertyPath();
             String[] pathArr = StringUtils.splitByWholeSeparatorPreserveAllTokens(path.toString(), ".");
-            message.append(pathArr[1]).append(violation.getMessage()).append(",");
+            message.append(pathArr[1]).append(violation.getMessage()).append(StringConstant.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         log.error(message.toString());
@@ -94,7 +95,7 @@ public class BaseExceptionHandler {
     public FebsResponse handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         StringBuilder message = new StringBuilder();
         for (FieldError error : e.getBindingResult().getFieldErrors()) {
-            message.append(error.getField()).append(error.getDefaultMessage()).append(",");
+            message.append(error.getField()).append(error.getDefaultMessage()).append(StringConstant.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         log.error(message.toString());

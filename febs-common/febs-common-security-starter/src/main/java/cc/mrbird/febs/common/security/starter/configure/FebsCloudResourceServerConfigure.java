@@ -1,5 +1,6 @@
 package cc.mrbird.febs.common.security.starter.configure;
 
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import cc.mrbird.febs.common.security.starter.handler.FebsAccessDeniedHandler;
 import cc.mrbird.febs.common.security.starter.handler.FebsAuthExceptionEntryPoint;
 import cc.mrbird.febs.common.security.starter.properties.FebsCloudSecurityProperties;
@@ -41,7 +42,7 @@ public class FebsCloudResourceServerConfigure extends ResourceServerConfigurerAd
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(properties.getAnonUris(), ",");
+        String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(properties.getAnonUris(), StringConstant.COMMA);
         if (ArrayUtils.isEmpty(anonUrls)) {
             anonUrls = new String[]{};
         }

@@ -1,5 +1,6 @@
 package cc.mrbird.febs.server.system.service.impl;
 
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
 import cc.mrbird.febs.common.core.entity.system.UserRole;
 import cc.mrbird.febs.server.system.mapper.UserRoleMapper;
 import cc.mrbird.febs.server.system.service.IUserRoleService;
@@ -36,7 +37,7 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
 
     @Override
     public List<String> findUserIdsByRoleId(String[] roleIds) {
-        List<UserRole> list = baseMapper.selectList(new LambdaQueryWrapper<UserRole>().in(UserRole::getRoleId, String.join(",", roleIds)));
+        List<UserRole> list = baseMapper.selectList(new LambdaQueryWrapper<UserRole>().in(UserRole::getRoleId, String.join(StringConstant.COMMA, roleIds)));
         return list.stream().map(userRole -> String.valueOf(userRole.getUserId())).collect(Collectors.toList());
     }
 
