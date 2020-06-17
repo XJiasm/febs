@@ -295,4 +295,15 @@ BEGIN;
 INSERT INTO `users` VALUES ('febs', '$2a$10$NJRJ.JUIUVX5suXNFRuOFezX5nzQLxl86OyMNnA7yxH1zr94H/gBS', 1);
 COMMIT;
 
+-- ----------------------------
+-- Table structure for permissions
+-- ----------------------------
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE `permissions` (
+                               `role` varchar(50) NOT NULL,
+                               `resource` varchar(512) NOT NULL,
+                               `action` varchar(8) NOT NULL,
+                               UNIQUE KEY `uk_role_permission` (`role`,`resource`,`action`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 SET FOREIGN_KEY_CHECKS = 1;
