@@ -40,7 +40,7 @@ public class FebsRouteEnhanceConfigure {
     }
 
     @Bean
-    public ApplicationRunner febsRoutenEhanceRunner(RouteEnhanceCacheService cacheService,
+    public ApplicationRunner febsRouteEnhanceRunner(RouteEnhanceCacheService cacheService,
                                                     BlackListService blackListService,
                                                     RateLimitRuleService rateLimitRuleService) {
         return new FebsRouteEnhanceRunner(cacheService, blackListService, rateLimitRuleService);
