@@ -58,9 +58,11 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
         if (clientDetails != null) {
             BaseClientDetails baseClientDetails = (BaseClientDetails) clientDetails;
             Set<String> autoApproveScopes = baseClientDetails.getAutoApproveScopes();
-            baseClientDetails.setAutoApproveScopes(
-                    autoApproveScopes.stream().map(this::convert).collect(Collectors.toSet())
-            );
+            if (CollectionUtils.isNotEmpty(autoApproveScopes)) {
+                baseClientDetails.setAutoApproveScopes(
+                        autoApproveScopes.stream().map(this::convert).collect(Collectors.toSet())
+                );
+            }
             redisService.hset(CACHE_CLIENT_KEY, clientId, JSONObject.toJSONString(baseClientDetails));
         }
         return clientDetails;
