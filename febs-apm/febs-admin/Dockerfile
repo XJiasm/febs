@@ -1,7 +1,7 @@
 FROM openjdk:8u212-jre
 MAINTAINER MrBird 852252810@qq.com
 
-COPY ./target/febs-server-generator-2.1-RELEASE.jar /febs/febs-server-generator-2.1-RELEASE.jar
+COPY ./target/febs-admin-2.1-RELEASE.jar /febs/febs-admin-2.1-RELEASE.jar
 ADD agent/ /agent
 
-ENTRYPOINT ["java", "-javaagent:/agent/skywalking-agent.jar", "-Dskywalking.agent.service_name=febs-server-generator", "-Dskywalking.collector.backend_service=skywalkingIp:11800", "-jar", "/febs/febs-server-generator-2.1-RELEASE.jar"]
+ENTRYPOINT ["java", "-javaagent:/agent/skywalking-agent.jar", "-Dskywalking.agent.service_name=febs-admin", "-Dskywalking.collector.backend_service=skywalkingIp:11800", "-jar", "/febs/febs-admin-2.1-RELEASE.jar"]
