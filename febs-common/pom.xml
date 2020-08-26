@@ -17,6 +17,7 @@
         <module>febs-common-doc</module>
         <module>febs-common-doc-gateway-starter</module>
         <module>febs-common-doc-starter</module>
+        <module>febs-common-logging-starter</module>
     </modules>
 
     <artifactId>febs-common</artifactId>
