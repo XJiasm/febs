@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author: xuefrye
+ * @author xuefrye
  */
 @Data
 @ConfigurationProperties(prefix = "febs.log")
@@ -17,10 +17,10 @@ public class FebsLogProperties {
     /**
      * 是否开启controller层api调用的日志
      */
-    private String enableLogForController;
+    private Boolean enableLogForController = false;
 
     /**
      * 是否开启ELK日志收集
      */
-    private String enableElk;
+    private Boolean enableElk = false;
 }
