@@ -39,6 +39,11 @@
             <version>${febs-cloud.version}</version>
         </dependency>
         <dependency>
+            <groupId>cc.mrbird</groupId>
+            <artifactId>febs-common-logging-starter</artifactId>
+            <version>${febs-cloud.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.whvcse</groupId>
             <artifactId>easy-captcha</artifactId>
             <version>${easy-captcha.version}</version>
