@@ -233,6 +233,9 @@ Skywalking|11800、12800、8080|Skywalking APM
 <a href="https://github.com/liuzhuoming23">
     <img src="https://avatars1.githubusercontent.com/u/41719224?s=400&v=4" width="45px"></a>
 
+<a href="https://github.com/xuefrye">
+    <img src="https://avatars3.githubusercontent.com/u/43038814?s=400&v=4" width="45px"></a>
+
 ### 反馈交流
 
 加入QQ群和大家一起~~交流~~吹水：
