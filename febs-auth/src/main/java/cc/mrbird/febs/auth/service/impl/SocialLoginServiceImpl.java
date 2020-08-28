@@ -203,7 +203,7 @@ public class SocialLoginServiceImpl implements SocialLoginService {
         Map<String, String> requestParameters = new HashMap<>(5);
         requestParameters.put(ParamsConstant.GRANT_TYPE, GrantTypeConstant.PASSWORD);
         requestParameters.put(USERNAME, user.getUsername());
-        requestParameters.put(PASSWORD, SocialConstant.SOCIAL_LOGIN_PASSWORD);
+        requestParameters.put(PASSWORD, SocialConstant.setSocialLoginPassword());
 
         String grantTypes = String.join(StringConstant.COMMA, clientDetails.getAuthorizedGrantTypes());
         TokenRequest tokenRequest = new TokenRequest(requestParameters, clientDetails.getClientId(), clientDetails.getScope(), grantTypes);
