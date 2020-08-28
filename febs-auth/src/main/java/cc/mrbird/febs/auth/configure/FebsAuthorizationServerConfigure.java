@@ -1,6 +1,7 @@
 package cc.mrbird.febs.auth.configure;
 
 import cc.mrbird.febs.auth.properties.FebsAuthProperties;
+import cc.mrbird.febs.auth.service.impl.RedisAuthenticationCodeService;
 import cc.mrbird.febs.auth.service.impl.RedisClientDetailsService;
 import cc.mrbird.febs.auth.translator.FebsWebResponseExceptionTranslator;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,7 @@ public class FebsAuthorizationServerConfigure extends AuthorizationServerConfigu
     private final PasswordEncoder passwordEncoder;
     private final FebsWebResponseExceptionTranslator exceptionTranslator;
     private final FebsAuthProperties properties;
+    private final RedisAuthenticationCodeService authenticationCodeService;
     private final RedisClientDetailsService redisClientDetailsService;
     private final RedisConnectionFactory redisConnectionFactory;
 
@@ -56,6 +58,7 @@ public class FebsAuthorizationServerConfigure extends AuthorizationServerConfigu
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore())
                 .userDetailsService(userDetailService)
+                .authorizationCodeServices(authenticationCodeService)
                 .authenticationManager(authenticationManager)
                 .exceptionTranslator(exceptionTranslator);
         if (properties.getEnableJwt()) {
