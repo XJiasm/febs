@@ -20,13 +20,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>cc.mrbird</groupId>
-            <artifactId>febs-common-core</artifactId>
-            <version>${febs-cloud.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

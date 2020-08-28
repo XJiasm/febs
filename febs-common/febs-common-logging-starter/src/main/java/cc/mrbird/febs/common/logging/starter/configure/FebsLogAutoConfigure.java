@@ -1,5 +1,6 @@
 package cc.mrbird.febs.common.logging.starter.configure;
 
+import cc.mrbird.febs.common.logging.starter.aspect.ControllerLogAspect;
 import cc.mrbird.febs.common.logging.starter.properties.FebsLogProperties;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
@@ -39,13 +40,19 @@ public class FebsLogAutoConfigure {
         ROOTLOGGER = CONTEXT.getLogger("ROOT");
     }
 
-    @ConditionalOnProperty(name = "febs.log.enable-elk", havingValue = "true", matchIfMissing = true)
+    @ConditionalOnProperty(name = "febs.log.enable-log-for-controller", havingValue = "true")
+    @Bean
+    public ControllerLogAspect controllerLogAspect(){
+        return new ControllerLogAspect();
+    }
+
+    @ConditionalOnProperty(name = "febs.log.enable-elk", havingValue = "true")
     @Bean
     public void enableElk() throws JsonProcessingException {
         LogstashTcpSocketAppender appender = new LogstashTcpSocketAppender();
         LogstashEncoder encoder = new LogstashEncoder();
 
-        HashMap<String, String> customFields = new HashMap<>();
+        HashMap<String, String> customFields = new HashMap<>(2);
         customFields.put("application-name", applicationName);
         String customFieldsString = new ObjectMapper().writeValueAsString(customFields);
         encoder.setCustomFields(customFieldsString);

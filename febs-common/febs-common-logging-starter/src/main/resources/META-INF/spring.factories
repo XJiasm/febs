@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cc.mrbird.febs.common.logging.starter.aop.ControllerLogAspect,\
 cc.mrbird.febs.common.logging.starter.configure.FebsLogAutoConfigure

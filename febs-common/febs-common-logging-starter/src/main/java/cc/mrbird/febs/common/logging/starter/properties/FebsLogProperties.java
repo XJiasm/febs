@@ -1,12 +1,10 @@
 package cc.mrbird.febs.common.logging.starter.properties;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author xuefrye
  */
-@Data
 @ConfigurationProperties(prefix = "febs.log")
 public class FebsLogProperties {
     /**
@@ -23,4 +21,28 @@ public class FebsLogProperties {
      * 是否开启ELK日志收集
      */
     private Boolean enableElk = false;
+
+    public String getLogstashHost() {
+        return logstashHost;
+    }
+
+    public void setLogstashHost(String logstashHost) {
+        this.logstashHost = logstashHost;
+    }
+
+    public Boolean getEnableLogForController() {
+        return enableLogForController;
+    }
+
+    public void setEnableLogForController(Boolean enableLogForController) {
+        this.enableLogForController = enableLogForController;
+    }
+
+    public Boolean getEnableElk() {
+        return enableElk;
+    }
+
+    public void setEnableElk(Boolean enableElk) {
+        this.enableElk = enableElk;
+    }
 }

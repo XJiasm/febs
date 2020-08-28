@@ -1,18 +1,19 @@
-package cc.mrbird.febs.common.logging.starter.aop;
+package cc.mrbird.febs.common.logging.starter.aspect;
 
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author xuefrye
  */
-@Slf4j
 @Aspect
-@Component
 public class ControllerLogAspect {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Around("(@within(org.springframework.stereotype.Controller)" +
             "|| @within(org.springframework.web.bind.annotation.RestController))" +
             "&& execution(public * cc.mrbird..*.controller..*.*(..))")

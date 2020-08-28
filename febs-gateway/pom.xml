@@ -55,6 +55,12 @@
             <groupId>cc.mrbird</groupId>
             <artifactId>febs-common-logging-starter</artifactId>
             <version>${febs-cloud.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
