@@ -1,5 +1,6 @@
 package cc.mrbird.febs.auth.properties;
 
+import cc.mrbird.febs.common.core.entity.constant.ImageTypeConstant;
 import lombok.Data;
 
 /**
@@ -15,7 +16,7 @@ public class FebsValidateCodeProperties {
     /**
      * 验证码类型，可选值 png和 gif
      */
-    private String type = "png";
+    private String type = ImageTypeConstant.PNG;
     /**
      * 图片宽度，px
      */

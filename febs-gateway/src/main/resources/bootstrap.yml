@@ -1,28 +1,37 @@
-server:
-  port: 8301
-
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: FEBS-Gateway
   cloud:
-    config:
-      fail-fast: true
-      name: ${spring.application.name}
-      profile: ${spring.profiles.active}
+    nacos:
+      config:
+        server-addr: ${nacos.url}:8001
+        group: DEFAULT_GROUP
+        prefix: febs-gateway
+        file-extension: yaml
       discovery:
-        enabled: true
-        service-id: FEBS-Config
-  profiles:
-    active: dev
+        server-addr: ${nacos.url}:8001
+  boot:
+    admin:
+      client:
+        instance:
+          prefer-ip: true
 
-eureka:
-  instance:
-    lease-renewal-interval-in-seconds: 20
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    instance-info-replication-interval-seconds: 30
-    registry-fetch-interval-seconds: 3
-    serviceUrl:
-      defaultZone: http://febs:123456@${febs-register}:8001/register/eureka/
-
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              EndpointId: error
+        data:
+          convert:
+            CustomConversions: error
+    com:
+      alibaba:
+        cloud:
+          nacos:
+            client:
+              NacosPropertySourceBuilder: error

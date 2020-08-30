@@ -1,18 +1,19 @@
 package cc.mrbird.febs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.Log;
-import cc.mrbird.febs.common.entity.FebsResponse;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.LoginLog;
-import cc.mrbird.febs.common.entity.system.SystemUser;
-import cc.mrbird.febs.common.exception.FebsException;
-import cc.mrbird.febs.common.utils.FebsUtil;
+import cc.mrbird.febs.common.core.entity.FebsResponse;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
+import cc.mrbird.febs.common.core.entity.system.LoginLog;
+import cc.mrbird.febs.common.core.entity.system.SystemUser;
+import cc.mrbird.febs.common.core.exception.FebsException;
+import cc.mrbird.febs.common.core.utils.FebsUtil;
+import cc.mrbird.febs.server.system.annotation.ControllerEndpoint;
 import cc.mrbird.febs.server.system.service.ILoginLogService;
+import cc.mrbird.febs.server.system.service.IUserDataPermissionService;
 import cc.mrbird.febs.server.system.service.IUserService;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
@@ -32,30 +33,30 @@ import java.util.Map;
 @Slf4j
 @Validated
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("user")
 public class UserController {
 
-    @Autowired
-    private IUserService userService;
-    @Autowired
-    private ILoginLogService loginLogService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final IUserService userService;
+    private final IUserDataPermissionService userDataPermissionService;
+    private final ILoginLogService loginLogService;
+    private final PasswordEncoder passwordEncoder;
 
-    @GetMapping("success/{username}")
-    public void loginSuccess(@NotBlank(message = "{required}") @PathVariable String username, HttpServletRequest request) {
+    @GetMapping("success")
+    public void loginSuccess(HttpServletRequest request) {
+        String currentUsername = FebsUtil.getCurrentUsername();
         // update last login time
-        this.userService.updateLoginTime(username);
+        this.userService.updateLoginTime(currentUsername);
         // save login log
         LoginLog loginLog = new LoginLog();
-        loginLog.setUsername(username);
+        loginLog.setUsername(currentUsername);
         loginLog.setSystemBrowserInfo(request.getHeader("user-agent"));
         this.loginLogService.saveLoginLog(loginLog);
     }
 
-    @GetMapping("index/{username}")
-    public FebsResponse index(@NotBlank(message = "{required}") @PathVariable String username) {
-        Map<String, Object> data = new HashMap<>();
+    @GetMapping("index")
+    public FebsResponse index() {
+        Map<String, Object> data = new HashMap<>(5);
         // 获取系统访问记录
         Long totalVisitCount = loginLogService.findTotalVisitCount();
         data.put("totalVisitCount", totalVisitCount);
@@ -67,7 +68,7 @@ public class UserController {
         List<Map<String, Object>> lastTenVisitCount = loginLogService.findLastTenDaysVisitCount(null);
         data.put("lastTenVisitCount", lastTenVisitCount);
         SystemUser param = new SystemUser();
-        param.setUsername(username);
+        param.setUsername(FebsUtil.getCurrentUsername());
         List<Map<String, Object>> lastTenUserVisitCount = loginLogService.findLastTenDaysVisitCount(param);
         data.put("lastTenUserVisitCount", lastTenUserVisitCount);
         return new FebsResponse().data(data);
@@ -75,9 +76,9 @@ public class UserController {
 
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('user:view')")
+    @PreAuthorize("hasAuthority('user:view')")
     public FebsResponse userList(QueryRequest queryRequest, SystemUser user) {
-        Map<String, Object> dataTable = FebsUtil.getDataTable(userService.findUserDetail(user, queryRequest));
+        Map<String, Object> dataTable = FebsUtil.getDataTable(userService.findUserDetailList(user, queryRequest));
         return new FebsResponse().data(dataTable);
     }
 
@@ -86,114 +87,73 @@ public class UserController {
         return this.userService.findByName(username) == null;
     }
 
-    @Log("新增用户")
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('user:add')")
-    public void addUser(@Valid SystemUser user) throws FebsException {
-        try {
-            this.userService.createUser(user);
-        } catch (Exception e) {
-            String message = "新增用户失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('user:add')")
+    @ControllerEndpoint(operation = "新增用户", exceptionMessage = "新增用户失败")
+    public void addUser(@Valid SystemUser user) {
+        this.userService.createUser(user);
     }
 
-    @Log("新增用户")
     @PutMapping
-    @PreAuthorize("hasAnyAuthority('user:update')")
-    public void updateUser(@Valid SystemUser user) throws FebsException {
-        try {
-            this.userService.updateUser(user);
-        } catch (Exception e) {
-            String message = "修改用户失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('user:update')")
+    @ControllerEndpoint(operation = "修改用户", exceptionMessage = "修改用户失败")
+    public void updateUser(@Valid SystemUser user) {
+        this.userService.updateUser(user);
+    }
+
+    @GetMapping("/{userId}")
+    @PreAuthorize("hasAuthority('user:update')")
+    public FebsResponse findUserDataPermissions(@NotBlank(message = "{required}") @PathVariable String userId) {
+        String dataPermissions = this.userDataPermissionService.findByUserId(userId);
+        return new FebsResponse().data(dataPermissions);
     }
 
     @DeleteMapping("/{userIds}")
-    @PreAuthorize("hasAnyAuthority('user:delete')")
-    public void deleteUsers(@NotBlank(message = "{required}") @PathVariable String userIds) throws FebsException {
-        try {
-            String[] ids = userIds.split(StringPool.COMMA);
-            this.userService.deleteUsers(ids);
-        } catch (Exception e) {
-            String message = "删除用户失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('user:delete')")
+    @ControllerEndpoint(operation = "删除用户", exceptionMessage = "删除用户失败")
+    public void deleteUsers(@NotBlank(message = "{required}") @PathVariable String userIds) {
+        String[] ids = userIds.split(StringConstant.COMMA);
+        this.userService.deleteUsers(ids);
     }
 
     @PutMapping("profile")
+    @ControllerEndpoint(exceptionMessage = "修改个人信息失败")
     public void updateProfile(@Valid SystemUser user) throws FebsException {
-        try {
-            this.userService.updateProfile(user);
-        } catch (Exception e) {
-            String message = "修改个人信息失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+        this.userService.updateProfile(user);
     }
 
     @PutMapping("avatar")
-    public void updateAvatar(
-            @NotBlank(message = "{required}") String username,
-            @NotBlank(message = "{required}") String avatar) throws FebsException {
-        try {
-            this.userService.updateAvatar(username, avatar);
-        } catch (Exception e) {
-            String message = "修改头像失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(exceptionMessage = "修改头像失败")
+    public void updateAvatar(@NotBlank(message = "{required}") String avatar) {
+        this.userService.updateAvatar(avatar);
     }
 
     @GetMapping("password/check")
-    public boolean checkPassword(
-            @NotBlank(message = "{required}") String username,
-            @NotBlank(message = "{required}") String password) {
-        SystemUser user = userService.findByName(username);
+    public boolean checkPassword(@NotBlank(message = "{required}") String password) {
+        String currentUsername = FebsUtil.getCurrentUsername();
+        SystemUser user = userService.findByName(currentUsername);
         return user != null && passwordEncoder.matches(password, user.getPassword());
     }
 
     @PutMapping("password")
-    public void updatePassword(
-            @NotBlank(message = "{required}") String username,
-            @NotBlank(message = "{required}") String password) throws FebsException {
-        try {
-            userService.updatePassword(username, password);
-        } catch (Exception e) {
-            String message = "修改密码失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @ControllerEndpoint(exceptionMessage = "修改密码失败")
+    public void updatePassword(@NotBlank(message = "{required}") String password) {
+        userService.updatePassword(password);
     }
 
     @PutMapping("password/reset")
-    @PreAuthorize("hasAnyAuthority('user:reset')")
-    public void resetPassword(@NotBlank(message = "{required}") String usernames) throws FebsException {
-        try {
-            String[] usernameArr = usernames.split(StringPool.COMMA);
-            this.userService.resetPassword(usernameArr);
-        } catch (Exception e) {
-            String message = "重置用户密码失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('user:reset')")
+    @ControllerEndpoint(exceptionMessage = "重置用户密码失败")
+    public void resetPassword(@NotBlank(message = "{required}") String usernames) {
+        String[] usernameArr = usernames.split(StringConstant.COMMA);
+        this.userService.resetPassword(usernameArr);
     }
 
-    @Log("导出用户数据")
     @PostMapping("excel")
-    @PreAuthorize("hasAnyAuthority('user:export')")
-    public void export(QueryRequest queryRequest, SystemUser user, HttpServletResponse response) throws FebsException {
-        try {
-            List<SystemUser> users = this.userService.findUserDetail(user, queryRequest).getRecords();
-            ExcelKit.$Export(SystemUser.class, response).downXlsx(users, false);
-        } catch (Exception e) {
-            String message = "导出Excel失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('user:export')")
+    @ControllerEndpoint(operation = "导出用户数据", exceptionMessage = "导出Excel失败")
+    public void export(QueryRequest queryRequest, SystemUser user, HttpServletResponse response) {
+        List<SystemUser> users = this.userService.findUserDetailList(user, queryRequest).getRecords();
+        ExcelKit.$Export(SystemUser.class, response).downXlsx(users, false);
     }
 }

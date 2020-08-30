@@ -1,7 +1,8 @@
 package cc.mrbird.febs.server.system.service;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.SystemUser;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.system.SystemUser;
+import cc.mrbird.febs.common.core.exception.FebsException;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -25,7 +26,7 @@ public interface IUserService extends IService<SystemUser> {
      * @param user    用户对象，用于传递查询条件
      * @return IPage
      */
-    IPage<SystemUser> findUserDetail(SystemUser user, QueryRequest request);
+    IPage<SystemUser> findUserDetailList(SystemUser user, QueryRequest request);
 
     /**
      * 通过用户名查找用户详细信息
@@ -67,32 +68,23 @@ public interface IUserService extends IService<SystemUser> {
      * 更新个人信息
      *
      * @param user 个人信息
+     * @throws FebsException 异常
      */
-    void updateProfile(SystemUser user);
+    void updateProfile(SystemUser user) throws FebsException;
 
     /**
      * 更新用户头像
      *
-     * @param username 用户名
-     * @param avatar   用户头像
+     * @param avatar 用户头像
      */
-    void updateAvatar(String username, String avatar);
+    void updateAvatar(String avatar);
 
     /**
      * 更新用户密码
      *
-     * @param username 用户名
      * @param password 新密码
      */
-    void updatePassword(String username, String password);
-
-    /**
-     * 注册用户
-     *
-     * @param username 用户名
-     * @param password 密码
-     */
-    void regist(String username, String password);
+    void updatePassword(String password);
 
     /**
      * 重置密码

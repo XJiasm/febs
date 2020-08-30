@@ -1,8 +1,8 @@
 package cc.mrbird.febs.server.system.service;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.LoginLog;
-import cc.mrbird.febs.common.entity.system.SystemUser;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.system.LoginLog;
+import cc.mrbird.febs.common.core.entity.system.SystemUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 

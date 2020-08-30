@@ -1,16 +1,15 @@
 package cc.mrbird.febs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.Log;
-import cc.mrbird.febs.common.entity.FebsResponse;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.Role;
-import cc.mrbird.febs.common.exception.FebsException;
-import cc.mrbird.febs.common.utils.FebsUtil;
+import cc.mrbird.febs.common.core.entity.FebsResponse;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
+import cc.mrbird.febs.common.core.entity.system.Role;
+import cc.mrbird.febs.common.core.utils.FebsUtil;
+import cc.mrbird.febs.server.system.annotation.ControllerEndpoint;
 import cc.mrbird.febs.server.system.service.IRoleService;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +20,17 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author MrBird
+ */
 @Slf4j
 @Validated
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("role")
 public class RoleController {
 
-    @Autowired
-    private IRoleService roleService;
-
-    private String message;
+    private final IRoleService roleService;
 
     @GetMapping
     public FebsResponse roleList(QueryRequest queryRequest, Role role) {
@@ -39,7 +39,7 @@ public class RoleController {
     }
 
     @GetMapping("options")
-    public FebsResponse roles(){
+    public FebsResponse roles() {
         List<Role> allRoles = roleService.findAllRoles();
         return new FebsResponse().data(allRoles);
     }
@@ -50,57 +50,33 @@ public class RoleController {
         return result == null;
     }
 
-    @Log("新增角色")
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('role:add')")
-    public void addRole(@Valid Role role) throws FebsException {
-        try {
-            this.roleService.createRole(role);
-        } catch (Exception e) {
-            message = "新增角色失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('role:add')")
+    @ControllerEndpoint(operation = "新增角色", exceptionMessage = "新增角色失败")
+    public void addRole(@Valid Role role) {
+        this.roleService.createRole(role);
     }
 
-    @Log("删除角色")
     @DeleteMapping("/{roleIds}")
-    @PreAuthorize("hasAnyAuthority('role:delete')")
-    public void deleteRoles(@NotBlank(message = "{required}") @PathVariable String roleIds) throws FebsException {
-        try {
-            String[] ids = roleIds.split(StringPool.COMMA);
-            this.roleService.deleteRoles(ids);
-        } catch (Exception e) {
-            message = "删除角色失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('role:delete')")
+    @ControllerEndpoint(operation = "删除角色", exceptionMessage = "删除角色失败")
+    public void deleteRoles(@NotBlank(message = "{required}") @PathVariable String roleIds) {
+        String[] ids = roleIds.split(StringConstant.COMMA);
+        this.roleService.deleteRoles(ids);
     }
 
-    @Log("修改角色")
     @PutMapping
-    @PreAuthorize("hasAnyAuthority('role:update')")
-    public void updateRole(@Valid Role role) throws FebsException {
-        try {
-            this.roleService.updateRole(role);
-        } catch (Exception e) {
-            message = "修改角色失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('role:update')")
+    @ControllerEndpoint(operation = "修改角色", exceptionMessage = "修改角色失败")
+    public void updateRole(@Valid Role role) {
+        this.roleService.updateRole(role);
     }
 
-    @Log("导出角色数据")
     @PostMapping("excel")
-    @PreAuthorize("hasAnyAuthority('role:export')")
-    public void export(QueryRequest queryRequest, Role role, HttpServletResponse response) throws FebsException {
-        try {
-            List<Role> roles = this.roleService.findRoles(role, queryRequest).getRecords();
-            ExcelKit.$Export(Role.class, response).downXlsx(roles, false);
-        } catch (Exception e) {
-            String message = "导出Excel失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('role:export')")
+    @ControllerEndpoint(operation = "导出角色数据", exceptionMessage = "导出Excel失败")
+    public void export(QueryRequest queryRequest, Role role, HttpServletResponse response) {
+        List<Role> roles = this.roleService.findRoles(role, queryRequest).getRecords();
+        ExcelKit.$Export(Role.class, response).downXlsx(roles, false);
     }
 }

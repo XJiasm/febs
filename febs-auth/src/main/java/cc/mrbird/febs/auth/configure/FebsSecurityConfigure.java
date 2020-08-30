@@ -1,8 +1,10 @@
 package cc.mrbird.febs.auth.configure;
 
+import cc.mrbird.febs.auth.handler.FebsWebLoginFailureHandler;
+import cc.mrbird.febs.auth.handler.FebsWebLoginSuccessHandler;
 import cc.mrbird.febs.auth.filter.ValidateCodeFilter;
-import cc.mrbird.febs.auth.service.FebsUserDetailService;
-import org.springframework.beans.factory.annotation.Autowired;
+import cc.mrbird.febs.common.core.entity.constant.EndpointConstant;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -20,16 +23,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Order(2)
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class FebsSecurityConfigure extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private FebsUserDetailService userDetailService;
-    @Autowired
-    private ValidateCodeFilter validateCodeFilter;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailService;
+    private final ValidateCodeFilter validateCodeFilter;
+    private final PasswordEncoder passwordEncoder;
+    private final FebsWebLoginSuccessHandler successHandler;
+    private final FebsWebLoginFailureHandler failureHandler;
+
 
     @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
@@ -38,12 +43,19 @@ public class FebsSecurityConfigure extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .requestMatchers()
-                .antMatchers("/oauth/**")
+                .antMatchers(EndpointConstant.OAUTH_ALL, EndpointConstant.LOGIN)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/oauth/**").authenticated()
+                .antMatchers(EndpointConstant.OAUTH_ALL).authenticated()
                 .and()
-                .csrf().disable();
+                .formLogin()
+                .loginPage(EndpointConstant.LOGIN)
+                .loginProcessingUrl(EndpointConstant.LOGIN)
+                .successHandler(successHandler)
+                .failureHandler(failureHandler)
+                .permitAll()
+                .and().csrf().disable()
+                .httpBasic().disable();
     }
 
     @Override

@@ -1,14 +1,15 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.Eximport;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.system.Eximport;
 import cc.mrbird.febs.server.system.mapper.EximportMapper;
+import cc.mrbird.febs.server.system.properties.FebsServerSystemProperties;
 import cc.mrbird.febs.server.system.service.IEximportService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +21,11 @@ import java.util.List;
  */
 @Slf4j
 @Service
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
+@RequiredArgsConstructor
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class EximportServiceImpl extends ServiceImpl<EximportMapper, Eximport> implements IEximportService {
 
-    @Value("${febs.max.batch.insert.num:1000}")
-    private int batchInsertMaxNum;
+    private final FebsServerSystemProperties properties;
 
     @Override
     public IPage<Eximport> findEximports(QueryRequest request, Eximport eximport) {
@@ -33,9 +34,9 @@ public class EximportServiceImpl extends ServiceImpl<EximportMapper, Eximport> i
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void batchInsert(List<Eximport> list) {
-        this.saveBatch(list, batchInsertMaxNum);
+        this.saveBatch(list, properties.getBatchInsertMaxNum());
     }
 
 }

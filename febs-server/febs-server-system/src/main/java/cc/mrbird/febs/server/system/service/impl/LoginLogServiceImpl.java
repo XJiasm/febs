@@ -1,12 +1,11 @@
 package cc.mrbird.febs.server.system.service.impl;
 
-import cc.mrbird.febs.common.entity.FebsConstant;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.LoginLog;
-import cc.mrbird.febs.common.entity.system.SystemUser;
-import cc.mrbird.febs.common.utils.HttpContextUtil;
-import cc.mrbird.febs.common.utils.IPUtil;
-import cc.mrbird.febs.common.utils.SortUtil;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.core.entity.system.LoginLog;
+import cc.mrbird.febs.common.core.entity.system.SystemUser;
+import cc.mrbird.febs.common.core.utils.FebsUtil;
+import cc.mrbird.febs.common.core.utils.SortUtil;
 import cc.mrbird.febs.server.system.mapper.LoginLogMapper;
 import cc.mrbird.febs.server.system.service.ILoginLogService;
 import cc.mrbird.febs.server.system.utils.AddressUtil;
@@ -16,10 +15,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -28,8 +24,8 @@ import java.util.Map;
 /**
  * @author MrBird
  */
+
 @Service("loginLogService")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> implements ILoginLogService {
 
     @Override
@@ -52,18 +48,15 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
     }
 
     @Override
-    @Transactional
     public void saveLoginLog(LoginLog loginLog) {
         loginLog.setLoginTime(new Date());
-        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        String ip = IPUtil.getIpAddr(request);
+        String ip = FebsUtil.getHttpServletRequestIpAddress();
         loginLog.setIp(ip);
         loginLog.setLocation(AddressUtil.getCityInfo(ip));
         this.save(loginLog);
     }
 
     @Override
-    @Transactional
     public void deleteLoginLogs(String[] ids) {
         List<String> list = Arrays.asList(ids);
         baseMapper.deleteBatchIds(list);
@@ -96,6 +89,7 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
 
         QueryRequest request = new QueryRequest();
         request.setPageNum(1);
+        // 近7日记录
         request.setPageSize(7);
 
         IPage<LoginLog> loginLogs = this.findLoginLogs(loginLog, request);

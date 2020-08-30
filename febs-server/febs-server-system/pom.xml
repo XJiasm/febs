@@ -1,39 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>cc.mrbird</groupId>
         <artifactId>febs-server</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>2.2-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>febs-server-system</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <name>FEBS-Server-System</name>
     <description>FEBS-Server-System微服务系统模块</description>
 
+    <properties>
+        <febs-cloud.version>2.2-RELEASE</febs-cloud.version>
+    </properties>
+
     <dependencies>
         <dependency>
-            <groupId>org.lionsoul</groupId>
-            <artifactId>ip2region</artifactId>
-            <version>1.7</version>
+            <groupId>cc.mrbird</groupId>
+            <artifactId>febs-common-datasource-starter</artifactId>
+            <version>${febs-cloud.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <groupId>cc.mrbird</groupId>
+            <artifactId>febs-common-security-starter</artifactId>
+            <version>${febs-cloud.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
+            <groupId>cc.mrbird</groupId>
+            <artifactId>febs-common-doc-starter</artifactId>
+            <version>${febs-cloud.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
+            <groupId>cc.mrbird</groupId>
+            <artifactId>febs-common-logging-starter</artifactId>
+            <version>${febs-cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codingapi.txlcn</groupId>
+            <artifactId>txlcn-tc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.codingapi.txlcn</groupId>
+            <artifactId>txlcn-txmsg-netty</artifactId>
         </dependency>
     </dependencies>
 

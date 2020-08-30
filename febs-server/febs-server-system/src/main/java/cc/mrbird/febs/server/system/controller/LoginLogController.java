@@ -1,16 +1,15 @@
 package cc.mrbird.febs.server.system.controller;
 
-import cc.mrbird.febs.common.annotation.Log;
-import cc.mrbird.febs.common.entity.FebsResponse;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.LoginLog;
-import cc.mrbird.febs.common.exception.FebsException;
-import cc.mrbird.febs.common.utils.FebsUtil;
+import cc.mrbird.febs.common.core.entity.FebsResponse;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
+import cc.mrbird.febs.common.core.entity.system.LoginLog;
+import cc.mrbird.febs.common.core.utils.FebsUtil;
+import cc.mrbird.febs.server.system.annotation.ControllerEndpoint;
 import cc.mrbird.febs.server.system.service.ILoginLogService;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +23,11 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("loginLog")
 public class LoginLogController {
 
-    @Autowired
-    private ILoginLogService loginLogService;
+    private final ILoginLogService loginLogService;
 
     @GetMapping
     public FebsResponse loginLogList(LoginLog loginLog, QueryRequest request) {
@@ -36,37 +35,26 @@ public class LoginLogController {
         return new FebsResponse().data(dataTable);
     }
 
-    @GetMapping("/{username}")
-    public FebsResponse getUserLastSevenLoginLogs(@NotBlank(message = "{required}") @PathVariable String username) {
-        List<LoginLog> userLastSevenLoginLogs = this.loginLogService.findUserLastSevenLoginLogs(username);
+    @GetMapping("currentUser")
+    public FebsResponse getUserLastSevenLoginLogs() {
+        String currentUsername = FebsUtil.getCurrentUsername();
+        List<LoginLog> userLastSevenLoginLogs = this.loginLogService.findUserLastSevenLoginLogs(currentUsername);
         return new FebsResponse().data(userLastSevenLoginLogs);
     }
 
-    @Log("删除登录日志")
     @DeleteMapping("{ids}")
-    @PreAuthorize("hasAnyAuthority('loginlog:delete')")
-    public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) throws FebsException {
-        try {
-            String[] loginLogIds = ids.split(StringPool.COMMA);
-            this.loginLogService.deleteLoginLogs(loginLogIds);
-        } catch (Exception e) {
-            String message = "删除登录日志失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('loginlog:delete')")
+    @ControllerEndpoint(operation = "删除登录日志", exceptionMessage = "删除登录日志失败")
+    public void deleteLogs(@NotBlank(message = "{required}") @PathVariable String ids) {
+        String[] loginLogIds = ids.split(StringConstant.COMMA);
+        this.loginLogService.deleteLoginLogs(loginLogIds);
     }
 
-    @Log("导出登录日志数据")
     @PostMapping("excel")
-    @PreAuthorize("hasAnyAuthority('loginlog:export')")
-    public void export(QueryRequest request, LoginLog loginLog, HttpServletResponse response) throws FebsException {
-        try {
-            List<LoginLog> loginLogs = this.loginLogService.findLoginLogs(loginLog, request).getRecords();
-            ExcelKit.$Export(LoginLog.class, response).downXlsx(loginLogs, false);
-        } catch (Exception e) {
-            String message = "导出Excel失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('loginlog:export')")
+    @ControllerEndpoint(operation = "导出登录日志数据", exceptionMessage = "导出Excel失败")
+    public void export(QueryRequest request, LoginLog loginLog, HttpServletResponse response) {
+        List<LoginLog> loginLogs = this.loginLogService.findLoginLogs(loginLog, request).getRecords();
+        ExcelKit.$Export(LoginLog.class, response).downXlsx(loginLogs, false);
     }
 }

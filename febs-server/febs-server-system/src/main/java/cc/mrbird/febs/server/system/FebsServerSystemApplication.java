@@ -1,24 +1,28 @@
 package cc.mrbird.febs.server.system;
 
-import cc.mrbird.febs.common.annotation.FebsCloudApplication;
+import cc.mrbird.febs.common.security.starter.annotation.EnableFebsCloudResourceServer;
+import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * @author MrBird
+ */
 @EnableAsync
-@EnableDiscoveryClient
 @SpringBootApplication
-@FebsCloudApplication
+@EnableFebsCloudResourceServer
 @EnableTransactionManagement
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableDistributedTransaction
 @MapperScan("cc.mrbird.febs.server.system.mapper")
 public class FebsServerSystemApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FebsServerSystemApplication.class, args);
+        new SpringApplicationBuilder(FebsServerSystemApplication.class)
+                .web(WebApplicationType.SERVLET)
+                .run(args);
     }
 }

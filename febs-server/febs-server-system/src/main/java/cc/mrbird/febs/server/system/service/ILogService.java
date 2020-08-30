@@ -1,13 +1,15 @@
 package cc.mrbird.febs.server.system.service;
 
 
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.Log;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
+import cc.mrbird.febs.common.core.entity.system.Log;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
+
+import java.lang.reflect.Method;
 
 /**
  * @author MrBird
@@ -19,7 +21,7 @@ public interface ILogService extends IService<Log> {
      *
      * @param log     日志
      * @param request QueryRequest
-     * @return IPage<Log>
+     * @return IPage<SystemLog>
      */
     IPage<Log> findLogs(Log log, QueryRequest request);
 
@@ -33,10 +35,13 @@ public interface ILogService extends IService<Log> {
     /**
      * 异步保存操作日志
      *
-     * @param point 切点
-     * @param log   日志
-     * @throws JsonProcessingException 异常
+     * @param point     切点
+     * @param method    Method
+     * @param ip        ip
+     * @param operation 操作内容
+     * @param username  操作用户
+     * @param start     开始时间
      */
-    @Async("febsAsyncThreadPool")
-    void saveLog(ProceedingJoinPoint point, Log log) throws JsonProcessingException;
+    @Async(FebsConstant.ASYNC_POOL)
+    void saveLog(ProceedingJoinPoint point, Method method, String ip, String operation, String username, long start);
 }

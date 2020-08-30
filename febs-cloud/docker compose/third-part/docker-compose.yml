@@ -19,12 +19,3 @@ services:
       - /febs/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf #挂载 Redis配置
     ports:
       - 6379:6379
-  rabbitmq:
-    image: rabbitmq:3.7.15-management
-    container_name: rabbitmq
-    volumes:
-      - /febs/rabbitmq/data:/var/lib/rabbitmq #挂载 RabbitMQ数据
-      - /febs/rabbitmq/log:/var/log/rabbitmq #挂载 RabbitMQ日志
-    ports:
-      - 5672:5672
-      - 15672:15672

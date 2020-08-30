@@ -1,15 +1,15 @@
 package cc.mrbird.febs.server.system.controller;
 
-import cc.mrbird.febs.common.entity.FebsResponse;
-import cc.mrbird.febs.common.entity.QueryRequest;
-import cc.mrbird.febs.common.entity.system.Log;
-import cc.mrbird.febs.common.exception.FebsException;
-import cc.mrbird.febs.common.utils.FebsUtil;
+import cc.mrbird.febs.common.core.entity.FebsResponse;
+import cc.mrbird.febs.common.core.entity.QueryRequest;
+import cc.mrbird.febs.common.core.entity.constant.StringConstant;
+import cc.mrbird.febs.common.core.entity.system.Log;
+import cc.mrbird.febs.common.core.utils.FebsUtil;
+import cc.mrbird.febs.server.system.annotation.ControllerEndpoint;
 import cc.mrbird.febs.server.system.service.ILogService;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.wuwenze.poi.ExcelKit;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +23,11 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("log")
 public class LogController {
 
-    @Autowired
-    private ILogService logService;
+    private final ILogService logService;
 
     @GetMapping
     public FebsResponse logList(Log log, QueryRequest request) {
@@ -36,29 +36,19 @@ public class LogController {
     }
 
     @DeleteMapping("{ids}")
-    @PreAuthorize("hasAnyAuthority('log:delete')")
-    public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) throws FebsException {
-        try {
-            String[] logIds = ids.split(StringPool.COMMA);
-            this.logService.deleteLogs(logIds);
-        } catch (Exception e) {
-            String message = "删除日志失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('log:delete')")
+    @ControllerEndpoint(exceptionMessage = "删除日志失败")
+    public void deleteLogss(@NotBlank(message = "{required}") @PathVariable String ids) {
+        String[] logIds = ids.split(StringConstant.COMMA);
+        this.logService.deleteLogs(logIds);
     }
 
 
     @PostMapping("excel")
-    @PreAuthorize("hasAnyAuthority('log:export')")
-    public void export(QueryRequest request, Log lg, HttpServletResponse response) throws FebsException {
-        try {
-            List<Log> logs = this.logService.findLogs(lg, request).getRecords();
-            ExcelKit.$Export(Log.class, response).downXlsx(logs, false);
-        } catch (Exception e) {
-            String message = "导出Excel失败";
-            log.error(message, e);
-            throw new FebsException(message);
-        }
+    @PreAuthorize("hasAuthority('log:export')")
+    @ControllerEndpoint(exceptionMessage = "导出Excel失败")
+    public void export(QueryRequest request, Log lg, HttpServletResponse response) {
+        List<Log> logs = this.logService.findLogs(lg, request).getRecords();
+        ExcelKit.$Export(Log.class, response).downXlsx(logs, false);
     }
 }
