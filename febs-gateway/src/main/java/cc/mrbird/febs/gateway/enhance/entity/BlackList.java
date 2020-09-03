@@ -17,8 +17,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class BlackList {
 
-    public static final String CLOSE = "0";
-    public static final String OPEN = "1";
+    public static final int CLOSE = 0;
+    public static final int OPEN = 1;
 
     public static final String METHOD_ALL = "all";
 
@@ -51,7 +51,7 @@ public class BlackList {
     /**
      * 状态，0关闭，1开启
      */
-    private Integer status;
+    private String status;
     /**
      * 规则创建时间
      */
