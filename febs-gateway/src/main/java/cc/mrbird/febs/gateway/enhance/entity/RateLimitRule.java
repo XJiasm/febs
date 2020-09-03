@@ -52,7 +52,7 @@ public class RateLimitRule {
     /**
      * 状态，0关闭，1开启
      */
-    private String status;
+    private Integer status;
     /**
      * 规则创建时间
      */
