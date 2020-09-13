@@ -48,7 +48,7 @@ public class AddressUtil {
                 try {
                     searcher.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error("ip2region searcher close error", e);
                 }
             }
         }

@@ -18,8 +18,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 public class RateLimitRule {
 
-    public static final String CLOSE = "0";
-    public static final String OPEN = "1";
+    public static final int CLOSE = 0;
+    public static final int OPEN = 1;
 
     public static final String METHOD_ALL = "all";
 

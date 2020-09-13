@@ -164,7 +164,7 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
     private void doBlackListCheck(AtomicBoolean forbid, Set<Object> blackList, URI uri, String requestMethod) {
         for (Object o : blackList) {
             BlackList b = JSONObject.parseObject(o.toString(), BlackList.class);
-            if (pathMatcher.match(b.getRequestUri(), uri.getPath()) && BlackList.OPEN.equals(b.getStatus())) {
+            if (pathMatcher.match(b.getRequestUri(), uri.getPath()) && BlackList.OPEN == Integer.parseInt(b.getStatus())) {
                 if (BlackList.METHOD_ALL.equalsIgnoreCase(b.getRequestMethod())
                         || StringUtils.equalsIgnoreCase(requestMethod, b.getRequestMethod())) {
                     if (StringUtils.isNotBlank(b.getLimitFrom()) && StringUtils.isNotBlank(b.getLimitTo())) {
@@ -184,8 +184,8 @@ public class RouteEnhanceServiceImpl implements RouteEnhanceService {
 
     private Mono<Void> doRateLimitCheck(AtomicBoolean limit, RateLimitRule rule, URI uri,
                                         String requestIp, String requestMethod, ServerHttpResponse response) {
-        boolean isRateLimitRuleHit = RateLimitRule.OPEN.equals(rule.getStatus())
-                && (RateLimitRule.METHOD_ALL.equalsIgnoreCase(rule.getRequestMethod())
+        boolean isRateLimitRuleHit = RateLimitRule.OPEN == Integer.parseInt(rule.getStatus())
+                &&(RateLimitRule.METHOD_ALL.equalsIgnoreCase(rule.getRequestMethod())
                 || StringUtils.equalsIgnoreCase(requestMethod, rule.getRequestMethod()));
         if (isRateLimitRuleHit) {
             if (StringUtils.isNotBlank(rule.getLimitFrom()) && StringUtils.isNotBlank(rule.getLimitTo())) {
