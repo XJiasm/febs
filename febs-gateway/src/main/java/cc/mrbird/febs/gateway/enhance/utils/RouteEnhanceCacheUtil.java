@@ -6,7 +6,7 @@ import cc.mrbird.febs.common.core.entity.constant.FebsConstant;
 /**
  * @author MrBird
  */
-public class RouteEnhanceCacheUtil {
+public abstract class RouteEnhanceCacheUtil {
 
     private static final String BLACKLIST_CHACHE_KEY_PREFIX = "febs:route:blacklist:";
     private static final String RATELIMIT_CACHE_KEY_PREFIX = "febs:route:ratelimit:";

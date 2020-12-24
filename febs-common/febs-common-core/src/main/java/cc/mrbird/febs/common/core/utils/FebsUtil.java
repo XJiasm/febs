@@ -41,7 +41,7 @@ import java.util.stream.IntStream;
  * @author MrBird
  */
 @Slf4j
-public class FebsUtil {
+public abstract class FebsUtil {
 
     private static final String UNKNOW = "unknown";
 

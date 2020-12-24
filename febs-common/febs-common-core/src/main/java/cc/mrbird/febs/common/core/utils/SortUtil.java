@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author MrBird
  */
-public class SortUtil {
+public abstract class SortUtil {
     /**
      * 处理排序（分页情况下） for mybatis-plus
      *

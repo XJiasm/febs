@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author MrBird
  */
-public class TreeUtil {
+public abstract class TreeUtil {
 
     private final static String TOP_NODE_ID = "0";
 
