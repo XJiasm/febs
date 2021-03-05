@@ -44,7 +44,7 @@ public class FebsCloudResourceServerConfigure extends ResourceServerConfigurerAd
     @Override
     public void configure(HttpSecurity http) throws Exception {
         if (properties == null) {
-            premitAll(http);
+            permitAll(http);
             return;
         }
         String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(properties.getAnonUris(), StringConstant.COMMA);
@@ -52,7 +52,7 @@ public class FebsCloudResourceServerConfigure extends ResourceServerConfigurerAd
             anonUrls = new String[]{};
         }
         if (ArrayUtils.contains(anonUrls, EndpointConstant.ALL)) {
-            premitAll(http);
+            permitAll(http);
             return;
         }
         http.csrf().disable()
@@ -75,7 +75,7 @@ public class FebsCloudResourceServerConfigure extends ResourceServerConfigurerAd
         }
     }
 
-    private void premitAll(HttpSecurity http) throws Exception {
+    private void permitAll(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests().anyRequest().permitAll();
     }
