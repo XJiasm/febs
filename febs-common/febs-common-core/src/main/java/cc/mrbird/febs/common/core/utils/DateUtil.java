@@ -15,7 +15,7 @@ import java.util.Locale;
  *
  * @author MrBird
  */
-public class DateUtil {
+public abstract class DateUtil {
 
     public static final String FULL_TIME_PATTERN = "yyyyMMddHHmmss";
 

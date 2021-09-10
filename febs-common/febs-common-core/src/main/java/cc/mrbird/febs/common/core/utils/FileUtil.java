@@ -7,6 +7,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.util.FileSystemUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -20,7 +21,7 @@ import java.util.zip.ZipOutputStream;
  * @author MrBird
  */
 @Slf4j
-public class FileUtil {
+public abstract class FileUtil {
 
     private static final int BUFFER = 1024 * 8;
 
@@ -76,25 +77,9 @@ public class FileUtil {
             }
         } finally {
             if (delete) {
-                delete(filePath);
+                FileSystemUtils.deleteRecursively(file);
             }
         }
-    }
-
-    /**
-     * 递归删除文件或目录
-     *
-     * @param filePath 文件或目录
-     */
-    public static void delete(String filePath) {
-        File file = new File(filePath);
-        if (file.isDirectory()) {
-            File[] files = file.listFiles();
-            if (files != null) {
-                Arrays.stream(files).forEach(f -> delete(f.getPath()));
-            }
-        }
-        file.delete();
     }
 
     /**

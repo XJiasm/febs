@@ -13,7 +13,7 @@ import reactor.core.publisher.Flux;
 /**
  * @author MrBird
  */
-public class PageableExecutionUtil {
+public abstract class PageableExecutionUtil {
 
     public static <FEBS> Flux<FEBS> getPages(Query query, QueryRequest request, Class<FEBS> clazz,
                                              ReactiveMongoTemplate template) {
