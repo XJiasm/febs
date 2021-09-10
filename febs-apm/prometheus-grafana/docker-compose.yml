@@ -50,5 +50,10 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafana
+    user: 'root'
+    volumes:
+      - /febs/grafana/data:/var/lib/grafana:rw
+      - /febs/grafana/log:/var/log/grafana
+      - /etc/localtime:/etc/localtime
     ports:
       - 8404:3000
