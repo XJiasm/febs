@@ -122,6 +122,11 @@ public class UserController {
         this.userService.updateProfile(user);
     }
 
+    @PutMapping("theme")
+    public void updateSidebarTheme(@NotBlank(message = "{required}") String theme) {
+        userService.updateSidebarTheme(theme);
+    }
+
     @PutMapping("avatar")
     @ControllerEndpoint(exceptionMessage = "修改头像失败")
     public void updateAvatar(@NotBlank(message = "{required}") String avatar) {

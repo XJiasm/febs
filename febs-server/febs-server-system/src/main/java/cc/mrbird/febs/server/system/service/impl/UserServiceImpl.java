@@ -162,6 +162,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
 
     }
 
+    @Override
+    public void updateSidebarTheme(String theme) {
+        CurrentUser currentUser = FebsUtil.getCurrentUser();
+        if (currentUser != null) {
+            Long userId = currentUser.getUserId();
+            SystemUser user = new SystemUser();
+            user.setUserId(userId);
+            user.setTheme(theme);
+            baseMapper.updateById(user);
+        }
+    }
+
     private void setUserRoles(SystemUser user, String[] roles) {
         List<UserRole> userRoles = new ArrayList<>();
         Arrays.stream(roles).forEach(roleId -> {

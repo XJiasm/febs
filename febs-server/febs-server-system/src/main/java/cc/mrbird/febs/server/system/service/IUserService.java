@@ -93,4 +93,11 @@ public interface IUserService extends IService<SystemUser> {
      */
     void resetPassword(String[] usernames);
 
+    /**
+     * 更新用户侧边栏主题
+     *
+     * @param theme 侧栏主题
+     */
+    void updateSidebarTheme(String theme);
+
 }
