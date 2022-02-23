@@ -25,12 +25,11 @@ FEBS Cloud是一款使用Spring Cloud Hoxton.RELEASE、Spring Cloud OAuth2 & Spr
 
 文档 | 地址
 ---|---
-项目导入教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1647283](https://www.kancloud.cn/mrbird/spring-cloud/1647283)
-管理页面使用教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1647284](https://www.kancloud.cn/mrbird/spring-cloud/1647284)
-二次开发教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1265030](https://www.kancloud.cn/mrbird/spring-cloud/1265030)
-项目从零搭建教程 | [https://www.kancloud.cn/mrbird/spring-cloud/1263685](https://www.kancloud.cn/mrbird/spring-cloud/1263685)
+项目导入教程 | [https://mrbird.cc/FEBS-Cloud项目导入教程.html](https://mrbird.cc/FEBS-Cloud项目导入教程.html)
+项目使用教程 | [https://mrbird.cc/FEBS-Cloud项目使用教程.html](https://mrbird.cc/FEBS-Cloud项目使用教程.html])
+项目开发教程 | [https://mrbird.cc/FEBS-Cloud项目开发教程.html](https://mrbird.cc/FEBS-Cloud项目开发教程.html)
+项目从零搭建教程 | [https://mrbird.cc/book.html](https://mrbird.cc/book.html)
 系统常见问题解答 | [https://mrbird.cc/FEBS-Cloud常见问题汇总.html](https://mrbird.cc/FEBS-Cloud常见问题汇总.html)
-系统更新日志 | [https://www.kancloud.cn/mrbird/spring-cloud/1292659](https://www.kancloud.cn/mrbird/spring-cloud/1292659)
 
 ### 系统架构
 
