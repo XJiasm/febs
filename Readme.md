@@ -26,7 +26,7 @@ FEBS Cloud是一款使用Spring Cloud Hoxton.RELEASE、Spring Cloud OAuth2 & Spr
 文档 | 地址
 ---|---
 项目导入教程 | [https://mrbird.cc/FEBS-Cloud项目导入教程.html](https://mrbird.cc/FEBS-Cloud项目导入教程.html)
-项目使用教程 | [https://mrbird.cc/FEBS-Cloud项目使用教程.html](https://mrbird.cc/FEBS-Cloud项目使用教程.html])
+项目使用教程 | [https://mrbird.cc/FEBS-Cloud项目使用教程.html](https://mrbird.cc/FEBS-Cloud项目使用教程.html)
 项目开发教程 | [https://mrbird.cc/FEBS-Cloud项目开发教程.html](https://mrbird.cc/FEBS-Cloud项目开发教程.html)
 项目从零搭建教程 | [https://mrbird.cc/book.html](https://mrbird.cc/book.html)
 系统常见问题解答 | [https://mrbird.cc/FEBS-Cloud常见问题汇总.html](https://mrbird.cc/FEBS-Cloud常见问题汇总.html)
